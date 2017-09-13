@@ -1,0 +1,54 @@
+* The Setup
+
+* The Reasons
+
+* The Origins
+SOCRATES 2015
+http://blog.ninjaferret.co.uk/2015/06/05/Introducing-Functional-Calisthenics.html
+
+* The Rules
+
+** Side effects can only occur at the top level
+*** Definition
+*** Reason
+*** Example
+** No mutable state
+*** Definition
+*** Reason
+*** Example
+** Expressions not statements
+*** Definition
+*** Reason
+*** Example
+** Functions should have 1 argument
+*** Definition
+*** Reason
+*** Example
+** No explicit recursion
+*** Definition
+*** Reason
+*** Example
+** Maximum type-level abstraction
+*** Definition
+*** Reason
+*** Example
+** Always use infinite sequences
+*** Definition
+*** Reason
+*** Example
+** No "if"
+*** Definition
+*** Reason
+*** Example
+** Name everything
+*** Definition
+*** Reason
+*** Example
+** Use intermediates
+*** Definition
+*** Reason
+*** Example
+** Don't abbreviate
+*** Definition
+*** Reason
+*** Example

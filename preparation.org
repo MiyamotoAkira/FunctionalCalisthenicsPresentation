@@ -1,0 +1,17 @@
+
+
+|         | Gilded Rose | Bank Kata |   |   |
+| Scala   |             |           |   |   |
+| Clojure |             |           |   |   |
+| F#      |             |           |   |   |
+| Elixir  |             |           |   |   |
+
+
+* Katas description and reason:
+** Gilded Rose
+*** Reason
+*** Description
+** Bank Kata
+*** Reason
+*** Description
+
