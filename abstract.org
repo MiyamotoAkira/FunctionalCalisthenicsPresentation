@@ -1,1 +1,5 @@
-Functional Calisthenics
+* Functional Calisthenics
+
+Functional Calisthenics are a collection of rules limiting how you can do create code with the idea to improve your ability to write "properly" functional code.
+
+This talk is a description of Functional Calisthenics. We will be talking about why they came about, why I became interested in them, when to use them and then we will go through the rules with examples. During the discussion of the rules we will talk about what each rule is trying to accomplish and will show some code before and after applying the rule.
