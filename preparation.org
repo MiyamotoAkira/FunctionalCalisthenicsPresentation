@@ -1,5 +1,5 @@
 
-
+Versions "finished"
 |         | Gilded Rose | Bank Kata |   |   |
 | Scala   |             |           |   |   |
 | Clojure |             |           |   |   |
