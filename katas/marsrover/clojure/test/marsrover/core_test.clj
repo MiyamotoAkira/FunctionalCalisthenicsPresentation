@@ -19,6 +19,13 @@
   (testing "turn right"
     (let [rover (initialize-rover "0,0,N")]
       (is (= :E (:direction (turn "R" rover))))
-      (is (= :S (:direction (turn "RR" rover))))))
+      (is (= :S (:direction (turn "RR" rover))))
+      (is (= :W (:direction (turn "RRR" rover))))
+      (is (= :N (:direction (turn "RRRR" rover))))))
   
-  (testing "turn left"))
+  (testing "turn left"
+    (let [rover (initialize-rover "0,0,N")]
+      (is (= :W (:direction (turn "L" rover))))
+      (is (= :S (:direction (turn "LL" rover))))
+      (is (= :E (:direction (turn "LLL" rover))))
+      (is (= :N (:direction (turn "LLLL" rover)))))))

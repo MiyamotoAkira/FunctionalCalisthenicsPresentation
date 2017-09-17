@@ -28,10 +28,21 @@
 (defn turn-right [rover]
   (condp = (:direction rover)
     :N (assoc rover :direction :E)
-    :E (assoc rover :direction :S)))
+    :E (assoc rover :direction :S)
+    :S (assoc rover :direction :W)
+    :W (assoc rover :direction :N)))
+
+(defn turn-left [rover]
+  (condp = (:direction rover)
+    :N (assoc rover :direction :W)
+    :W (assoc rover :direction :S)
+    :S (assoc rover :direction :E)
+    :E (assoc rover :direction :N)))
 
 (defn select-turn [turn]
-  turn-right)
+  (condp = turn
+    \R turn-right
+    \L turn-left))
 
 (defn turn [turns rover]
   (reduce #((select-turn %2) %1) rover turns))
