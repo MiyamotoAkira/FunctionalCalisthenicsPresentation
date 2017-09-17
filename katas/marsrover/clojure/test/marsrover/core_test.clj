@@ -14,3 +14,11 @@
       (is (= 1 (:x rover)))
       (is (= 2 (:y rover)))
       (is (= :E (:direction rover))))))
+
+(deftest mars-rover-rotating
+  (testing "turn right"
+    (let [rover (initialize-rover "0,0,N")]
+      (is (= :E (:direction (turn "R" rover))))
+      (is (= :S (:direction (turn "RR" rover))))))
+  
+  (testing "turn left"))

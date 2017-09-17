@@ -6,7 +6,6 @@
 (def directions-literals #{"N" "E" "S" "W"})
 
 (defn parse-input-element [input]
-  (println input)
   (cond
     (nil? (directions-literals input)) (Integer/parseInt input)
     :else (directions input)))
@@ -25,3 +24,14 @@
       (str/split #",")
       (parse-input)
       (zip-rover)))
+
+(defn turn-right [rover]
+  (condp = (:direction rover)
+    :N (assoc rover :direction :E)
+    :E (assoc rover :direction :S)))
+
+(defn select-turn [turn]
+  turn-right)
+
+(defn turn [turns rover]
+  (reduce #((select-turn %2) %1) rover turns))
