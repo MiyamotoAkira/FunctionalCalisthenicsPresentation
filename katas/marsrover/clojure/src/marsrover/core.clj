@@ -5,6 +5,10 @@
 
 (def directions-literals #{"N" "E" "S" "W"})
 
+(def next-turn-right {:N :E :E :S :S :W :W :N})
+
+(def next-turn-left {:N :W :W :S :S :E :E :N})
+
 (defn parse-input-element [input]
   (cond
     (nil? (directions-literals input)) (Integer/parseInt input)
@@ -26,18 +30,10 @@
       (zip-rover)))
 
 (defn turn-right [rover]
-  (condp = (:direction rover)
-    :N (assoc rover :direction :E)
-    :E (assoc rover :direction :S)
-    :S (assoc rover :direction :W)
-    :W (assoc rover :direction :N)))
+  (assoc rover :direction ((:direction rover) next-turn-right)))
 
 (defn turn-left [rover]
-  (condp = (:direction rover)
-    :N (assoc rover :direction :W)
-    :W (assoc rover :direction :S)
-    :S (assoc rover :direction :E)
-    :E (assoc rover :direction :N)))
+  (assoc rover :direction ((:direction rover) next-turn-left)))
 
 (defn select-turn [turn]
   (condp = turn
