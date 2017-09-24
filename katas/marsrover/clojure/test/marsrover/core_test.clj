@@ -31,14 +31,26 @@
       (is (= :N (:direction (turn "LLLL" rover)))))))
 
 (deftest mars-moving
-  (testing "move forward"
+  (testing "move forwards North"
     (let [rover (initialize-rover "0,0,N")]
       (is (= 1 (:x (move "F" rover))))
       (is (= 2 (:x (move "FF" rover))))
       (is (= 3 (:x (move "FFF" rover))))))
 
-  (testing "move backward"
+  (testing "move backwards North"
     (let [rover (initialize-rover "3,0,N")]
       (is (= 2 (:x (move "B" rover))))
       (is (= 1 (:x (move "BB" rover))))
-      (is (= 0 (:x (move "BBB" rover)))))))
+      (is (= 0 (:x (move "BBB" rover))))))
+
+  (testing "move forwards South"
+    (let [rover (initialize-rover "3,0,S")]
+      (is (= 2 (:x (move "F" rover))))
+      (is (= 1 (:x (move "FF" rover))))
+      (is (= 0 (:x (move "FFF" rover))))))
+
+  (testing "move backwards South"
+    (let [rover (initialize-rover "0,0,S")]
+      (is (= 1 (:x (move "B" rover))))
+      (is (= 2 (:x (move "BB" rover))))
+      (is (= 3 (:x (move "BBB" rover)))))))

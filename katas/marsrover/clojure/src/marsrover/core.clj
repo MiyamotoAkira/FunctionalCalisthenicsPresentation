@@ -44,10 +44,14 @@
   (reduce #((select-turn %2) %1) rover turns))
 
 (defn move-forwards [rover]
-  (assoc rover :x (+ (:x rover) 1)))
+  (condp = (:direction rover)
+    :N (assoc rover :x (+ (:x rover) 1))
+    :S (assoc rover :x (- (:x rover) 1))))
 
 (defn move-backwards [rover]
-  (assoc rover :x (- (:x rover) 1)))
+  (condp = (:direction rover)
+    :N (assoc rover :x (- (:x rover) 1))
+    :S (assoc rover :x (+ (:x rover) 1))))
 
 (defn select-movement [movement]
   (condp = movement
