@@ -29,3 +29,16 @@
       (is (= :S (:direction (turn "LL" rover))))
       (is (= :E (:direction (turn "LLL" rover))))
       (is (= :N (:direction (turn "LLLL" rover)))))))
+
+(deftest mars-moving
+  (testing "move forward"
+    (let [rover (initialize-rover "0,0,N")]
+      (is (= 1 (:x (move "F" rover))))
+      (is (= 2 (:x (move "FF" rover))))
+      (is (= 3 (:x (move "FFF" rover))))))
+
+  (testing "move backward"
+    (let [rover (initialize-rover "3,0,N")]
+      (is (= 2 (:x (move "B" rover))))
+      (is (= 1 (:x (move "BB" rover))))
+      (is (= 0 (:x (move "BBB" rover)))))))
