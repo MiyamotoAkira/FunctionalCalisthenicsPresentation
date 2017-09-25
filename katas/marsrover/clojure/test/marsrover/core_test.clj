@@ -53,4 +53,28 @@
     (let [rover (initialize-rover "0,0,S")]
       (is (= 1 (:x (move "B" rover))))
       (is (= 2 (:x (move "BB" rover))))
-      (is (= 3 (:x (move "BBB" rover)))))))
+      (is (= 3 (:x (move "BBB" rover))))))
+
+  (testing "move forwards East"
+    (let [rover (initialize-rover "0,0,E")]
+      (is (= 1 (:y (move "F" rover))))
+      (is (= 2 (:y (move "FF" rover))))
+      (is (= 3 (:y (move "FFF" rover))))))
+
+  (testing "move backwards East"
+    (let [rover (initialize-rover "0,3,E")]
+      (is (= 2 (:y (move "B" rover))))
+      (is (= 1 (:y (move "BB" rover))))
+      (is (= 0 (:y (move "BBB" rover))))))
+
+  (testing "move forwards West"
+    (let [rover (initialize-rover "0,3,W")]
+      (is (= 2 (:y (move "F" rover))))
+      (is (= 1 (:y (move "FF" rover))))
+      (is (= 0 (:y (move "FFF" rover))))))
+
+  (testing "move backwards West"
+    (let [rover (initialize-rover "0,0,W")]
+      (is (= 1 (:y (move "B" rover))))
+      (is (= 2 (:y (move "BB" rover))))
+      (is (= 3 (:y (move "BBB" rover)))))))

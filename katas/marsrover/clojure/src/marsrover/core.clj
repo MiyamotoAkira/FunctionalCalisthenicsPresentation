@@ -46,12 +46,16 @@
 (defn move-forwards [rover]
   (condp = (:direction rover)
     :N (assoc rover :x (+ (:x rover) 1))
-    :S (assoc rover :x (- (:x rover) 1))))
+    :S (assoc rover :x (- (:x rover) 1))
+    :E (assoc rover :y (+ (:y rover) 1))
+    :W (assoc rover :y (- (:y rover) 1))))
 
 (defn move-backwards [rover]
   (condp = (:direction rover)
     :N (assoc rover :x (- (:x rover) 1))
-    :S (assoc rover :x (+ (:x rover) 1))))
+    :S (assoc rover :x (+ (:x rover) 1))
+    :E (assoc rover :y (- (:y rover) 1))
+    :W (assoc rover :y (+ (:y rover) 1))))
 
 (defn select-movement [movement]
   (condp = movement
