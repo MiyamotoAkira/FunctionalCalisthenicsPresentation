@@ -77,4 +77,8 @@
     (let [rover (initialize-rover "0,0,W")]
       (is (= 1 (:y (move "B" rover))))
       (is (= 2 (:y (move "BB" rover))))
-      (is (= 3 (:y (move "BBB" rover)))))))
+      (is (= 3 (:y (move "BBB" rover))))))
+
+  (testing "Move wrapping North movement on grid limit"
+    (let [rover (initialize-rover "10,0,N,10,10")]
+      (is (= 0 (:x (move "F" rover)))))))

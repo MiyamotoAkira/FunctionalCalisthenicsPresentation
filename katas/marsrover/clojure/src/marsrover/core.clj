@@ -15,10 +15,10 @@
     :else (directions input)))
 
 (defn zip-rover [data]
-  (zipmap [:x :y :direction] data))
+  (zipmap [:x :y :direction :grid-x-size :grid-y-size] data))
 
 (defn parse-input [input]
-  (map #(parse-input-element  %) input))
+  (map #(parse-input-element %) input))
 
 (defn initialize-rover
   "Initializes a rover map"
@@ -62,5 +62,14 @@
     \F move-forwards
     \B move-backwards))
 
+(defn wrap-NS-movement [rover]
+  (if (> (:x rover) (:grid-x-size rover))
+    (assoc rover :x (- (:x rover) (:grid-x-size rover) 1))
+    rover))
+
+(defn wrap-movement [rover]
+  (-> rover
+      (wrap-NS-movement)))
+
 (defn move [movement rover]
-  (reduce #((select-movement %2) %1) rover movement))
+  (reduce #(wrap-movement ((select-movement %2) %1)) rover movement))
