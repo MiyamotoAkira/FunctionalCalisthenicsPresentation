@@ -11,25 +11,19 @@
       (is (= 6 (:y-limit world)))
       (is (= "standard-coordinates" (:directions world)))))
 
-  (testing "Put rover in world"
+  (testing "Put rover in world at 0,0,N"
     (let [rover (initialize-rover)
           world (place-rover-in-world world rover 0 0 :N)]
       (is (= 0 (:x (rover-position world))))
       (is (= 0 (:y (rover-position world))))
-      (is (= :N (:direction (rover-position world)))))))
+      (is (= :N (:direction (rover-position world))))))
 
-(deftest mars-rover-setup
-  (testing "set position of the mars rover to 0,0,N"
-    (let [rover  (initialize-rover "0,0,N")]
-      (is (= 0 (:x rover)))
-      (is (= 0 (:y rover)))
-      (is (= :N (:direction rover)))))
-
-  (testing "set position of the mars rover to 1,2,E"
-    (let [rover  (initialize-rover "1,2,E")]
-      (is (= 1 (:x rover)))
-      (is (= 2 (:y rover)))
-      (is (= :E (:direction rover))))))
+  (testing "Put rover in world at 1,2,E"
+    (let [rover (initialize-rover)
+          world (place-rover-in-world world rover 1 2 :E)]
+      (is (= 1 (:x (rover-position world))))
+      (is (= 2 (:y (rover-position world))))
+      (is (= :E (:direction (rover-position world)))))))
 
 (deftest mars-rover-rotating
   (testing "turn right"
