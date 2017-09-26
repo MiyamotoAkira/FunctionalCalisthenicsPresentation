@@ -35,7 +35,7 @@
       (is (= :N (:direction (rover-position (turn rover "RRRR")))))))
   
   (testing "turn left"
-    (let [rover (initialize-rover "0,0,N")
+    (let [rover (initialize-rover)
           rover (place-rover-in-world rover world 0 0 :N)]
       (is (= :W (:direction (rover-position (turn rover "L")))))
       (is (= :S (:direction (rover-position (turn rover "LL")))))
@@ -44,49 +44,57 @@
 
 (deftest mars-moving
   (testing "move forwards North"
-    (let [rover (initialize-rover "0,0,N")]
-      (is (= 1 (:x (move "F" rover))))
-      (is (= 2 (:x (move "FF" rover))))
-      (is (= 3 (:x (move "FFF" rover))))))
+    (let [rover (initialize-rover)
+          rover (place-rover-in-world rover world 0 0 :N)]
+      (is (= 1 (:x (move rover "F"))))
+      (is (= 2 (:x (move rover "FF"))))
+      (is (= 3 (:x (move rover "FFF"))))))
 
   (testing "move backwards North"
-    (let [rover (initialize-rover "3,0,N")]
-      (is (= 2 (:x (move "B" rover))))
-      (is (= 1 (:x (move "BB" rover))))
-      (is (= 0 (:x (move "BBB" rover))))))
+    (let [rover (initialize-rover)
+          rover (place-rover-in-world rover world 3 0 :N)]
+      (is (= 2 (:x (move rover "B"))))
+      (is (= 1 (:x (move rover "BB"))))
+      (is (= 0 (:x (move rover "BBB"))))))
 
   (testing "move forwards South"
-    (let [rover (initialize-rover "3,0,S")]
-      (is (= 2 (:x (move "F" rover))))
-      (is (= 1 (:x (move "FF" rover))))
-      (is (= 0 (:x (move "FFF" rover))))))
+    (let [rover (initialize-rover)
+          rover (place-rover-in-world rover world 3 0 :S)]
+      (is (= 2 (:x (move rover "F"))))
+      (is (= 1 (:x (move rover "FF"))))
+      (is (= 0 (:x (move rover "FFF"))))))
 
   (testing "move backwards South"
-    (let [rover (initialize-rover "0,0,S")]
-      (is (= 1 (:x (move "B" rover))))
-      (is (= 2 (:x (move "BB" rover))))
-      (is (= 3 (:x (move "BBB" rover))))))
+    (let [rover (initialize-rover)
+          rover (place-rover-in-world rover world 0 0 :S)]
+      (is (= 1 (:x (move rover "B"))))
+      (is (= 2 (:x (move rover "BB"))))
+      (is (= 3 (:x (move rover "BBB"))))))
 
   (testing "move forwards East"
-    (let [rover (initialize-rover "0,0,E")]
-      (is (= 1 (:y (move "F" rover))))
-      (is (= 2 (:y (move "FF" rover))))
-      (is (= 3 (:y (move "FFF" rover))))))
+    (let [rover (initialize-rover)
+          rover (place-rover-in-world rover world 0 0 :E)]
+      (is (= 1 (:y (move rover "F"))))
+      (is (= 2 (:y (move rover "FF"))))
+      (is (= 3 (:y (move rover "FFF"))))))
 
   (testing "move backwards East"
-    (let [rover (initialize-rover "0,3,E")]
-      (is (= 2 (:y (move "B" rover))))
-      (is (= 1 (:y (move "BB" rover))))
-      (is (= 0 (:y (move "BBB" rover))))))
+    (let [rover (initialize-rover)
+          rover (place-rover-in-world rover world 0 3 :E)]
+      (is (= 2 (:y (move rover "B"))))
+      (is (= 1 (:y (move rover "BB"))))
+      (is (= 0 (:y (move rover "BBB"))))))
 
   (testing "move forwards West"
-    (let [rover (initialize-rover "0,3,W")]
-      (is (= 2 (:y (move "F" rover))))
-      (is (= 1 (:y (move "FF" rover))))
-      (is (= 0 (:y (move "FFF" rover))))))
+    (let [rover (initialize-rover)
+          rover (place-rover-in-world rover world 0 3 :W)]
+      (is (= 2 (:y (move rover "F"))))
+      (is (= 1 (:y (move rover "FF"))))
+      (is (= 0 (:y (move rover "FFF"))))))
 
   (testing "move backwards West"
-    (let [rover (initialize-rover "0,0,W")]
-      (is (= 1 (:y (move "B" rover))))
-      (is (= 2 (:y (move "BB" rover))))
-      (is (= 3 (:y (move "BBB" rover)))))))
+    (let [rover (initialize-rover)
+          rover (place-rover-in-world rover world 0 0 :W)]
+      (is (= 1 (:y (move rover "B"))))
+      (is (= 2 (:y (move rover "BB"))))
+      (is (= 3 (:y (move rover "BBB")))))))

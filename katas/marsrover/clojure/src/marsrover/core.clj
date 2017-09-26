@@ -100,8 +100,8 @@ The coordinate system has to be a 2D environment."
   (-> rover
       (wrap-NS-movement)))
 
-(defn move [movement rover]
-  (reduce #((select-movement %2) %1) rover movement))
+(defn move [rover movement]
+  (reduce #((select-movement %2) %1) (:rover-in-world rover) movement))
 
 (defn place-rover-in-world [rover world x y direction]
   (assoc rover :rover-in-world {:world world :x x :y y :direction direction}))
