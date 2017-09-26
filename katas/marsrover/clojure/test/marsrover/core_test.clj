@@ -27,11 +27,12 @@
 
 (deftest mars-rover-rotating
   (testing "turn right"
-    (let [rover (initialize-rover "0,0,N")]
-      (is (= :E (:direction (turn "R" rover))))
-      (is (= :S (:direction (turn "RR" rover))))
-      (is (= :W (:direction (turn "RRR" rover))))
-      (is (= :N (:direction (turn "RRRR" rover))))))
+    (let [rover (initialize-rover)
+          world (place-rover-in-world world rover 0 0 :N)]
+      (is (= :E (:direction (rover-position (turn-rover "R" world)) )))
+      (is (= :S (:direction (rover-position (turn-rover "RR" world)))))
+      (is (= :W (:direction (rover-position (turn-rover "RRR" world)))))
+      (is (= :N (:direction (rover-position (turn-rover "RRRR" world)))))))
   
   (testing "turn left"
     (let [rover (initialize-rover "0,0,N")]
