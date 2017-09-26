@@ -69,10 +69,7 @@ The coordinate system has to be a 2D environment."
     \R turn-right
     \L turn-left))
 
-(defn turn [turns rover]
-  (reduce #((select-turn %2) %1) rover turns))
-
-(defn turn-rover [rover turns]
+(defn turn [rover turns]
   (assoc rover :rover-in-world (reduce #((select-turn %2) %1) (:rover-in-world rover) turns)))
 
 (defn move-forwards [rover]

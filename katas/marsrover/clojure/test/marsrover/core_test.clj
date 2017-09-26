@@ -29,18 +29,18 @@
   (testing "turn right"
     (let [rover (initialize-rover)
           rover (place-rover-in-world rover world 0 0 :N)]
-      (is (= :E (:direction (rover-position (turn-rover rover "R")))))
-      (is (= :S (:direction (rover-position (turn-rover rover "RR")))))
-      (is (= :W (:direction (rover-position (turn-rover rover "RRR")))))
-      (is (= :N (:direction (rover-position (turn-rover rover "RRRR")))))))
+      (is (= :E (:direction (rover-position (turn rover "R")))))
+      (is (= :S (:direction (rover-position (turn rover "RR")))))
+      (is (= :W (:direction (rover-position (turn rover "RRR")))))
+      (is (= :N (:direction (rover-position (turn rover "RRRR")))))))
   
   (testing "turn left"
     (let [rover (initialize-rover "0,0,N")
           rover (place-rover-in-world rover world 0 0 :N)]
-      (is (= :W (:direction (rover-position (turn-rover rover "L")))))
-      (is (= :S (:direction (rover-position (turn-rover rover "LL")))))
-      (is (= :E (:direction (rover-position (turn-rover rover "LLL")))))
-      (is (= :N (:direction (rover-position (turn-rover rover "LLLL"))))))))
+      (is (= :W (:direction (rover-position (turn rover "L")))))
+      (is (= :S (:direction (rover-position (turn rover "LL")))))
+      (is (= :E (:direction (rover-position (turn rover "LLL")))))
+      (is (= :N (:direction (rover-position (turn rover "LLLL"))))))))
 
 (deftest mars-moving
   (testing "move forwards North"
