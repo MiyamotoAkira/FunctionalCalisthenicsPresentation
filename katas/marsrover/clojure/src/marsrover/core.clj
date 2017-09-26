@@ -27,13 +27,16 @@
   (map #(parse-input-element %) input))
 
 (defn initialize-rover
-  "Initializes a rover map"
-  [initialization]
+  ([]
+   "Initializes a rover for use on a world"
+   {})
 
-  (-> initialization
-      (str/split #",")
-      (parse-input)
-      (zip-rover)))
+  ([initialization]
+   "Initializes an independent rover map"
+   (-> initialization
+       (str/split #",")
+       (parse-input)
+       (zip-rover))))
 
 (defn parse-coordinate-element [input]
   (cond
@@ -99,3 +102,9 @@ The coordinate system has to be a 2D environment."
 
 (defn move [movement rover]
   (reduce #((select-movement %2) %1) rover movement))
+
+(defn place-rover-in-world [world rover x y direction]
+  (assoc world :rover-in-world {:rover rover :x x :y y :direction direction}))
+
+(defn rover-position [world]
+  (:rover-in-world world))
