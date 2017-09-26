@@ -2,6 +2,15 @@
   (:require [clojure.test :refer :all]
             [marsrover.core :refer :all]))
 
+(def world (initialize-coordinate-system "10,10,standard-coordinates"))
+
+(deftest world-setup
+  (testing "set initial size and coordinate system"
+    (let [world (initialize-coordinate-system "5,6,standard-coordinates")]
+      (is (= 5 (:x-limit world)))
+      (is (= 6 (:y-limit world)))
+      (is (= "standard-coordinates" (:directions world))))))
+
 (deftest mars-rover-setup
   (testing "set position of the mars rover to 0,0,N"
     (let [rover  (initialize-rover "0,0,N")]
@@ -80,5 +89,5 @@
       (is (= 3 (:y (move "BBB" rover))))))
 
   (testing "Move wrapping North movement on grid limit"
-    (let [rover (initialize-rover "10,0,N,10,10")]
+    (let [rover (initialize-rover "10,0,N")]
       (is (= 0 (:x (move "F" rover)))))))

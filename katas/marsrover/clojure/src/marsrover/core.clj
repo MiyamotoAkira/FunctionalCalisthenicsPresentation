@@ -1,7 +1,7 @@
 (ns marsrover.core
   (:require [clojure.string :as str]) )
 
-(def directions {"N" :N "E" :E "S" :S "W" :W})
+(def directions-parsing {"N" :N "E" :E "S" :S "W" :W})
 
 (def directions-literals #{"N" "E" "S" "W"})
 
@@ -9,13 +9,19 @@
 
 (def next-turn-left {:N :W :W :S :S :E :E :N})
 
+(def standard-coordinates
+  {:directons-parsing directions-parsing
+   :directions-literals directions-literals
+   :turn-right next-turn-right
+   :turn-left next-turn-left})
+
 (defn parse-input-element [input]
   (cond
     (nil? (directions-literals input)) (Integer/parseInt input)
-    :else (directions input)))
+    :else (directions-parsing input)))
 
 (defn zip-rover [data]
-  (zipmap [:x :y :direction :grid-x-size :grid-y-size] data))
+  (zipmap [:x :y :direction] data))
 
 (defn parse-input [input]
   (map #(parse-input-element %) input))
@@ -28,6 +34,26 @@
       (str/split #",")
       (parse-input)
       (zip-rover)))
+
+(defn parse-coordinate-element [input]
+  (cond
+    (re-find #"[^0-9]" input) input
+    :else (Integer/parseInt input)))
+
+(defn parse-coordinate-system-input [input]
+  (map #(parse-coordinate-element %) input))
+
+(defn zip-coordinate-system [data]
+  (zipmap [:x-limit :y-limit :directions] data))
+
+(defn initialize-coordinate-system
+  [initialization]
+  "Creates a new coordinate system with limits and directions.
+The coordinate system has to be a 2D environment."
+  (-> initialization
+      (str/split #",")
+      (parse-coordinate-system-input)
+      (zip-coordinate-system)))
 
 (defn turn-right [rover]
   (assoc rover :direction ((:direction rover) next-turn-right)))
@@ -72,4 +98,4 @@
       (wrap-NS-movement)))
 
 (defn move [movement rover]
-  (reduce #(wrap-movement ((select-movement %2) %1)) rover movement))
+  (reduce #((select-movement %2) %1) rover movement))
