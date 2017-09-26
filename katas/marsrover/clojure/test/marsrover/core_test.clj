@@ -13,26 +13,26 @@
 
   (testing "Put rover in world at 0,0,N"
     (let [rover (initialize-rover)
-          world (place-rover-in-world world rover 0 0 :N)]
-      (is (= 0 (:x (rover-position world))))
-      (is (= 0 (:y (rover-position world))))
-      (is (= :N (:direction (rover-position world))))))
+          rover (place-rover-in-world rover world 0 0 :N)]
+      (is (= 0 (:x (rover-position rover))))
+      (is (= 0 (:y (rover-position rover))))
+      (is (= :N (:direction (rover-position rover))))))
 
   (testing "Put rover in world at 1,2,E"
     (let [rover (initialize-rover)
-          world (place-rover-in-world world rover 1 2 :E)]
-      (is (= 1 (:x (rover-position world))))
-      (is (= 2 (:y (rover-position world))))
-      (is (= :E (:direction (rover-position world)))))))
+          rover (place-rover-in-world rover world 1 2 :E)]
+      (is (= 1 (:x (rover-position rover))))
+      (is (= 2 (:y (rover-position rover))))
+      (is (= :E (:direction (rover-position rover)))))))
 
 (deftest mars-rover-rotating
   (testing "turn right"
     (let [rover (initialize-rover)
-          world (place-rover-in-world world rover 0 0 :N)]
-      (is (= :E (:direction (rover-position (turn-rover "R" world)) )))
-      (is (= :S (:direction (rover-position (turn-rover "RR" world)))))
-      (is (= :W (:direction (rover-position (turn-rover "RRR" world)))))
-      (is (= :N (:direction (rover-position (turn-rover "RRRR" world)))))))
+          rover (place-rover-in-world rover world 0 0 :N)]
+      (is (= :E (:direction (rover-position (turn-rover rover "R")))))
+      (is (= :S (:direction (rover-position (turn-rover rover "RR")))))
+      (is (= :W (:direction (rover-position (turn-rover rover "RRR")))))
+      (is (= :N (:direction (rover-position (turn-rover rover "RRRR")))))))
   
   (testing "turn left"
     (let [rover (initialize-rover "0,0,N")]

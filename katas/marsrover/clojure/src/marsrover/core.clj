@@ -72,8 +72,8 @@ The coordinate system has to be a 2D environment."
 (defn turn [turns rover]
   (reduce #((select-turn %2) %1) rover turns))
 
-(defn turn-rover [turns world]
-  (assoc world :rover-in-world (reduce #((select-turn %2) %1) (:rover-in-world world) turns)))
+(defn turn-rover [rover turns]
+  (assoc rover :rover-in-world (reduce #((select-turn %2) %1) (:rover-in-world rover) turns)))
 
 (defn move-forwards [rover]
   (condp = (:direction rover)
@@ -106,8 +106,8 @@ The coordinate system has to be a 2D environment."
 (defn move [movement rover]
   (reduce #((select-movement %2) %1) rover movement))
 
-(defn place-rover-in-world [world rover x y direction]
-  (assoc world :rover-in-world {:rover rover :x x :y y :direction direction}))
+(defn place-rover-in-world [rover world x y direction]
+  (assoc rover :rover-in-world {:world world :x x :y y :direction direction}))
 
-(defn rover-position [world]
-  (:rover-in-world world))
+(defn rover-position [rover]
+  (:rover-in-world rover))
