@@ -29,14 +29,7 @@
 (defn initialize-rover
   ([]
    "Initializes a rover for use on a world"
-   {})
-
-  ([initialization]
-   "Initializes an independent rover map"
-   (-> initialization
-       (str/split #",")
-       (parse-input)
-       (zip-rover))))
+   {:speed 1}))
 
 (defn parse-coordinate-element [input]
   (cond
@@ -72,19 +65,19 @@ The coordinate system has to be a 2D environment."
 (defn turn [rover turns]
   (assoc rover :rover-in-world (reduce #((select-turn %2) %1) (:rover-in-world rover) turns)))
 
-(defn move-forwards [rover]
-  (condp = (:direction rover)
-    :N (assoc rover :x (+ (:x rover) 1))
-    :S (assoc rover :x (- (:x rover) 1))
-    :E (assoc rover :y (+ (:y rover) 1))
-    :W (assoc rover :y (- (:y rover) 1))))
+(defn move-forwards [speed rover-in-world]
+  (condp = (:direction rover-in-world)
+    :N (assoc rover-in-world :x (+ (:x rover-in-world) speed))
+    :S (assoc rover-in-world :x (- (:x rover-in-world) speed))
+    :E (assoc rover-in-world :y (+ (:y rover-in-world) speed))
+    :W (assoc rover-in-world :y (- (:y rover-in-world) speed))))
 
-(defn move-backwards [rover]
-  (condp = (:direction rover)
-    :N (assoc rover :x (- (:x rover) 1))
-    :S (assoc rover :x (+ (:x rover) 1))
-    :E (assoc rover :y (- (:y rover) 1))
-    :W (assoc rover :y (+ (:y rover) 1))))
+(defn move-backwards [speed rover-in-world]
+  (condp = (:direction rover-in-world)
+    :N (assoc rover-in-world :x (- (:x rover-in-world) speed))
+    :S (assoc rover-in-world :x (+ (:x rover-in-world) speed))
+    :E (assoc rover-in-world :y (- (:y rover-in-world) speed))
+    :W (assoc rover-in-world :y (+ (:y rover-in-world) speed))))
 
 (defn select-movement [movement]
   (condp = movement
@@ -101,7 +94,7 @@ The coordinate system has to be a 2D environment."
       (wrap-NS-movement)))
 
 (defn move [rover movement]
-  (reduce #((select-movement %2) %1) (:rover-in-world rover) movement))
+  (reduce #((select-movement %2) (:speed rover) %1) (:rover-in-world rover) movement))
 
 (defn place-rover-in-world [rover world x y direction]
   (assoc rover :rover-in-world {:world world :x x :y y :direction direction}))
