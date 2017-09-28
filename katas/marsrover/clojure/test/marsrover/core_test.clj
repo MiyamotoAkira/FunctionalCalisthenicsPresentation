@@ -9,7 +9,7 @@
     (let [world (initialize-coordinate-system "5,6,standard-coordinates")]
       (is (= 5 (:x-limit world)))
       (is (= 6 (:y-limit world)))
-      (is (= "standard-coordinates" (:directions world))))))
+      (is (= standard-coordinates @(:directions world))))))
 
 (deftest rover-in-world
   (testing "Put rover in world at 0,0,N"

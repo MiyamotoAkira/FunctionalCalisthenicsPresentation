@@ -10,7 +10,7 @@
 (def next-turn-left {:N :W :W :S :S :E :E :N})
 
 (def standard-coordinates
-  {:directons-parsing directions-parsing
+  {:directions-parsing directions-parsing
    :directions-literals directions-literals
    :turn-right next-turn-right
    :turn-left next-turn-left})
@@ -33,7 +33,7 @@
 
 (defn parse-coordinate-element [input]
   (cond
-    (re-find #"[^0-9]" input) input
+    (re-find #"[^0-9]" input) (resolve (symbol input))
     :else (Integer/parseInt input)))
 
 (defn parse-coordinate-system-input [input]
