@@ -9,11 +9,18 @@
 
 (def next-turn-left {:N :W :W :S :S :E :E :N})
 
+(def in-world-movement
+  {:N {:axis :x :forward + :backward -}
+   :S {:axis :x :forward - :backward +}
+   :E {:axis :y :forward + :backward -}
+   :W {:axis :y :forward - :backward +}})
+
 (def standard-coordinates
   {:directions-parsing directions-parsing
    :directions-literals directions-literals
    :turn-right next-turn-right
-   :turn-left next-turn-left})
+   :turn-left next-turn-left
+   :movement in-world-movement})
 
 (defn parse-input-element [input]
   (cond
@@ -33,7 +40,7 @@
 
 (defn parse-coordinate-element [input]
   (cond
-    (re-find #"[^0-9]" input) (resolve (symbol input))
+    (re-find #"[^0-9]" input) (resolve (symbol "marsrover.core" input))
     :else (Integer/parseInt input)))
 
 (defn parse-coordinate-system-input [input]
@@ -77,24 +84,13 @@ The coordinate system has to be a 2D environment."
 (defn turn [rover turns]
   (assoc rover :rover-in-world (reduce #((select-turn %2) %1) (:rover-in-world rover) turns)))
 
-(defn move-forwards [speed rover-in-world]
-  (condp = (:direction rover-in-world)
-    :N (assoc rover-in-world :x (+ (:x rover-in-world) speed))
-    :S (assoc rover-in-world :x (- (:x rover-in-world) speed))
-    :E (assoc rover-in-world :y (+ (:y rover-in-world) speed))
-    :W (assoc rover-in-world :y (- (:y rover-in-world) speed))))
+(defn move-rover-in-world [rover-in-world axis operation speed]
+  (assoc rover-in-world axis (operation (axis rover-in-world) speed)))
 
-(defn move-backwards [speed rover-in-world]
-  (condp = (:direction rover-in-world)
-    :N (assoc rover-in-world :x (- (:x rover-in-world) speed))
-    :S (assoc rover-in-world :x (+ (:x rover-in-world) speed))
-    :E (assoc rover-in-world :y (- (:y rover-in-world) speed))
-    :W (assoc rover-in-world :y (+ (:y rover-in-world) speed))))
-
-(defn select-movement [movement]
+(defn select-operation [movement]
   (condp = movement
-    \F move-forwards
-    \B move-backwards))
+    \F :forward
+    \B :backward))
 
 (defn wrap-NS-movement [rover]
   (if (> (:x rover) (:grid-x-size rover))
@@ -106,7 +102,13 @@ The coordinate system has to be a 2D environment."
       (wrap-NS-movement)))
 
 (defn move [rover movement]
-  (reduce #((select-movement %2) (:speed rover) %1) (:rover-in-world rover) movement))
+  (reduce #(move-rover-in-world
+            %1
+            (:axis ((:direction (:rover-in-world rover)) (:movement @(:directions (:world (:rover-in-world rover))))))
+            ((select-operation %2) ((:direction (:rover-in-world rover)) (:movement @(:directions (:world (:rover-in-world rover))))))
+            (:speed rover))
+          (:rover-in-world rover)
+          movement))
 
 (defn place-rover-in-world [rover world x y direction]
   (assoc rover :rover-in-world {:world world :x x :y y :direction direction}))
