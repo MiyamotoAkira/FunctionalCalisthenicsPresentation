@@ -51,11 +51,23 @@ The coordinate system has to be a 2D environment."
       (parse-coordinate-system-input)
       (zip-coordinate-system)))
 
-(defn turn-right [rover]
-  (assoc rover :direction ((:direction rover) next-turn-right)))
+(defn turn-right-options [rover-in-world]
+  (:turn-right @(:directions (:world rover-in-world))))
 
-(defn turn-left [rover]
-  (assoc rover :direction ((:direction rover) next-turn-left)))
+(defn turn-left-options [rover-in-world]
+  (:turn-left @(:directions (:world rover-in-world))))
+
+(defn direction-on-right [rover-in-world]
+  ((:direction rover-in-world) (turn-right-options rover-in-world)))
+
+(defn direction-on-left [rover-in-world]
+  ((:direction rover-in-world) (turn-left-options rover-in-world)))
+
+(defn turn-right [rover-in-world]
+  (assoc rover-in-world :direction (direction-on-right rover-in-world)))
+
+(defn turn-left [rover-in-world]
+  (assoc rover-in-world :direction (direction-on-left rover-in-world)))
 
 (defn select-turn [turn]
   (condp = turn
