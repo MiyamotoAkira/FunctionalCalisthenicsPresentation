@@ -2,6 +2,9 @@
   (:require [clojure.test :refer :all]
             [marsrover.core :refer :all]))
 
+(defn test-helper [actual expected operation]
+  (is (operation expected actual)))
+
 (def world (initialize-coordinate-system "10,10,standard-coordinates"))
 
 (defn get-rover [x y direction]
@@ -26,22 +29,25 @@
     (is (= 2 (:y (rover-position (get-rover 1 2 :E)))))
     (is (= :E (:direction (rover-position (get-rover 1 2 :E)))))))
 
+(defn test-turn [x y direction movement expected]
+  (-> (get-rover x y direction)
+      (turn movement)
+      (rover-position)
+      (:direction)
+      (test-helper expected =)))
+
 (deftest mars-rover-rotating
   (testing "turn right"
-    (is (= :E (:direction (rover-position (turn (get-rover 0 0 :N) "R")))))
-    (is (= :S (:direction (rover-position (turn (get-rover 0 0 :N) "RR")))))
-    (is (= :W (:direction (rover-position (turn (get-rover 0 0 :N) "RRR")))))
-    (is (= :N (:direction (rover-position (turn (get-rover 0 0 :N) "RRRR"))))))
+    (test-turn 0 0 :N "R" :E)
+    (test-turn 0 0 :N "RR" :S)
+    (test-turn 0 0 :N "RRR" :W)
+    (test-turn 0 0 :N "RRRR" :N))
   
   (testing "turn left"
     (is (= :W (:direction (rover-position (turn (get-rover 0 0 :N) "L")))))
     (is (= :S (:direction (rover-position (turn (get-rover 0 0 :N) "LL")))))
     (is (= :E (:direction (rover-position (turn (get-rover 0 0 :N) "LLL")))))
     (is (= :N (:direction (rover-position (turn (get-rover 0 0 :N) "LLLL")))))))
-
-
-(defn test-helper [actual expected operation]
-  (is (operation expected actual)))
 
 (defn test-move [x y direction movement expected]
   (-> (get-rover x y direction)
