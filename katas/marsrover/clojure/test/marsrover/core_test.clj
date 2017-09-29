@@ -39,11 +39,21 @@
     (is (= :E (:direction (rover-position (turn (get-rover 0 0 :N) "LLL")))))
     (is (= :N (:direction (rover-position (turn (get-rover 0 0 :N) "LLLL")))))))
 
+
+(defn testhelper [actual expected operation]
+  (is (operation expected actual)))
+
+(defn testmove [x y direction movement expected]
+  (-> (get-rover x y direction)
+      (move movement)
+      (:x)
+      (testhelper expected =)))
+
 (deftest mars-moving
   (testing "move forwards North"
-    (is (= 1 (:x (move (get-rover 0 0 :N) "F"))))
-    (is (= 2 (:x (move (get-rover 0 0 :N) "FF"))))
-    (is (= 3 (:x (move (get-rover 0 0 :N) "FFF")))))
+    (testmove 0 0 :N "F" 1)
+    (testmove 0 0 :N "FF" 2)
+    (testmove 0 0 :N "FFF" 3))
 
   (testing "move backwards North"
     (is (= 2 (:x (move (get-rover 3 0 :N) "B"))))

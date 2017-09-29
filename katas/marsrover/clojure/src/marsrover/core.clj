@@ -101,11 +101,21 @@ The coordinate system has to be a 2D environment."
   (-> rover
       (wrap-NS-movement)))
 
+(defn get-coordinate-map [world]
+  @(:directions world))
+
+(defn move-options-current-direction [rover]
+  ((:direction (:rover-in-world rover)) (-> rover
+                                            (:rover-in-world)
+                                            (:world)
+                                            (get-coordinate-map)
+                                            (:movement))))
+
 (defn move [rover movement]
   (reduce #(move-rover-in-world
             %1
-            (:axis ((:direction (:rover-in-world rover)) (:movement @(:directions (:world (:rover-in-world rover))))))
-            ((select-operation %2) ((:direction (:rover-in-world rover)) (:movement @(:directions (:world (:rover-in-world rover))))))
+            (:axis (move-options-current-direction rover))
+            ((select-operation %2) (move-options-current-direction rover))
             (:speed rover))
           (:rover-in-world rover)
           movement))
