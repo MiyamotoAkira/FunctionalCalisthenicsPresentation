@@ -44,10 +44,10 @@
     (test-turn 0 0 :N "RRRR" :N))
   
   (testing "turn left"
-    (is (= :W (:direction (rover-position (turn (get-rover 0 0 :N) "L")))))
-    (is (= :S (:direction (rover-position (turn (get-rover 0 0 :N) "LL")))))
-    (is (= :E (:direction (rover-position (turn (get-rover 0 0 :N) "LLL")))))
-    (is (= :N (:direction (rover-position (turn (get-rover 0 0 :N) "LLLL")))))))
+    (test-turn 0 0 :N "L" :W)
+    (test-turn 0 0 :N "LL" :S)
+    (test-turn 0 0 :N "LLL" :E)
+    (test-turn 0 0 :N "LLLL" :N)))
 
 (defn extract-value [rover-in-world]
   ((:axis ((:direction rover-in-world) (:movement @(:directions (:world rover-in-world))))) rover-in-world))
@@ -70,31 +70,31 @@
     (test-move 3 0 :N "BBB" 0))
 
   (testing "move forwards South"
-    (is (= 2 (:x (move (get-rover 3 0 :S) "F"))))
-    (is (= 1 (:x (move (get-rover 3 0 :S) "FF"))))
-    (is (= 0 (:x (move (get-rover 3 0 :S) "FFF")))))
+    (test-move 3 0 :S "F" 2)
+    (test-move 3 0 :S "FF" 1)
+    (test-move 3 0 :S "FFF" 0))
 
   (testing "move backwards South"
-    (is (= 1 (:x (move (get-rover 0 0 :S) "B"))))
-    (is (= 2 (:x (move (get-rover 0 0 :S) "BB"))))
-    (is (= 3 (:x (move (get-rover 0 0 :S) "BBB")))))
+    (test-move 0 0 :S "B" 1)
+    (test-move 0 0 :S "BB" 2)
+    (test-move 0 0 :S "BBB" 3))
 
   (testing "move forwards East"
-    (is (= 1 (:y (move (get-rover 0 0 :E) "F"))))
-    (is (= 2 (:y (move (get-rover 0 0 :E) "FF"))))
-    (is (= 3 (:y (move (get-rover 0 0 :E) "FFF")))))
+    (test-move 0 0 :E "F" 1)
+    (test-move 0 0 :E "FF" 2)
+    (test-move 0 0 :E "FFF" 3))
 
   (testing "move backwards East"
-    (is (= 2 (:y (move (get-rover 0 3 :E) "B"))))
-    (is (= 1 (:y (move (get-rover 0 3 :E) "BB"))))
-    (is (= 0 (:y (move (get-rover 0 3 :E) "BBB")))))
+    (test-move 0 3 :E "B" 2)
+    (test-move 0 3 :E "BB" 1)
+    (test-move 0 3 :E "BBB" 0))
 
   (testing "move forwards West"
-    (is (= 2 (:y (move (get-rover 0 3 :W) "F"))))
-    (is (= 1 (:y (move (get-rover 0 3 :W) "FF"))))
-    (is (= 0 (:y (move (get-rover 0 3 :W) "FFF")))))
+    (test-move 0 3 :W "F" 2)
+    (test-move 0 3 :W "FF" 1)
+    (test-move 0 3 :W "FFF" 0))
 
   (testing "move backwards West"
-    (is (= 1 (:y (move (get-rover 0 0 :W) "B"))))
-    (is (= 2 (:y (move (get-rover 0 0 :W) "BB"))))
-    (is (= 3 (:y (move (get-rover 0 0 :W) "BBB"))))))
+    (test-move 0 0 :W "B" 1)
+    (test-move 0 0 :W "BB" 2)
+    (test-move 0 0 :W "BBB" 3)))
