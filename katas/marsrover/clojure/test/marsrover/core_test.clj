@@ -2,8 +2,9 @@
   (:require [clojure.test :refer :all]
             [marsrover.core :refer :all]))
 
-(defn test-helper [actual expected operation]
-  (is (operation expected actual)))
+(defmacro test-helper
+  [actual expected operation]
+  (list 'is (list operation expected actual)))
 
 (def world (initialize-coordinate-system "10,10,standard-coordinates"))
 
