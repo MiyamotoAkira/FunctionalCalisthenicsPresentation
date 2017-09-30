@@ -56,6 +56,7 @@
 (defn test-move [x y direction movement expected]
   (-> (get-rover x y direction)
       (move movement)
+      (rover-position)
       (extract-value)
       (test-helper expected =)))
 
@@ -99,3 +100,24 @@
     (test-move 0 0 :W "B" 1)
     (test-move 0 0 :W "BB" 2)
     (test-move 0 0 :W "BBB" 3)))
+
+(deftest mars-move-wrapping
+  (testing "wrap North"
+    (test-move 10 0 :N "F" 0)
+    (test-move 10 0 :N "FF" 1)
+    (test-move 9 0 :N "FFFF" 2))
+
+  (testing "wrap South"
+    (test-move 0 0 :S "F" 10)
+    (test-move 0 0 :S "FF" 9)
+    (test-move 1 0 :S "FFFF" 8))
+
+  (testing "wrap East"
+    (test-move 0 10 :E "F" 0)
+    (test-move 0 10 :E "FF" 1)
+    (test-move 0 9 :E "FFFF" 2))
+
+  (testing "wrap West"
+    (test-move 0 0 :W "F" 10)
+    (test-move 0 0 :W "FF" 9)
+    (test-move 0 1 :W "FFFF" 8)))

@@ -93,13 +93,31 @@ The coordinate system has to be a 2D environment."
     \B :backward))
 
 (defn wrap-NS-movement [rover]
-  (if (> (:x rover) (:grid-x-size rover))
-    (assoc rover :x (- (:x rover) (:grid-x-size rover) 1))
+  (if (> (:x (:rover-in-world rover)) (:x-limit (:world (:rover-in-world rover))))
+    (assoc-in rover [:rover-in-world :x] (- (:x (:rover-in-world rover)) (:x-limit (:world (:rover-in-world rover))) 1))
+    rover))
+
+(defn wrap-SN-movement [rover]
+  (if (< (:x (:rover-in-world rover)) 0)
+    (assoc-in rover [:rover-in-world :x] (+ (:x (:rover-in-world rover)) (:x-limit (:world (:rover-in-world rover))) 1))
+    rover))
+
+(defn wrap-EW-movement [rover]
+  (if (> (:y (:rover-in-world rover)) (:y-limit (:world (:rover-in-world rover))))
+    (assoc-in rover [:rover-in-world :y] (- (:y (:rover-in-world rover)) (:y-limit (:world (:rover-in-world rover))) 1))
+    rover))
+
+(defn wrap-WE-movement [rover]
+  (if (< (:y (:rover-in-world rover)) 0)
+    (assoc-in rover [:rover-in-world :y] (+ (:y (:rover-in-world rover)) (:y-limit (:world (:rover-in-world rover))) 1))
     rover))
 
 (defn wrap-movement [rover]
-  (-> rover
-      (wrap-NS-movement)))
+  (condp = (:direction (:rover-in-world rover))
+    :N (wrap-NS-movement rover)
+    :S (wrap-SN-movement rover)
+    :E (wrap-EW-movement rover)
+    :W (wrap-WE-movement rover)))
 
 (defn get-coordinate-map [world]
   @(:directions world))
@@ -112,13 +130,14 @@ The coordinate system has to be a 2D environment."
                                             (:movement))))
 
 (defn move [rover movement]
-  (reduce #(move-rover-in-world
-            %1
-            (:axis (move-options-current-direction rover))
-            ((select-operation %2) (move-options-current-direction rover))
-            (:speed rover))
-          (:rover-in-world rover)
-          movement))
+  (wrap-movement
+   (assoc rover :rover-in-world (reduce #(move-rover-in-world
+                                          %1
+                                          (:axis (move-options-current-direction rover))
+                                          ((select-operation %2) (move-options-current-direction rover))
+                                          (:speed rover))
+                                        (:rover-in-world rover)
+                                        movement))))
 
 (defn place-rover-in-world [rover world x y direction]
   (assoc rover :rover-in-world {:world world :x x :y y :direction direction}))
