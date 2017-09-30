@@ -1,7 +1,7 @@
 * Functional Calisthenics
 
-As an, mostly, OOP programmer moving into my first production code using a functional language, I found myself reverting to my way of coding on OOP. The code felt like code I would write on OOP but with the lack of classes and different syntax. The quality of the code and tests suffered because of it. And bad quality leads to maintanability issues.
+OOP habits die hard. Having trained my OOP skills through the years, I have applied unconsciously OOP techniques while writing code in functional languages. The quality of the code and test suffered because of it, leading to a very confused design and maintenance problems.
 
-On OOP there are a set of guidelines well-know by the majority SOLID, DRY, ... that help on crafting good code. And to help with the practice, Object Calisthenics were devised to force to write code such that it would follow good design. Functional Calisthenics are also a collection of rules limiting how you can do create code with the idea to improve your ability and write "proper" functional code. We will be looking at the rules, explaining why are there, and will be showing examples of code written in Clojure/Elixir/Scala/F# following those rules.
+For OOP we have designed good guidelines to produce code that is readable and maintenable, like SOLID, DRY, ... On top of it we have Object Calisthenics, for practicing the creation of good OOP Code. Functional Calisthenics have the same aim for the functional paradigm.
 
-I have done katas in four languages, multiple times, totalling more than 48 exercises, and I believe that the quality of my functional code has improved. Hopefully, this will show you why are useful.
+In this talk I will explain the rules, with examples in Clojure, Elixir, Scala, and F#, on the hope that I can show how they lead to better functional code and to entice you to try them for yourselves.
