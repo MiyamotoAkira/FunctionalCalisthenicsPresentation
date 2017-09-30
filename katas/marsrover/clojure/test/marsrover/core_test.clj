@@ -49,10 +49,13 @@
     (is (= :E (:direction (rover-position (turn (get-rover 0 0 :N) "LLL")))))
     (is (= :N (:direction (rover-position (turn (get-rover 0 0 :N) "LLLL")))))))
 
+(defn extract-value [rover-in-world]
+  ((:axis ((:direction rover-in-world) (:movement @(:directions (:world rover-in-world))))) rover-in-world))
+
 (defn test-move [x y direction movement expected]
   (-> (get-rover x y direction)
       (move movement)
-      (:x)
+      (extract-value)
       (test-helper expected =)))
 
 (deftest mars-moving
