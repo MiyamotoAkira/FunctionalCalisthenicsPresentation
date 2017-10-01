@@ -8,9 +8,15 @@
 
 (def world (initialize-coordinate-system "10,10,standard-coordinates"))
 
-(defn get-rover [x y direction]
-  (-> (initialize-rover)
-      (place-rover-in-world world x y direction)))
+(defn get-rover
+  ([x y direction]
+   "World without obstacles"
+   (-> (initialize-rover)
+       (place-rover-in-world world x y direction)))
+  ([x y direction obstacles]
+   "World with obstacles"
+   (-> (initialize-rover)
+       (place-rover-in-world (add-obstacles world obstacles) x y direction))))
 
 (deftest world-setup
   (testing "set initial size and coordinate system"
@@ -18,6 +24,16 @@
       (is (= 5 (:x-limit world)))
       (is (= 6 (:y-limit world)))
       (is (= standard-coordinates @(:directions world))))))
+
+(deftest add-obstacles-to-world
+  (testing "adding obstacles to the world"
+    (let [world (add-obstacles world [[1 0] [3 2] [6 5]])]
+      (is (not (check-obstacle world [0 0])))
+      (is (not (check-obstacle world [3 3])))
+      (is (not (check-obstacle world [4 2])))
+      (is (check-obstacle world [1 0]))
+      (is (check-obstacle world [3 2]))
+      (is (check-obstacle world [6 5])))))
 
 (deftest rover-in-world
   (testing "Put rover in world at 0,0,N"
@@ -53,12 +69,21 @@
 (defn extract-value [rover-in-world]
   ((:axis ((:direction rover-in-world) (:movement @(:directions (:world rover-in-world))))) rover-in-world))
 
-(defn test-move [x y direction movement expected]
-  (-> (get-rover x y direction)
-      (move movement)
-      (rover-position)
-      (extract-value)
-      (test-helper expected =)))
+(defn test-move
+  ([x y direction movement expected]
+   "World without obstacles"
+   (-> (get-rover x y direction)
+       (move movement)
+       (rover-position)
+       (extract-value)
+       (test-helper expected =)))
+  ([x y direction obstacles movement expected]
+   "World with obstacles"
+   (-> (get-rover x y direction obstacles)
+       (move movement)
+       (rover-position)
+       (extract-value)
+       (test-helper expected =))))
 
 (deftest mars-moving
   (testing "move forwards North"
@@ -121,3 +146,14 @@
     (test-move 0 0 :W "F" 10)
     (test-move 0 0 :W "FF" 9)
     (test-move 0 1 :W "FFFF" 8)))
+
+
+
+(deftest move-with-obstacles
+  (testing "obstacle on last movement"
+    (test-move 0 0 :N [[1,0]] "F" 0)
+    (test-move 0 0 :N [[2,0]] "FF" 1)
+    (test-move 0 0 :N [[3,0]] "FFF" 2))
+  
+  (testing "obstacle on the middle movement"
+    (test-move 0 0 :N [[2,0]] "FFFFFF" 1)))

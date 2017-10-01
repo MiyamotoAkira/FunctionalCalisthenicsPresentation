@@ -38,6 +38,12 @@
    "Initializes a rover for use on a world"
    {:speed 1}))
 
+(defn add-obstacles [world obstacles]
+  (assoc world :obstacles obstacles))
+
+(defn check-obstacle [world position]
+  (some #(and (= (first %1) (first position)) (= (second %1) (second position))) (:obstacles world)))
+
 (defn parse-coordinate-element [input]
   (cond
     (re-find #"[^0-9]" input) (resolve (symbol "marsrover.core" input))
@@ -122,22 +128,31 @@ The coordinate system has to be a 2D environment."
 (defn get-coordinate-map [world]
   @(:directions world))
 
-(defn move-options-current-direction [rover]
-  ((:direction (:rover-in-world rover)) (-> rover
-                                            (:rover-in-world)
-                                            (:world)
-                                            (get-coordinate-map)
-                                            (:movement))))
+(defn move-options-current-direction [rover-in-world]
+  ((:direction rover-in-world)
+   (-> rover-in-world
+       (:world)
+       (get-coordinate-map)
+       (:movement))))
+
+(defn calculate-new-position [rover-in-world movement speed]
+  (move-rover-in-world
+   rover-in-world
+   (:axis (move-options-current-direction rover-in-world))
+   ((select-operation movement) (move-options-current-direction rover-in-world))
+   speed))
+
+(defn select-position [new previous]
+  (cond
+    (check-obstacle (:world new) [(:x new) (:y new)]) previous
+    :else new))
 
 (defn move [rover movement]
   (wrap-movement
-   (assoc rover :rover-in-world (reduce #(move-rover-in-world
-                                          %1
-                                          (:axis (move-options-current-direction rover))
-                                          ((select-operation %2) (move-options-current-direction rover))
-                                          (:speed rover))
-                                        (:rover-in-world rover)
-                                        movement))))
+   (assoc rover :rover-in-world (reduce
+                                 #(select-position (calculate-new-position %1 %2 (:speed rover)) %1)
+                                 (:rover-in-world rover)
+                                 movement))))
 
 (defn place-rover-in-world [rover world x y direction]
   (assoc rover :rover-in-world {:world world :x x :y y :direction direction}))
