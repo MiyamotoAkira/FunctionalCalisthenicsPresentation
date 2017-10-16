@@ -1,6 +1,6 @@
 defmodule TennisTest do
   use ExUnit.Case
-  #  doctest Tennis
+  use Quixir
 
   def assert_winner(actual_winner, expected_winner) do
     assert expected_winner == actual_winner
@@ -99,28 +99,61 @@ defmodule TennisTest do
     |> assert_winner(:player2)
   end
 
+  test "Game with player on 4 and other below has a winner" do
+    ptest score: int(max: 3) do
+      Tennis.create_game(4, score)
+      |> Tennis.get_winner()
+      |> assert_winner(:player1)
+    end
+
+    ptest score: int(max: 3) do
+      Tennis.create_game(score, 4)
+      |> Tennis.get_winner()
+      |> assert_winner(:player2)
+    end
+end
 
   test "Game no player with 4 points doesn't have a winner" do
-    Tennis.create_game(3, 2)
-    |> Tennis.get_winner()
-    |> assert_winner(:none)
+    ptest p1_score: int(max: 3), p2_score: int(max: 3) do
+      Tennis.create_game(p1_score, p2_score)
+      |> Tennis.get_winner()
+      |> assert_winner(:none)
+    end
   end
 
-  test "Game with both player in 4 doesn't have a winner" do
-    Tennis.create_game(4,4)
-    |> Tennis.get_winner()
-    |> assert_winner(:none)
+  test "Game with both players same score doesn't have a winner" do
+    ptest score: int() do
+      Tennis.create_game(score, score)
+      |> Tennis.get_winner()
+      |> assert_winner(:none)
+    end
   end
 
-  test "Game with one player in 5 and other in 4 doesn't have a winner" do
-    Tennis.create_game(5,4)
-    |> Tennis.get_winner()
-    |> assert_winner(:none)
+  test "Game with one player in winning range but not 2 clear" do
+    ptest score: int(min: 5) do
+      Tennis.create_game(score, score - 1)
+      |> Tennis.get_winner()
+      |> assert_winner(:none)
+    end
+
+    ptest score: int(min: 5) do
+      Tennis.create_game(score - 1, score)
+      |> Tennis.get_winner()
+      |> assert_winner(:none)
+    end
   end
 
-  test "Game with one player in 4 and other in 5 doesn't have a winner" do
-    Tennis.create_game(4,5)
-    |> Tennis.get_winner()
-    |> assert_winner(:none)
+  test "Game with one player in winning range" do
+    ptest score: int(min: 5) do
+      Tennis.create_game(score, score - 2)
+      |> Tennis.get_winner()
+      |> assert_winner(:player1)
+    end
+
+    ptest score: int(min: 5) do
+      Tennis.create_game(score - 2, score)
+      |> Tennis.get_winner()
+      |> assert_winner(:player2)
+    end
   end
 end
