@@ -14,7 +14,12 @@ defmodule TennisTest do
     Tennis.create_game()
     |> assert_score(%{player1: 0, player2: 0})
   end
-  
+
+  test "Game setup with score" do
+    Tennis.create_game(3,4)
+    |> assert_score(%{player1: 3, player2: 4})
+  end
+
   test "Game player1 scores once" do
     Tennis.create_game()
     |> Tennis.score(:player1)
@@ -81,4 +86,5 @@ defmodule TennisTest do
     |> Tennis.get_winner()
     |> assert_winner(:player2)
   end
+
 end
