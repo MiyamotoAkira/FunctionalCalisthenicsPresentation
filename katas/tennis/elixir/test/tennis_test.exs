@@ -87,15 +87,40 @@ defmodule TennisTest do
     |> assert_winner(:player2)
   end
 
-  test "Game went ot multiple deuce and Player1 won" do
+  test "Game went to multiple deuce and Player1 won" do
     Tennis.create_game(7, 5)
     |> Tennis.get_winner()
     |> assert_winner(:player1)
   end
 
-  test "Game went ot multiple deuce and Player2 won" do
+  test "Game went to multiple deuce and Player2 won" do
     Tennis.create_game(5, 7)
     |> Tennis.get_winner()
     |> assert_winner(:player2)
+  end
+
+
+  test "Game no player with 4 points doesn't have a winner" do
+    Tennis.create_game(3, 2)
+    |> Tennis.get_winner()
+    |> assert_winner(:none)
+  end
+
+  test "Game with both player in 4 doesn't have a winner" do
+    Tennis.create_game(4,4)
+    |> Tennis.get_winner()
+    |> assert_winner(:none)
+  end
+
+  test "Game with one player in 5 and other in 4 doesn't have a winner" do
+    Tennis.create_game(5,4)
+    |> Tennis.get_winner()
+    |> assert_winner(:none)
+  end
+
+  test "Game with one player in 4 and other in 5 doesn't have a winner" do
+    Tennis.create_game(4,5)
+    |> Tennis.get_winner()
+    |> assert_winner(:none)
   end
 end

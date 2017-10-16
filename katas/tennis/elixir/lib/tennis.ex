@@ -25,7 +25,9 @@ defmodule Tennis do
   end
 
   def check_player(game, player_to_win, other_player) do
-    game[player_to_win] >= 4 and game[player_to_win] > game[other_player]
+    game[player_to_win] >= 4
+    and game[player_to_win] > game[other_player]
+    and game[player_to_win] > game[other_player] + 1
   end
 
   def get_winner(game) do
