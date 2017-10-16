@@ -21,6 +21,12 @@ defmodule TennisTest do
     |> assert_score(%{player1: 1, player2: 0})
   end
 
+  test "Game player2 scores once" do
+    Tennis.create_game()
+    |> Tennis.score(:player2)
+    |> assert_score(%{player1: 0, player2: 1})
+  end
+
   test "Game player 1 scores twice" do
     Tennis.create_game()
     |> Tennis.score(:player1)
