@@ -43,4 +43,14 @@ defmodule TennisTest do
     |> Tennis.get_winner()
     |> assert_winner(:player1)
   end
+
+  test "Game only Player 2 scores and wins" do
+    Tennis.create_game()
+    |> Tennis.score(:player2)
+    |> Tennis.score(:player2)
+    |> Tennis.score(:player2)
+    |>Tennis.score(:player2)
+    |> Tennis.get_winner()
+    |> assert_winner(:player2)
+  end
 end
