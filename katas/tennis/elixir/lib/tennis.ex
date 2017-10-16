@@ -24,19 +24,15 @@ defmodule Tennis do
     %{game | player => game[player] + 1}
   end
 
-  def check_player(game, player) do
-    game[player] >= 4
+  def check_player(game, player_to_win, other_player) do
+    game[player_to_win] >= 4 and game[player_to_win] > game[other_player]
   end
 
   def get_winner(game) do
-    if (check_player(game, :player1)) do
-      :player1
-    else
-      if (check_player(game, :player2)) do
-        :player2
-      else
-        :none
-      end
+    cond do
+      check_player(game, :player1, :player2) -> :player1
+      check_player(game, :player2, :player1) -> :player2
+      true ->  :none
     end
   end
 end

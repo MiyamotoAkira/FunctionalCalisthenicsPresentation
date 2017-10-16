@@ -87,4 +87,15 @@ defmodule TennisTest do
     |> assert_winner(:player2)
   end
 
+  test "Game went ot multiple deuce and Player1 won" do
+    Tennis.create_game(7, 5)
+    |> Tennis.get_winner()
+    |> assert_winner(:player1)
+  end
+
+  test "Game went ot multiple deuce and Player2 won" do
+    Tennis.create_game(5, 7)
+    |> Tennis.get_winner()
+    |> assert_winner(:player2)
+  end
 end
