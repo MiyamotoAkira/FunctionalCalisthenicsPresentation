@@ -39,7 +39,7 @@ defmodule TennisTest do
     |> Tennis.score(:player1)
     |> Tennis.score(:player1)
     |> Tennis.score(:player1)
-    |>Tennis.score(:player1)
+    |> Tennis.score(:player1)
     |> Tennis.get_winner()
     |> assert_winner(:player1)
   end
@@ -49,7 +49,35 @@ defmodule TennisTest do
     |> Tennis.score(:player2)
     |> Tennis.score(:player2)
     |> Tennis.score(:player2)
-    |>Tennis.score(:player2)
+    |> Tennis.score(:player2)
+    |> Tennis.get_winner()
+    |> assert_winner(:player2)
+  end
+
+  test "Game went to deuce and Player1 won" do
+    Tennis.create_game()
+    |> Tennis.score(:player2)
+    |> Tennis.score(:player2)
+    |> Tennis.score(:player2)
+    |> Tennis.score(:player1)
+    |> Tennis.score(:player1)
+    |> Tennis.score(:player1)
+    |> Tennis.score(:player1)
+    |> Tennis.score(:player1)
+    |> Tennis.get_winner()
+    |> assert_winner(:player1)
+  end
+
+  test "Game went to deuce and Player2 won" do
+    Tennis.create_game()
+    |> Tennis.score(:player2)
+    |> Tennis.score(:player2)
+    |> Tennis.score(:player2)
+    |> Tennis.score(:player1)
+    |> Tennis.score(:player1)
+    |> Tennis.score(:player1)
+    |> Tennis.score(:player2)
+    |> Tennis.score(:player2)
     |> Tennis.get_winner()
     |> assert_winner(:player2)
   end

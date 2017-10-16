@@ -21,10 +21,10 @@ defmodule Tennis do
   end
 
   def get_winner(game) do
-    if (game[:player1] == 4) do
+    if (game[:player1] >= 4) do
       :player1
     else
-      if (game[:player2] == 4) do
+      if (game[:player2] >= 4) do
         :player2
       else
         :none
