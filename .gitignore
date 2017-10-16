@@ -1,4 +1,4 @@
-
+# Clojure
 pom.xml
 pom.xml.asc
 *.jar
@@ -12,3 +12,16 @@ pom.xml.asc
 **/.lein-plugins/
 .lein-failures
 .nrepl-port
+
+
+# Elixir
+_build/
+deps/
+ebin/
+erl_crash.dump
+mix.lock
+*.ez
+*.beam
+doc/
+cover/
+.fetch
