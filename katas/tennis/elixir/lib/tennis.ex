@@ -35,6 +35,8 @@ defmodule Tennis do
   def report_score(game) do
     case {game[:player1], game[:player2]} do
       {0, 0} -> "love all"
+      {15, 0} -> "fifteen love"
+      {0, 15} -> "love fifteen"
     end
   end
 

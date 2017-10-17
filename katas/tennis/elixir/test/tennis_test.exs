@@ -169,7 +169,9 @@ end
     |> assert_report_score(expected_report)
   end do
     [
-      {0, 0, "love all"}
+      {0, 0, "love all"},
+      {15, 0, "fifteen love"},
+      {0, 15, "love fifteen"}
     ]
   end
 end
