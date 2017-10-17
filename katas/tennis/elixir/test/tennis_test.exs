@@ -1,5 +1,6 @@
 defmodule TennisTest do
   use ExUnit.Case
+  use ExUnit.Parameterized
   use Quixir
 
   def assert_winner(actual_winner, expected_winner) do
@@ -8,6 +9,10 @@ defmodule TennisTest do
 
   def assert_score(current_result, expected_result) do
     assert current_result == expected_result
+  end
+
+  def assert_report_score(current_report, expected_report) do
+    assert current_report, expected_report
   end
 
   test "Game setup" do
@@ -155,5 +160,16 @@ end
       |> Tennis.get_winner()
       |> assert_winner(:player2)
     end
+  end
+
+  test_with_params "report score",
+  fn (p1_score, p2_score, expected_report) ->
+    Tennis.create_game(p1_score, p2_score)
+    |> Tennis.report_score()
+    |> assert_report_score(expected_report)
+  end do
+    [
+      {0, 0, "love all"}
+    ]
   end
 end

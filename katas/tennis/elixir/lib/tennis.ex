@@ -32,6 +32,12 @@ defmodule Tennis do
       and (game[player_to_win] > game[other_player] + 1))
   end
 
+  def report_score(game) do
+    case {game[:player1], game[:player2]} do
+      {0, 0} -> "love all"
+    end
+  end
+
   def get_winner(game) do
     cond do
       check_player(game, :player1, :player2) -> :player1

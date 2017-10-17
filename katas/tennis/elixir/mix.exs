@@ -21,7 +21,8 @@ defmodule Tennis.Mixfile do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:quixir, "~> 0.9", only: :test}
+      {:quixir, "~> 0.9", only: :test},
+      {:ex_parameterized, "~> 1.3.0", only: :test}
     ]
   end
 end
