@@ -170,8 +170,8 @@ end
   end do
     [
       {0, 0, "love all"},
-      {15, 0, "fifteen love"},
-      {0, 15, "love fifteen"}
+      {1, 0, "fifteen love"},
+      {0, 1, "love fifteen"}
     ]
   end
 end

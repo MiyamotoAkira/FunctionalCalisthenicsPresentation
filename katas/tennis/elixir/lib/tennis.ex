@@ -32,11 +32,16 @@ defmodule Tennis do
       and (game[player_to_win] > game[other_player] + 1))
   end
 
+  def score_as_string(score) do
+    case score do
+      0 -> "love"
+      1 -> "fifteen"
+    end
+  end
   def report_score(game) do
     case {game[:player1], game[:player2]} do
       {0, 0} -> "love all"
-      {15, 0} -> "fifteen love"
-      {0, 15} -> "love fifteen"
+      {a, b} when a < 4 and b < 4 -> "#{score_as_string(a)} #{score_as_string(b)}"
     end
   end
 
