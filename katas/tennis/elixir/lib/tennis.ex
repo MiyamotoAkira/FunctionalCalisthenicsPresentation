@@ -43,6 +43,7 @@ defmodule Tennis do
   def report_score(game) do
     case {game[:player1], game[:player2]} do
       {0, 0} -> "love all"
+      {a, a} when a < 4 -> "#{score_as_string(a)} equals"
       {a, b} when a < 4 and b < 4 -> "#{score_as_string(a)} #{score_as_string(b)}"
     end
   end

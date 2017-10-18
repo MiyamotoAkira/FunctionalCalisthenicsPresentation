@@ -172,7 +172,8 @@ end
       {0, 0, "love all"},
       {1, 0, "fifteen love"},
       {0, 1, "love fifteen"},
-      {2, 3, "thirty forty"}
+      {2, 3, "thirty forty"},
+      {2, 2, "thirty equals"}
     ]
   end
 end
