@@ -36,6 +36,8 @@ defmodule Tennis do
     case score do
       0 -> "love"
       1 -> "fifteen"
+      2 -> "thirty"
+      3 -> "forty"
     end
   end
   def report_score(game) do
