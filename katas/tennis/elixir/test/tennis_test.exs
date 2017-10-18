@@ -12,7 +12,7 @@ defmodule TennisTest do
   end
 
   def assert_report_score(current_report, expected_report) do
-    assert current_report, expected_report
+    assert current_report == expected_report
   end
 
   test "Game setup" do
@@ -173,7 +173,8 @@ end
       {1, 0, "fifteen love"},
       {0, 1, "love fifteen"},
       {2, 3, "thirty forty"},
-      {2, 2, "thirty equals"}
+      {2, 2, "thirty equals"},
+      {3, 3, "deuce"}
     ]
   end
 end
