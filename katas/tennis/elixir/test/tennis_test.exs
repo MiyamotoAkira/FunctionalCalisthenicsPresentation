@@ -174,7 +174,11 @@ end
       {0, 1, "love fifteen"},
       {2, 3, "thirty forty"},
       {2, 2, "thirty equals"},
-      {3, 3, "deuce"}
+      {3, 3, "deuce"},
+      {4, 4, "deuce"},
+      {4, 3, "advantage player 1"},
+      {4, 5, "advantage player 2"},
+      {4, 6, "game finished"}
     ]
   end
 end

@@ -46,6 +46,9 @@ defmodule Tennis do
       {a, a} when a < 3 -> "#{score_as_string(a)} equals"
       {a, a} -> "deuce"
       {a, b} when a < 4 and b < 4 -> "#{score_as_string(a)} #{score_as_string(b)}"
+      {a, b} when (a - b) == 1 -> "advantage player 1"
+      {a, b} when (b - a) == 1 -> "advantage player 2"
+      _ -> "game finished"
     end
   end
 
