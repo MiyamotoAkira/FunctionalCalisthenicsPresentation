@@ -4,6 +4,8 @@ defmodule Marsrover do
   """
 
   @directions %{N: %{left: :W, right: :E}, W: %{left: :S}}
+  @moves ["F", "B"]
+  @turns ["L", "R"]
 
   def create_rover(x, y, direction) do
     %{position: %{x: x, y: y}, direction: direction}
@@ -31,13 +33,16 @@ defmodule Marsrover do
     end
   end
 
-  def move(rover, movement) do
-    String.graphemes(movement)
-    |> Enum.reduce(rover, fn(move, acc) ->  %{acc | :position => calculate_new_position(acc[:position], move)} end)
+  def execute_command(rover, command) when command in @moves do
+    %{rover | :position => calculate_new_position(rover[:position], command)}
   end
 
-  def turn(rover, turns) do
-    String.graphemes(turns)
-    |> Enum.reduce(rover, fn(turn, acc) -> %{ acc | :direction => @directions[acc[:direction]][get_turn(turn)]} end)
+  def execute_command(rover, command) when command in @turns do
+    %{rover | :direction => @directions[rover[:direction]][get_turn(command)]}
+  end
+
+  def commands(initial_rover, commands) do
+    String.graphemes(commands)
+    |> Enum.reduce(initial_rover, fn(command, rover) -> execute_command(rover, command) end)
   end
 end
