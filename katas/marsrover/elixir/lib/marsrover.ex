@@ -3,7 +3,7 @@ defmodule Marsrover do
   Documentation for Marsrover.
   """
 
-  @directions %{N: %{left: :W, right: :E}, W: %{left: :S}}
+  @directions %{N: %{left: :W, right: :E}, W: %{left: :S, right: :N}, E: %{left: :N, right: :S}, S: %{left: :E, right: :W}}
   @moves ["F", "B"]
   @turns ["L", "R"]
 

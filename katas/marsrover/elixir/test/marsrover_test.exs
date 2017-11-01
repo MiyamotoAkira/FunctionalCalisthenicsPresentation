@@ -1,5 +1,6 @@
 defmodule MarsroverTest do
   use ExUnit.Case
+  use ExUnit.Parameterized
 
   def assert_position_and_direction(rover, position, direction) do
     assert Marsrover.get_position(rover) == position
@@ -28,15 +29,19 @@ defmodule MarsroverTest do
     execute_commands(1, 0, :N, "B", %{x: 0, y: 0}, :N)
   end
 
-  test "Turn left" do
-    execute_commands(0, 0, :N, "L", %{x: 0, y: 0}, :W)
-  end
-
-  test "Turn left twice" do
-    execute_commands(0, 0, :N, "LL", %{x: 0, y: 0}, :S)
-  end
-
-  test "Turn right" do
-    execute_commands(0, 0, :N, "R", %{x: 0, y: 0}, :E)
+  test_with_params "Turning",
+  fn (turns, expected_direction) ->
+    execute_commands(0, 0, :N, turns, %{x: 0, y: 0}, expected_direction)
+  end do
+    [
+      {"L", :W},
+      {"LL", :S},
+      {"LLL", :E},
+      {"LLLL", :N},
+      {"R", :E},
+      {"RR", :S},
+      {"RRR", :W},
+      {"RRRR", :N}
+    ]
   end
 end
