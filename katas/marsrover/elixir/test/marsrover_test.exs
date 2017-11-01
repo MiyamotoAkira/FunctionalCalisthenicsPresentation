@@ -7,8 +7,10 @@ defmodule MarsroverTest do
     assert Marsrover.get_direction(rover) == direction
   end
 
+  @world_size 10
+
   def execute_commands(x, y, direction, commands, expected_position, expected_direction) do
-    Marsrover.create_rover(x, y, direction)
+    Marsrover.create_rover(x, y, direction, @world_size, @world_size)
     |> Marsrover.commands(commands)
     |> assert_position_and_direction(expected_position, expected_direction)
   end

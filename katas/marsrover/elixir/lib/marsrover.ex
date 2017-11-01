@@ -7,8 +7,8 @@ defmodule Marsrover do
   @moves ["F", "B"]
   @turns ["L", "R"]
 
-  def create_rover(x, y, direction) do
-    %{position: %{x: x, y: y}, direction: direction}
+  def create_rover(x, y, direction, x_limit, y_limit) do
+    %{position: %{x: x, y: y}, direction: direction, world_size: %{x: x_limit, y: y_limit}}
   end
 
   def get_position(rover) do
