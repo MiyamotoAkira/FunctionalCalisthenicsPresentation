@@ -109,7 +109,16 @@
  (list
   (list
    (para #:align 'left
-         (t "Original code")))
+         (tt "let GetNeighbours (cell:Cell) : List<Cell> =")
+         (tt "    let rec FindNeighbours cU nU =")
+         (tt "        match cU with")
+         (tt "        | [] -> nU")
+         (tt "        | H::T ->")
+         (tt "                FindNeighbours T ({ xPosition = cell.xPosition + fst H;")
+         (tt "                                    yPosition = cell.yPosition +  snd H}")
+         (tt "                                  :: nU)")
+         (tt "    FindNeighbours neighbours []")
+         (tt "    |> List.rev")))
   (list
    (t "new code"))))
 
