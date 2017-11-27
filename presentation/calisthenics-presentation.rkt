@@ -3,16 +3,25 @@
 (require slideshow/code)
 
 (slide
+ #:title "Functional Calisthenics"
+ (t "Jorge Gueorguiev Garcia")
  (bitmap "codurance.png"))
 
 (slide
- (t "ta"))
+ (t "ta")
+ (comment "What is this? Without context there is no meaning. Or rather we are left to
+create our meaning. If I put the context of trumpet playing, then 'ta' becomes the representation of the attacking pattern to start sound. As a student or profressional trumpet player you will practice this constantitly as part of your scales, arpegios and études."))
 
 (slide
- (t "taka"))
+ (t "taka")
+ (comment "Now that I have a context you know that 'taka' has to do with an attacking pattern. At some speed 'ta' is not good enough. The movement of the tongue is too slow to keep pace. The 'ka' attacking pattern represents the use of your laringe to cut and restart the air flow. And you do require quite some practice to master it."))
 
 (slide
- (t "tataka"))
+ (t "tataka")
+ (comment "Now you have the information about what the above represents. Both the how and why (physical movement and speed). Again, this requires a lot of practice. As a professional trumpet player you will go through this everyday. Scales, arpegios, études ..."))
+
+(slide
+ (t "Practice makes the master"))
 
 (slide
  (t "Clojure production code"))
@@ -114,9 +123,7 @@
          (tt "        match cU with")
          (tt "        | [] -> nU")
          (tt "        | H::T ->")
-         (tt "                FindNeighbours T ({ xPosition = cell.xPosition + fst H;")
-         (tt "                                    yPosition = cell.yPosition +  snd H}")
-         (tt "                                  :: nU)")
+         (tt "            FindNeighbours T (addNeigh cell H nU)")
          (tt "    FindNeighbours neighbours []")
          (tt "    |> List.rev")))
   (list
@@ -167,4 +174,6 @@
    (t "new code"))))
 
 (slide
- #:title "The end")
+ #:title "The end"
+ (t "Jorge Gueorguiev Garcia")
+ (bitmap "codurance.png"))
