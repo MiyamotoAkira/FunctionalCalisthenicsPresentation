@@ -31,6 +31,18 @@ defmodule MarsroverTest do
     execute_commands(1, 0, :N, "B", %{x: 0, y: 0}, :N)
   end
 
+  test "Wrapping north" do
+    execute_commands(@world_size - 1, 0, :N, "F", %{x: 0, y: 0}, :N)
+  end
+
+  test "Wrapping north after two moves" do
+    execute_commands(@world_size - 1, 0, :N, "FF", %{x: 1, y: 0}, :N)
+  end
+
+  # test "Wrapping south" do
+  #   execute_commands(0, 0, :S, "F", %{x: @world_size - 1, y: 0}, :N)
+  # end
+
   test_with_params "Turning",
   fn (turns, expected_direction) ->
     execute_commands(0, 0, :N, turns, %{x: 0, y: 0}, expected_direction)

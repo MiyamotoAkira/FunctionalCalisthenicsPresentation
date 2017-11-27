@@ -19,6 +19,10 @@ defmodule Marsrover do
     rover[:direction]
   end
 
+  def wrap_position(rover) do
+    %{rover | :position => %{rover[:position] | :x => rem(rover[:position][:x], rover[:world_size][:x])}}
+  end
+
   def calculate_new_position(position, movement) do
     case movement do
       "F" ->  %{position | :x => position[:x] + 1}
@@ -35,6 +39,7 @@ defmodule Marsrover do
 
   def execute_command(rover, command) when command in @moves do
     %{rover | :position => calculate_new_position(rover[:position], command)}
+    |> wrap_position
   end
 
   def execute_command(rover, command) when command in @turns do
