@@ -186,6 +186,13 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
    (t "new code"))))
 
 (slide
+ #:title "The Links"
+ (t "Our take: https://codurance.com/2017/10/12/functional-calisthenics/")
+ (t "The original: http://blog.ninjaferret.co.uk/2015/06/05/Introducing-Functional-Calisthenics.html")
+ (t "Kata modifications: https://codurance.com/2017/11/16/katas-for-functional-calisthenics/"))
+
+(slide
  #:title "The end"
  (t "Jorge Gueorguiev Garcia")
+ (t "@yefoakira")
  (bitmap "codurance.png"))
