@@ -24,10 +24,22 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
  (t "Practice makes the master"))
 
 (slide
- (t "Clojure production code"))
+ #:title "The Clojure Experiment"
+ 'next
+ (t "First functional production code")
+ 'next
+ (t "Back to well trained imperative patterns")
+ 'next
+ (t "The code was a mess")
+ (comment "I like functional programming. I have done functional programming at home. Testing things here and there. I have used F#. I have use Clojure. I have used Elixir. But ... all what I did was small pieces of code here and there. At Codurance I had the opportunity of working on my first production functional code. And soon I found myself, as the deadlines was looming, back into my well trained OO and imperative programming. On one side, it did allow me to move quickly. On the other side, the resulting code was a mess. Difficult to understand and difficult to change. At the end I came to realize that all that practicing that I have done for my OOP skills needed to be replicated on FP."))
 
 (slide
- (t "Calisthenics"))
+ #:title "Functional Calisthenics"
+ 'next
+ (t "Original version during Socrates UK 2015")
+ 'next
+ (t "First stab led to rewrite")
+ (comment "Which is were Functional Calisthenics come into play. They were originally set at Socrates UK 2015. I decided to have a stab at them. But there were a few rules that I disagree with, and sadly there was missing something I considered important: Why?. So we got together a group of developers at Codurance and rewrote them."))
 
 (slide
  #:title "Name Everything"
