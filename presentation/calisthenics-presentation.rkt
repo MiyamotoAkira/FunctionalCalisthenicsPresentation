@@ -3,7 +3,7 @@
 (require slideshow/code)
 
 (slide
- #:title "Functional Calisthenics"
+ (text "Functional Calisthenics" (current-main-font) 60)
  (t "Jorge Gueorguiev Garcia")
  (bitmap "codurance.png"))
 
