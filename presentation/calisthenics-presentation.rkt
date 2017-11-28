@@ -59,7 +59,8 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
          (tt "    [] neighbours")
          (tt "    |> List.rev")))
   (list
-   (t "new code"))))
+   (para #:align 'left
+         (t "new code")))))
 
 (slide
  #:title "No Mutable State"
@@ -75,7 +76,8 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
          (tt "    (List.length alive) = 2")
          (tt "    || (List.length alive = 3)")))
   (list
-   (t "new code"))))
+   (para #:align 'left
+         (t "new code")))))
 
 (slide
  #:title "Exhaustive Conditionals"
@@ -88,7 +90,8 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
    (para #:align 'left
          (t "Original code")))
   (list
-   (t "new code"))))
+   (para #:align 'left
+         (t "new code")))))
 
 (slide
  #:title "Do not use intermediate variables"
@@ -109,7 +112,8 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
          (tt "    let au = NextUniverse u3")
          (tt "    Assert.True (CompareList u au)")))
   (list
-   (t "new code"))))
+   (para #:align 'left
+         (t "new code")))))
 
 (slide
  #:title "Expressions, not Statements"
@@ -121,7 +125,8 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
    (para #:align 'left
          (t "Original code")))
   (list
-   (t "new code"))))
+   (para #:align 'left
+         (t "new code")))))
 
 (slide
  #:title "No Explicit Recursion"
@@ -139,7 +144,8 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
          (tt "    FindNeighbours neighbours []")
          (tt "    |> List.rev")))
   (list
-   (t "new code"))))
+   (para #:align 'left
+         (t "new code")))))
 
 (slide
  #:title "Generic Building Blocks"
@@ -150,7 +156,8 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
    (para #:align 'left
          (t "Original code")))
   (list
-   (t "new code"))))
+   (para #:align 'left
+         (t "new code")))))
 
 (slide
  #:title "Side effects at the boundaries"
@@ -158,9 +165,11 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
  'alts
  (list
   (list
-   (t "Original code"))
+   (para #:align 'left
+         (t "Original code")))
   (list
-   (t "new code"))))
+   (para #:align 'left
+         (t "new code")))))
 
 (slide
  #:title "Infinite Sequences"
@@ -172,7 +181,8 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
    (para #:align 'left
          (t "Original code")))
   (list
-   (t "new code"))))
+   (para #:align 'left
+         (t "new code")))))
 
 (slide
  #:title "One argument functions"
@@ -183,6 +193,7 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
    (para #:align 'left
          (t "Original code")))
   (list
+   (para #:align 'left)
    (t "new code"))))
 
 (slide
