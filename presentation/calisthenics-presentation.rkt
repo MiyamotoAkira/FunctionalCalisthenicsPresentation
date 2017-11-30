@@ -1,6 +1,17 @@
 #lang slideshow
 
 (require slideshow/code)
+(require slideshow/step)
+
+(define (code-line line)
+  (para #:align 'left (tt line)))
+
+(define (wrapper p)
+  (rb-superimpose
+   (cc-superimpose
+    (linewidth 0 (frame (blank client-w client-h) #:color "white"))
+    p)
+   (bitmap "footer-logo.png")))
 
 (slide
  (text "Functional Calisthenics" (current-main-font) 60)
@@ -8,41 +19,65 @@
  (bitmap "codurance.png"))
 
 (slide
- (t "ta")
  (comment "What is this? Without context there is no meaning. Or rather we are left to
-create our meaning. If I put the context of trumpet playing, then 'ta' becomes the representation of the attacking pattern to start sound. As a student or profressional trumpet player you will practice this constantitly as part of your scales, arpegios and études."))
+create our meaning. If I put the context of trumpet playing, then 'ta' becomes the representation of the attacking pattern to start sound. As a student or profressional trumpet player you will practice this constantitly as part of your scales, arpegios and études.")
+ (wrapper (t "ta")))
 
 (slide
- (t "taka")
- (comment "Now that I have a context you know that 'taka' has to do with an attacking pattern. At some speed 'ta' is not good enough. The movement of the tongue is too slow to keep pace. The 'ka' attacking pattern represents the use of your laringe to cut and restart the air flow. And you do require quite some practice to master it."))
+ (comment "Now that I have a context you know that 'taka' has to do with an attacking pattern. At some speed 'ta' is not good enough. The movement of the tongue is too slow to keep pace. The 'ka' attacking pattern represents the use of your laringe to cut and restart the air flow. And you do require quite some practice to master it.")
+ (rb-superimpose
+  (cc-superimpose
+   (linewidth 0 (frame (blank client-w client-h) #:color "white"))
+   (t "taka"))
+  (bitmap "footer-logo.png")) )
 
 (slide
- (t "tataka")
- (comment "Now you have the information about what the above represents. Both the how and why (physical movement and speed). Again, this requires a lot of practice. As a professional trumpet player you will go through this everyday. Scales, arpegios, études ..."))
+ (comment "Now you have the information about what the above represents. Both the how and why (physical movement and speed). Again, this requires a lot of practice. As a professional trumpet player you will go through this everyday. Scales, arpegios, études ...")
+ (rb-superimpose
+  (cc-superimpose
+   (linewidth 0 (frame (blank client-w client-h) #:color "white"))
+   (t "tataka"))
+  (bitmap "footer-logo.png")))
 
 (slide
- (t "Practice makes the master"))
+ (rb-superimpose
+  (cc-superimpose
+   (linewidth 0 (frame (blank client-w client-h) #:color "white"))
+   (t "Practice makes the master"))
+  (bitmap "footer-logo.png")))
 
-(slide
- #:title "The Clojure Experiment"
- 'next
- (t "First functional production code")
- 'next
- (t "Back to well trained imperative patterns")
- 'next
- (t "The code was a mess")
- (comment "I like functional programming. I have done functional programming at home. Testing things here and there. I have used F#. I have use Clojure. I have used Elixir. But ... all what I did was small pieces of code here and there. At Codurance I had the opportunity of working on my first production functional code. And soon I found myself, as the deadlines was looming, back into my well trained OO and imperative programming. On one side, it did allow me to move quickly. On the other side, the resulting code was a mess. Difficult to understand and difficult to change. At the end I came to realize that all that practicing that I have done for my OOP skills needed to be replicated on FP."))
+(with-steps
+ (intro first second third)
+ (slide
+  #:title "The Clojure Experiment"
+   (vc-append gap-size
+              ((vafter first)
+               (t "First functional production code"))
+              ((vafter second) (t "Back to well trained imperative patterns"))
+              ((vafter third) (t "The code was a mess")))
+  (comment "I like functional programming. I have done functional programming at home. Testing things here and there. I have used F#. I have use Clojure. I have used Elixir. But ... all what I did was small pieces of code here and there. At Codurance I had the opportunity of working on my first production functional code. And soon I found myself, as the deadlines was looming, back into my well trained OO and imperative programming. On one side, it did allow me to move quickly. On the other side, the resulting code was a mess. Difficult to understand and difficult to change. At the end I came to realize that all that practicing that I have done for my OOP skills needed to be replicated on FP.")))
 
 (slide
  #:title "Functional Calisthenics"
+ (comment "Which is were Functional Calisthenics come into play. They were originally set at Socrates UK 2015. I decided to have a stab at them. But there were a few rules that I disagree with, and sadly there was missing something I considered important: Why?. So we got together a group of developers at Codurance and rewrote them. They are not a finished job. And we are not the owners of the truth. I will explain why we have each one. But I will happily stand corrected if that means improving my craft.")
  'next
  (t "Original version during Socrates UK 2015")
  'next
  (t "First stab led to rewrite")
- (comment "Which is were Functional Calisthenics come into play. They were originally set at Socrates UK 2015. I decided to have a stab at them. But there were a few rules that I disagree with, and sadly there was missing something I considered important: Why?. So we got together a group of developers at Codurance and rewrote them."))
+ 'next
+ (t "A job in progress"))
+
+(slide
+ #:title "The application"
+ (comment "All what I am going to send is for practice. What you do on production code will depend. Because not all functional languages are equal. They have different characteristics. For example, I remember a presentation by Phil (Trelford) about the use of mutable collections on F# for performance purposes. Furthermore, some of the rules are either forced into you by the language (for example, Haskell forces a few of these rules). Or are simply not possible (the pipe operator or currying in Erlang for the rule \"Do not use intermediate variables\")")
+ 'next
+ (t "This is for practice")
+ 'next
+ (t "Each functional language has its own characteristics"))
 
 (slide
  #:title "Name Everything"
+ 'next
  (t "Everything should have a name")
  'next
  (t "(Including lambdas/anonymous functions)")
@@ -50,73 +85,123 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
  'alts
  (list
   (list
-   (para #:align 'left
-         (tt "let GetNeighbours (cell:Cell) : List<Cell> =")
-         (tt "    List.fold (fun acc elem ->")
-         (tt "        { xPosition = cell.xPosition + fst elem;")
-         (tt "          yPosition = cell.yPosition +  snd elem}")
-         (tt "       :: acc)")
-         (tt "    [] neighbours")
-         (tt "    |> List.rev")))
+   (vl-append 0
+         (code-line "let GetNeighbours (cell:Cell) : List<Cell> =")
+         (code-line "    List.fold (fun acc elem ->")
+         (code-line "        { xPosition = cell.xPosition + fst elem;")
+         (code-line "          yPosition = cell.yPosition +  snd elem}")
+         (code-line "       :: acc)")
+         (code-line "    [] neighbours")
+         (code-line "    |> List.rev")))
   (list
-   (para #:align 'left
-         (t "new code")))))
+   (vl-append 0
+         (code-line "let AddNeighbour cell mods universe =")
+         (code-line "    { xPosition = cell.xPosition + fst mods;")
+         (code-line "      yPosition = cell.yPosition +  snd mods}")
+         (code-line "    :: universe")
+         (code-line "")
+         (code-line "let GetNeighbours (cell:Cell) : List<Cell> =")
+         (code-line "    let AddNeighbourForCell acc elem = AddNeighbour cell elem acc")
+         (code-line "    List.fold AddNeighboursForCell [] neighbours")
+         (code-line "    |> List.rev")))))
 
 (slide
  #:title "No Mutable State"
- (t "We are doing functional programming")
+ (comment "Mutable state makes reasoning more difficult.")
+ 'next
+ (t "We want to have guarantees about our code")
  'next
  'alts
  (list
   (list
-   (para #:align 'left
-         (tt "let CheckIfAlive cell universe =")
-         (tt "    let mutable alive  = GetNeighbours cell")
-         (tt "    alive <- FindOnUniverse universe alive")
-         (tt "    (List.length alive) = 2")
-         (tt "    || (List.length alive = 3)")))
+   (vl-append
+    0
+    (code-line "let FindOnUniverse universe (alive:byref<_>) = ")
+    (code-line "    alive <- some_calculation")
+    (code-line " ")
+    (code-line "let CheckIfAlive cell universe =")
+    (code-line "    let mutable alive  = GetNeighbours cell")
+    (code-line "    FindOnUniverse universe &alive")
+    (code-line "    (List.length alive) = 2")
+    (code-line "    || (List.length alive = 3)")))
   (list
-   (para #:align 'left
-         (t "new code")))))
+   (vl-append
+    0
+    (code-line "let FindOnUniverse universe alive = ...")
+    (code-line " ")
+    (code-line "let CheckIfAlive cell universe =")
+    (code-line "    let neighbours  = GetNeighbours cell")
+    (code-line "    let alive = FindOnUniverse universe neighbours")
+    (code-line "    (List.length alive) = 2")
+    (code-line "    || (List.length alive = 3)")))))
 
 (slide
  #:title "Exhaustive Conditionals"
+ (comment "There is some help from F# here. Match statements need to be exhaustive. You can't define a match that is not exhaustive. The example on the screen throws an error at compile time. But, it is happy to allow ifs without else. We don't want that. There are two reasons for an if without an else: side effects and mutability. The latter we have already said we don't want, the former we will talk about later.")
+ 'next
  (t "All your ifs, matches, cases should be able")
  (t "to deal with all possible input")
  'next
  'alts
  (list
   (list
-   (para #:align 'left
-         (t "Original code")))
+   (vl-append 0
+    (code-line "match CheckIfAlive elem universe with")
+    (code-line "| true -> printf \"hey\"")))
   (list
-   (para #:align 'left
-         (t "new code")))))
+   (vl-append 0
+    (code-line "match CheckIfAlive elem universe with")
+    (code-line "| true -> elem :: acc")
+    (code-line "| false -> acc")))
+  (list
+   (vl-append 0
+              (code-line "if x = \"fefe\" then")
+              (code-line "    printf \"hey\"")))
+  (list
+   (vl-append 0
+              (code-line "if x = \"fefe\" then")
+              (code-line "    printf \"hey\"")
+              (code-line  "else")
+              (code-line  "    prinft \"ho\"")))))
 
 (slide
  #:title "Do not use intermediate variables"
- (t "Everything should have a name")
+ (comment "")
  'next
- (t "(Including lambdas/anonymous functions)")
+ (t "It is about the flow of data transformations")
  'next
  'alts
  (list
   (list
-   (para #:align 'left 
-         (tt "let ``Empty cell becomes alive`` () =")
-         (tt "    let u3 = [")
-         (tt "        { xPosition = -1; yPosition = -1};")
-         (tt "        { xPosition = 1; yPosition = 1};")
-         (tt "        { xPosition = -1; yPosition = 1}]")
-         (tt "    let u = [{ xPosition = 0; yPosition = 0}]")
-         (tt "    let au = NextUniverse u3")
-         (tt "    Assert.True (CompareList u au)")))
+   (vl-append
+    0
+    (code-line "let ``Empty cell becomes alive`` () =")
+    (code-line "    let u3 = [")
+    (code-line "        { xPosition = -1; yPosition = -1};")
+    (code-line "        { xPosition = 1; yPosition = 1};")
+    (code-line "        { xPosition = -1; yPosition = 1}]")
+    (code-line "    let u = [{ xPosition = 0; yPosition = 0}]")
+    (code-line "    let au = NextUniverse u3")
+    (code-line "    Assert.True (CompareList u au)")))
   (list
-   (para #:align 'left
-         (t "new code")))))
+   (vl-append
+    0
+    (code-line "let singleCellUniverse = [{ xPosition = 0; yPosition = 0}]")
+    (code-line "")
+    (code-line "let CompareExpected actualUniverse =")
+    (code-line "Assert.True (CompareList singleCellUniverse actualUniverse")
+    (code-line "")
+    (code-line "let ``Empty cell becomes alive`` () =")
+    (code-line "    [{ xPosition = -1; yPosition = -1};")
+    (code-line "     { xPosition = 1; yPosition = 1};")
+    (code-line "     { xPosition = -1; yPosition = 1}]")
+    (code-line "    |> NextUniverse")
+    (code-line "    |> CompareExpected")))))
 
 (slide
  #:title "Expressions, not Statements"
+ (comment "")
+ 'next
  (t "No assignment at any point.")
  'next
  'alts
@@ -130,34 +215,57 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
 
 (slide
  #:title "No Explicit Recursion"
+ (comment "")
+ 'next
  (t "Map and Reduce should be used instead")
  'alts
  (list
   (list
-   (para #:align 'left
-         (tt "let GetNeighbours (cell:Cell) : List<Cell> =")
-         (tt "    let rec FindNeighbours cU nU =")
-         (tt "        match cU with")
-         (tt "        | [] -> nU")
-         (tt "        | H::T ->")
-         (tt "            FindNeighbours T (addNeigh cell H nU)")
-         (tt "    FindNeighbours neighbours []")
-         (tt "    |> List.rev")))
+   (vl-append
+    0
+    (code-line "let GetNeighbours (cell:Cell) : List<Cell> =")
+    (code-line "    let rec FindNeighbours cU nU =")
+    (code-line "        match cU with")
+    (code-line "        | [] -> nU")
+    (code-line "        | H::T ->")
+    (code-line "            FindNeighbours T (addNeigh cell H nU)")
+    (code-line "    FindNeighbours neighbours []")
+    (code-line "    |> List.rev")))
   (list
-   (para #:align 'left
-         (t "new code")))))
+   (vl-append 0
+         (code-line "let AddNeighbour cell mods universe =")
+         (code-line "    { xPosition = cell.xPosition + fst mods;")
+         (code-line "      yPosition = cell.yPosition +  snd mods}")
+         (code-line "    :: universe")
+         (code-line "")
+         (code-line "let GetNeighbours (cell:Cell) : List<Cell> =")
+         (code-line "    let AddNeighbourForCell acc elem = AddNeighbour cell elem acc")
+         (code-line "    List.fold AddNeighboursForCell [] neighbours")
+         (code-line "    |> List.rev")))))
 
 (slide
  #:title "Generic Building Blocks"
+ (comment "")
+ 'next
  (t "Try to create functions that are not domain aware")
  'alts
  (list
   (list
-   (para #:align 'left
-         (t "Original code")))
+   (vl-append
+    0
+    (code-line "let Born universe =")
+    (code-line "    List.fold (fun acc elem -> (GetNeighbours elem) @ acc) [] universe")
+    (code-line "    |> Set.ofList")
+    (code-line "    |> Set.toList")
+    (code-line "    |> List.filter (fun x -> not (List.exists (fun y -> CompareCell x y) universe))")
+    (code-line "    |> List.fold (fun acc elem ->")
+    (code-line "                  match CheckIfThree elem universe with")
+    (code-line "                  | true -> elem :: acc")
+    (code-line "                  | false -> acc) []")))
   (list
-   (para #:align 'left
-         (t "new code")))))
+   (vl-append
+    0
+    (code-line "new code")))))
 
 (slide
  #:title "Side effects at the boundaries"
@@ -165,15 +273,19 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
  'alts
  (list
   (list
-   (para #:align 'left
-         (t "Original code")))
+   (vl-append
+    0
+    (code-line "Original code")))
   (list
-   (para #:align 'left
-         (t "new code")))))
+   (vl-append
+    0
+    (code-line "new code")))))
 
 (slide
  #:title "Infinite Sequences"
+ 'next
  (t "Don't use fixed sized collections")
+ 'next
  (t "Don't depend on the lenght of the collection")
  'alts
  (list
