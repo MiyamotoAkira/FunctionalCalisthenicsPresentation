@@ -55,7 +55,7 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
                (t "First functional production code"))
               ((vafter second) (t "Back to well trained imperative patterns"))
               ((vafter third) (t "The code was a mess")))
-  (comment "I like functional programming. I have done functional programming at home. Testing things here and there. I have used F#. I have use Clojure. I have used Elixir. But ... all what I did was small pieces of code here and there. At Codurance I had the opportunity of working on my first production functional code. And soon I found myself, as the deadlines was looming, back into my well trained OO and imperative programming. On one side, it did allow me to move quickly. On the other side, the resulting code was a mess. Difficult to understand and difficult to change. At the end I came to realize that all that practicing that I have done for my OOP skills needed to be replicated on FP.")))
+  (comment "I like functional programming. I have done functional programming at home. Testing things here and there. I have used F#. I have use Clojure. I have used Elixir. But ... all what I did was small pieces of code under no pressure. At Codurance I had the opportunity of working on my first production functional code. And soon I found myself, as the deadlines was looming, back into my well trained OO and imperative programming. On one side, it did allow me to move quickly. On the other side, the resulting code was a mess. Difficult to understand and difficult to change. At the end I came to realize that all that practicing that I have done for my OOP skills needed to be replicated on FP.")))
 
 (slide
  #:title "Functional Calisthenics"
@@ -74,6 +74,19 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
  (t "This is for practice")
  'next
  (t "Each functional language has its own characteristics"))
+
+(slide
+ #:title "The Rules"
+ (t "Name everything")
+ (t "No Mutable State")
+ (t "Name everything")
+ (t "Name everything")
+ (t "Name everything")
+ (t "Name everything")
+ (t "Name everything")
+ (t "Name everything")
+ (t "Name everything")
+ (t "Name everything"))
 
 (slide
  #:title "Name Everything"
@@ -186,38 +199,27 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
   (list
    (vl-append
     0
-    (code-line "let singleCellUniverse = [{ xPosition = 0; yPosition = 0}]")
+    (code-line "let expectedUniverse =")
+    (code-line "     [{ xPosition = 0; yPosition = 0}]")
     (code-line "")
-    (code-line "let CompareExpected actualUniverse =")
-    (code-line "Assert.True (CompareList singleCellUniverse actualUniverse")
+    (code-line "let CompareExpected expectedUniverse actualUniverse =")
+    (code-line "Assert.True (CompareList expectedUniverse actualUniverse)")
     (code-line "")
-    (code-line "let ``Empty cell becomes alive`` () =")
+    (code-line "let universeWithThreeCells = ")
     (code-line "    [{ xPosition = -1; yPosition = -1};")
     (code-line "     { xPosition = 1; yPosition = 1};")
     (code-line "     { xPosition = -1; yPosition = 1}]")
+    (code-line "let ``Empty cell becomes alive`` () =")
+    (code-line "    universeWithThreeCells")
     (code-line "    |> NextUniverse")
-    (code-line "    |> CompareExpected")))))
-
-(slide
- #:title "Expressions, not Statements"
- (comment "")
- 'next
- (t "No assignment at any point.")
- 'next
- 'alts
- (list
-  (list
-   (para #:align 'left
-         (t "Original code")))
-  (list
-   (para #:align 'left
-         (t "new code")))))
+    (code-line "    |> CompareWith expectedUniverse")))))
 
 (slide
  #:title "No Explicit Recursion"
  (comment "")
  'next
  (t "Map and Reduce should be used instead")
+ 'next
  'alts
  (list
   (list
@@ -239,25 +241,31 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
          (code-line "    :: universe")
          (code-line "")
          (code-line "let GetNeighbours (cell:Cell) : List<Cell> =")
-         (code-line "    let AddNeighbourForCell acc elem = AddNeighbour cell elem acc")
-         (code-line "    List.fold AddNeighboursForCell [] neighbours")
+         (code-line "    let AddNForCell acc elem = AddNeighbour cell elem acc")
+         (code-line "    List.fold AddNForCell [] neighbours")
          (code-line "    |> List.rev")))))
 
 (slide
  #:title "Generic Building Blocks"
- (comment "")
+ (comment "The Born function is very aware of the domain in which it is working. Its even aware of the fact that is a Life of game on a square's grid. But what if we wanted to use an hexagonal grid? The rule for being born is different (2 neighbours, instead of 3). ")
  'next
  (t "Try to create functions that are not domain aware")
+ 'next
+ (t "We are trying to create composable abstractions")
+ 'next
  'alts
  (list
   (list
    (vl-append
     0
     (code-line "let Born universe =")
-    (code-line "    List.fold (fun acc elem -> (GetNeighbours elem) @ acc) [] universe")
+    (code-line "    List.fold (fun acc elem ->")
+    (code-line "                   (GetNeighbours elem) @ acc) [] universe)")
     (code-line "    |> Set.ofList")
     (code-line "    |> Set.toList")
-    (code-line "    |> List.filter (fun x -> not (List.exists (fun y -> CompareCell x y) universe))")
+    (code-line "    |> List.filter (fun x -> ")
+    (code-line "                       not (List.exists")
+    (code-line "                                (fun y -> CompareCell x y) universe)")
     (code-line "    |> List.fold (fun acc elem ->")
     (code-line "                  match CheckIfThree elem universe with")
     (code-line "                  | true -> elem :: acc")
@@ -265,21 +273,56 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
   (list
    (vl-append
     0
-    (code-line "new code")))))
+    (code-line "let Born check universe =")
+    (code-line "    List.fold (fun acc elem ->")
+    (code-line "                   (GetNeighbours elem) @ acc) [] universe)")
+    (code-line "    |> Set.ofList")
+    (code-line "    |> Set.toList")
+    (code-line "    |> List.filter (fun x -> ")
+    (code-line "                       not (List.exists")
+    (code-line "                                (fun y -> CompareCell x y) universe)")
+    (code-line "    |> List.fold (fun acc elem ->")
+    (code-line "                  match check elem universe with")
+    (code-line "                  | true -> elem :: acc")
+    (code-line "                  | false -> acc) []")
+    (code-line "")
+    (code-line "let BornWithThree universe =")
+    (code-line "    Born CheckIfThree universe")
+    ))))
 
 (slide
  #:title "Side effects at the boundaries"
  (t "Keep your functions pure")
+ 'next
  'alts
  (list
   (list
    (vl-append
     0
-    (code-line "Original code")))
+    (code-line "let CreateUniverse () = ")
+    (code-line "    printf \"We are creating the universe\"")
+    (code-line "    [{xPosition = 0; yPosition = 0}]")))
   (list
    (vl-append
     0
-    (code-line "new code")))))
+    (code-line "let CreateUniverse logger = ")
+    (code-line "    logger \"We are creating the universe\"")
+    (code-line "    [{xPosition = 0; yPosition = 0}]")))
+  (list
+   (vl-append
+    0
+    (code-line "let CreateUniverse logger = ")
+    (code-line "    [{xPosition = 0; yPosition = 0}]")
+    (code-line "")
+    (code-line "let [<EntryPoint>] main _ = ")
+    (code-line "   printf \"We are creating the universe\"")
+    (code-line "   [{xPosition = 0; yPosition = 0}]")))))
+
+(slide
+ #:title "Expressions, not Statements"
+ (comment "")
+ 'next
+ (t "No assignment at any point."))
 
 (slide
  #:title "Infinite Sequences"
@@ -287,26 +330,63 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
  (t "Don't use fixed sized collections")
  'next
  (t "Don't depend on the lenght of the collection")
+ 'next
  'alts
  (list
   (list
-   (para #:align 'left
-         (t "Original code")))
+   (vl-append
+    0
+    (code-line "let FindOnUniverse list1 list2 =")
+    (code-line "    List.filter ")
+    (code-line "        (fun (x) ->")
+    (code-line "            List.exists (fun(y) -> x = y) list2)")
+    (code-line "        list1")))
   (list
-   (para #:align 'left
-         (t "new code")))))
+   (vl-append
+    0
+    (code-line "let FindOnUniverse seq1 seq2 =")
+    (code-line "    Seq.filter")
+    (code-line "        (fun (x) ->")
+    (code-line "            Seq.exists (fun(y) -> x = y) seq2)")
+    (code-line "        seq1")))))
 
 (slide
  #:title "One argument functions"
+ 'next
  (t "Functions should have a single argument")
+ 'next
  'alts
  (list
   (list
-   (para #:align 'left
-         (t "Original code")))
+   (vl-append
+    0
+    (code-line "let FindOnUniverse list1 list2 =")
+    (code-line "    List.filter")
+    (code-line "        (fun (x) -> ")
+    (code-line "            List.exists (fun(y) -> x = y) list2)")
+    (code-line "        list1")))
   (list
-   (para #:align 'left)
-   (t "new code"))))
+   (vl-append
+    0
+    (code-line "let CheckForExistence onList =")
+    (code-line "    fun(x) -> List.exists (fun(y) -> x = y) onList")
+    (code-line "")
+    (code-line "let Exists = CheckForExistence universe")
+    (code-line "let Find possibles = ")
+    (code-line "    List.Filter Exists possibles")))
+  (list
+   (vl-append
+    0
+    (code-line "let CheckIfThree cell universe =")
+    (code-line "    let neighbours = GetNeighbours cell")
+    (code-line "    let alive = FindOnUniverse universe neighbours")
+    (code-line "    List.length alive = 3")))
+  (list
+   (vl-append
+    0
+    (code-line "let FWU = FindOnUniverse universe")
+    (code-line "let checkForThree alive = List.length alive = 3")
+    (code-line "let check = GetNeighbours >> FWU >> checkForThree")))))
 
 (slide
  #:title "The Links"
