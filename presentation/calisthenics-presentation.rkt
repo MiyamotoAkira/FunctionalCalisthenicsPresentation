@@ -3,9 +3,6 @@
 (require slideshow/code)
 (require slideshow/step)
 
-(define (code-line line)
-  (para #:align 'left (tt line)))
-
 (define (wrapper p)
   (rb-superimpose
    (cc-superimpose
@@ -77,46 +74,48 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
 
 (slide
  #:title "The Rules"
- (t "Name everything")
- (t "No Mutable State")
- (t "Name everything")
- (t "Name everything")
- (t "Name everything")
- (t "Name everything")
- (t "Name everything")
- (t "Name everything")
- (t "Name everything")
- (t "Name everything"))
+ (item "Name everyting")
+ (item "No Mutable State")
+ (item "Exhaustive Conditionals")
+ (item "Do Not Use Intermediate Variables")
+ (item "No Explicit Recursion")
+ (item "Generic Building Blocks")
+ (item "Side Effects At The Boundaries")
+ (item "Expressions, Not Statemets")
+ (item "Infinite Sequences")
+ (item "One Argument Functions"))
 
-(slide
- #:title "Name Everything"
- 'next
- (t "Everything should have a name")
- 'next
- (t "(Including lambdas/anonymous functions)")
- 'next
- 'alts
- (list
-  (list
-   (vl-append 0
-         (code-line "let GetNeighbours (cell:Cell) : List<Cell> =")
-         (code-line "    List.fold (fun acc elem ->")
-         (code-line "        { xPosition = cell.xPosition + fst elem;")
-         (code-line "          yPosition = cell.yPosition +  snd elem}")
-         (code-line "       :: acc)")
-         (code-line "    [] neighbours")
-         (code-line "    |> List.rev")))
-  (list
-   (vl-append 0
-         (code-line "let AddNeighbour cell mods universe =")
-         (code-line "    { xPosition = cell.xPosition + fst mods;")
-         (code-line "      yPosition = cell.yPosition +  snd mods}")
-         (code-line "    :: universe")
-         (code-line "")
-         (code-line "let GetNeighbours (cell:Cell) : List<Cell> =")
-         (code-line "    let AddNeighbourForCell acc elem = AddNeighbour cell elem acc")
-         (code-line "    List.fold AddNeighboursForCell [] neighbours")
-         (code-line "    |> List.rev")))))
+(with-steps
+ (intro first second nonames withnames)
+ (slide
+  #:title "Name Everything"
+  (vc-append gap-size
+             ((vafter first)
+              (t "Everything should have a name"))
+             ((vafter second)
+              (t "(Including lambdas/anonymous functions)")))
+  (lt-superimpose
+   ((vonly nonames)
+    (vl-append 0
+               (tt "let GetNeighbours (cell:Cell) : List<Cell> =")
+               (tt "    List.fold (fun acc elem ->")
+               (tt "        { xPosition = cell.xPosition + fst elem;")
+               (tt "          yPosition = cell.yPosition +  snd elem}")
+               (tt "       :: acc)")
+               (tt "    [] neighbours")
+               (tt "    |> List.rev")))
+   ((vonly withnames)
+    (vl-append 0
+               (tt "let AddNeighbour cell mods universe =")
+               (tt "    { xPosition = cell.xPosition + fst mods;")
+               (tt "      yPosition = cell.yPosition +  snd mods}")
+               (tt "    :: universe")
+               (tt "")
+               (tt "let GetNeighbours (cell:Cell) : List<Cell> =")
+               (tt "    let AddNeighbourForCell acc elem =")
+               (tt "        AddNeighbour cell elem acc")
+               (tt "    List.fold AddNeighboursForCell [] neighbours")
+               (tt "    |> List.rev"))))))
 
 (slide
  #:title "No Mutable State"
@@ -129,24 +128,24 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
   (list
    (vl-append
     0
-    (code-line "let FindOnUniverse universe (alive:byref<_>) = ")
-    (code-line "    alive <- some_calculation")
-    (code-line " ")
-    (code-line "let CheckIfAlive cell universe =")
-    (code-line "    let mutable alive  = GetNeighbours cell")
-    (code-line "    FindOnUniverse universe &alive")
-    (code-line "    (List.length alive) = 2")
-    (code-line "    || (List.length alive = 3)")))
+    (tt "let FindOnUniverse universe (alive:byref<_>) = ")
+    (tt "    alive <- some_calculation")
+    (tt " ")
+    (tt "let CheckIfAlive cell universe =")
+    (tt "    let mutable alive  = GetNeighbours cell")
+    (tt "    FindOnUniverse universe &alive")
+    (tt "    (List.length alive) = 2")
+    (tt "    || (List.length alive = 3)")))
   (list
    (vl-append
     0
-    (code-line "let FindOnUniverse universe alive = ...")
-    (code-line " ")
-    (code-line "let CheckIfAlive cell universe =")
-    (code-line "    let neighbours  = GetNeighbours cell")
-    (code-line "    let alive = FindOnUniverse universe neighbours")
-    (code-line "    (List.length alive) = 2")
-    (code-line "    || (List.length alive = 3)")))))
+    (tt "let FindOnUniverse universe alive = ...")
+    (tt " ")
+    (tt "let CheckIfAlive cell universe =")
+    (tt "    let neighbours  = GetNeighbours cell")
+    (tt "    let alive = FindOnUniverse universe neighbours")
+    (tt "    (List.length alive) = 2")
+    (tt "    || (List.length alive = 3)")))))
 
 (slide
  #:title "Exhaustive Conditionals"
@@ -159,23 +158,23 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
  (list
   (list
    (vl-append 0
-    (code-line "match CheckIfAlive elem universe with")
-    (code-line "| true -> printf \"hey\"")))
+    (tt "match CheckIfAlive elem universe with")
+    (tt "| true -> printf \"hey\"")))
   (list
    (vl-append 0
-    (code-line "match CheckIfAlive elem universe with")
-    (code-line "| true -> elem :: acc")
-    (code-line "| false -> acc")))
+    (tt "match CheckIfAlive elem universe with")
+    (tt "| true -> elem :: acc")
+    (tt "| false -> acc")))
   (list
    (vl-append 0
-              (code-line "if x = \"fefe\" then")
-              (code-line "    printf \"hey\"")))
+              (tt "if x = \"fefe\" then")
+              (tt "    printf \"hey\"")))
   (list
    (vl-append 0
-              (code-line "if x = \"fefe\" then")
-              (code-line "    printf \"hey\"")
-              (code-line  "else")
-              (code-line  "    prinft \"ho\"")))))
+              (tt "if x = \"fefe\" then")
+              (tt "    printf \"hey\"")
+              (tt  "else")
+              (tt  "    prinft \"ho\"")))))
 
 (slide
  #:title "Do not use intermediate variables"
@@ -188,31 +187,31 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
   (list
    (vl-append
     0
-    (code-line "let ``Empty cell becomes alive`` () =")
-    (code-line "    let u3 = [")
-    (code-line "        { xPosition = -1; yPosition = -1};")
-    (code-line "        { xPosition = 1; yPosition = 1};")
-    (code-line "        { xPosition = -1; yPosition = 1}]")
-    (code-line "    let u = [{ xPosition = 0; yPosition = 0}]")
-    (code-line "    let au = NextUniverse u3")
-    (code-line "    Assert.True (CompareList u au)")))
+    (tt "let ``Empty cell becomes alive`` () =")
+    (tt "    let u3 = [")
+    (tt "        { xPosition = -1; yPosition = -1};")
+    (tt "        { xPosition = 1; yPosition = 1};")
+    (tt "        { xPosition = -1; yPosition = 1}]")
+    (tt "    let u = [{ xPosition = 0; yPosition = 0}]")
+    (tt "    let au = NextUniverse u3")
+    (tt "    Assert.True (CompareList u au)")))
   (list
    (vl-append
     0
-    (code-line "let expectedUniverse =")
-    (code-line "     [{ xPosition = 0; yPosition = 0}]")
-    (code-line "")
-    (code-line "let CompareExpected expectedUniverse actualUniverse =")
-    (code-line "Assert.True (CompareList expectedUniverse actualUniverse)")
-    (code-line "")
-    (code-line "let universeWithThreeCells = ")
-    (code-line "    [{ xPosition = -1; yPosition = -1};")
-    (code-line "     { xPosition = 1; yPosition = 1};")
-    (code-line "     { xPosition = -1; yPosition = 1}]")
-    (code-line "let ``Empty cell becomes alive`` () =")
-    (code-line "    universeWithThreeCells")
-    (code-line "    |> NextUniverse")
-    (code-line "    |> CompareWith expectedUniverse")))))
+    (tt "let expectedUniverse =")
+    (tt "     [{ xPosition = 0; yPosition = 0}]")
+    (tt "")
+    (tt "let CompareWith expected actual =")
+    (tt "    Assert.True (CompareList expected actual)")
+    (tt "")
+    (tt "let universeWithThreeCells = ")
+    (tt "    [{ xPosition = -1; yPosition = -1};")
+    (tt "     { xPosition = 1; yPosition = 1};")
+    (tt "     { xPosition = -1; yPosition = 1}]")
+    (tt "let ``Empty cell becomes alive`` () =")
+    (tt "    universeWithThreeCells")
+    (tt "    |> NextUniverse")
+    (tt "    |> CompareWith expectedUniverse")))))
 
 (slide
  #:title "No Explicit Recursion"
@@ -225,25 +224,30 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
   (list
    (vl-append
     0
-    (code-line "let GetNeighbours (cell:Cell) : List<Cell> =")
-    (code-line "    let rec FindNeighbours cU nU =")
-    (code-line "        match cU with")
-    (code-line "        | [] -> nU")
-    (code-line "        | H::T ->")
-    (code-line "            FindNeighbours T (addNeigh cell H nU)")
-    (code-line "    FindNeighbours neighbours []")
-    (code-line "    |> List.rev")))
+    (tt "let AddN cell mods universe =")
+    (tt "    { xPosition = cell.xPosition + fst mods;")
+    (tt "      yPosition = cell.yPosition +  snd mods}")
+    (tt "    :: universe")
+    (tt "")
+    (tt "let GetNeighbours (cell:Cell) : List<Cell> =")
+    (tt "    let rec FindNeighbours cU nU =")
+    (tt "        match cU with")
+    (tt "        | [] -> nU")
+    (tt "        | H::T ->")
+    (tt "            FindNeighbours T (AddN cell H nU)")
+    (tt "    FindNeighbours neighbours []")
+    (tt "    |> List.rev")))
   (list
    (vl-append 0
-         (code-line "let AddNeighbour cell mods universe =")
-         (code-line "    { xPosition = cell.xPosition + fst mods;")
-         (code-line "      yPosition = cell.yPosition +  snd mods}")
-         (code-line "    :: universe")
-         (code-line "")
-         (code-line "let GetNeighbours (cell:Cell) : List<Cell> =")
-         (code-line "    let AddNForCell acc elem = AddNeighbour cell elem acc")
-         (code-line "    List.fold AddNForCell [] neighbours")
-         (code-line "    |> List.rev")))))
+         (tt "let AddN cell mods universe =")
+         (tt "    { xPosition = cell.xPosition + fst mods;")
+         (tt "      yPosition = cell.yPosition +  snd mods}")
+         (tt "    :: universe")
+         (tt "")
+         (tt "let GetNeighbours (cell:Cell) : List<Cell> =")
+         (tt "    let AddNForCell acc elem = AddN cell elem acc")
+         (tt "    List.fold AddNForCell [] neighbours")
+         (tt "    |> List.rev")))))
 
 (slide
  #:title "Generic Building Blocks"
@@ -258,36 +262,44 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
   (list
    (vl-append
     0
-    (code-line "let Born universe =")
-    (code-line "    List.fold (fun acc elem ->")
-    (code-line "                   (GetNeighbours elem) @ acc) [] universe)")
-    (code-line "    |> Set.ofList")
-    (code-line "    |> Set.toList")
-    (code-line "    |> List.filter (fun x -> ")
-    (code-line "                       not (List.exists")
-    (code-line "                                (fun y -> CompareCell x y) universe)")
-    (code-line "    |> List.fold (fun acc elem ->")
-    (code-line "                  match CheckIfThree elem universe with")
-    (code-line "                  | true -> elem :: acc")
-    (code-line "                  | false -> acc) []")))
+    (tt "let NotIn universe =")
+    (tt "    fun x -> not (List.exists (fun(y) -> CompareCell x y) universe)")
+    (tt "")
+    (tt "let NotAnyInUniverse universe from =")
+    (tt "    List.filter (NotIn universe) from")
+    (tt "")
+    (tt "let Born universe =")
+    (tt "    List.fold (fun acc elem ->")
+    (tt "                   (GetNeighbours elem) @ acc) [] universe)")
+    (tt "    |> Set.ofList")
+    (tt "    |> Set.toList")
+    (tt "    |> NotAnyInUniverse ")
+    (tt "    |> List.fold (fun acc elem ->")
+    (tt "                  match CheckIfThree elem universe with")
+    (tt "                  | true -> elem :: acc")
+    (tt "                  | false -> acc) []")))
   (list
    (vl-append
     0
-    (code-line "let Born check universe =")
-    (code-line "    List.fold (fun acc elem ->")
-    (code-line "                   (GetNeighbours elem) @ acc) [] universe)")
-    (code-line "    |> Set.ofList")
-    (code-line "    |> Set.toList")
-    (code-line "    |> List.filter (fun x -> ")
-    (code-line "                       not (List.exists")
-    (code-line "                                (fun y -> CompareCell x y) universe)")
-    (code-line "    |> List.fold (fun acc elem ->")
-    (code-line "                  match check elem universe with")
-    (code-line "                  | true -> elem :: acc")
-    (code-line "                  | false -> acc) []")
-    (code-line "")
-    (code-line "let BornWithThree universe =")
-    (code-line "    Born CheckIfThree universe")
+    (tt "let NotIn list =")
+    (tt "    fun x -> not (List.exists (fun(y) -> CompareCell x y) list)")
+    (tt "")
+    (tt "let NotAnyIn list from =")
+    (tt "    List.filter (NotIn list) from")
+    (tt "")
+    (tt "let Born check universe =")
+    (tt "    List.fold (fun acc elem ->")
+    (tt "                   (GetNeighbours elem) @ acc) [] universe)")
+    (tt "    |> Set.ofList")
+    (tt "    |> Set.toList")
+    (tt "    |> NotAnyIn universe")
+    (tt "    |> List.fold (fun acc elem ->")
+    (tt "                  match check elem universe with")
+    (tt "                  | true -> elem :: acc")
+    (tt "                  | false -> acc) []")
+    (tt "")
+    (tt "let BornWithThree universe =")
+    (tt "    Born CheckIfThree universe")
     ))))
 
 (slide
@@ -299,24 +311,24 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
   (list
    (vl-append
     0
-    (code-line "let CreateUniverse () = ")
-    (code-line "    printf \"We are creating the universe\"")
-    (code-line "    [{xPosition = 0; yPosition = 0}]")))
+    (tt "let CreateUniverse () = ")
+    (tt "    printf \"We are creating the universe\"")
+    (tt "    [{xPosition = 0; yPosition = 0}]")))
   (list
    (vl-append
     0
-    (code-line "let CreateUniverse logger = ")
-    (code-line "    logger \"We are creating the universe\"")
-    (code-line "    [{xPosition = 0; yPosition = 0}]")))
+    (tt "let CreateUniverse logger = ")
+    (tt "    logger \"We are creating the universe\"")
+    (tt "    [{xPosition = 0; yPosition = 0}]")))
   (list
    (vl-append
     0
-    (code-line "let CreateUniverse logger = ")
-    (code-line "    [{xPosition = 0; yPosition = 0}]")
-    (code-line "")
-    (code-line "let [<EntryPoint>] main _ = ")
-    (code-line "   printf \"We are creating the universe\"")
-    (code-line "   [{xPosition = 0; yPosition = 0}]")))))
+    (tt "let CreateUniverse logger = ")
+    (tt "    [{xPosition = 0; yPosition = 0}]")
+    (tt "")
+    (tt "let [<EntryPoint>] main _ = ")
+    (tt "   printf \"We are creating the universe\"")
+    (tt "   [{xPosition = 0; yPosition = 0}]")))))
 
 (slide
  #:title "Expressions, not Statements"
@@ -336,19 +348,19 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
   (list
    (vl-append
     0
-    (code-line "let FindOnUniverse list1 list2 =")
-    (code-line "    List.filter ")
-    (code-line "        (fun (x) ->")
-    (code-line "            List.exists (fun(y) -> x = y) list2)")
-    (code-line "        list1")))
+    (tt "let FindOnUniverse list1 list2 =")
+    (tt "    List.filter ")
+    (tt "        (fun (x) ->")
+    (tt "            List.exists (fun(y) -> x = y) list2)")
+    (tt "        list1")))
   (list
    (vl-append
     0
-    (code-line "let FindOnUniverse seq1 seq2 =")
-    (code-line "    Seq.filter")
-    (code-line "        (fun (x) ->")
-    (code-line "            Seq.exists (fun(y) -> x = y) seq2)")
-    (code-line "        seq1")))))
+    (tt "let FindOnUniverse seq1 seq2 =")
+    (tt "    Seq.filter")
+    (tt "        (fun (x) ->")
+    (tt "            Seq.exists (fun(y) -> x = y) seq2)")
+    (tt "        seq1")))))
 
 (slide
  #:title "One argument functions"
@@ -360,33 +372,32 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
   (list
    (vl-append
     0
-    (code-line "let FindOnUniverse list1 list2 =")
-    (code-line "    List.filter")
-    (code-line "        (fun (x) -> ")
-    (code-line "            List.exists (fun(y) -> x = y) list2)")
-    (code-line "        list1")))
+    (tt "let FindOnUniverse list1 list2 =")
+    (tt "    List.filter")
+    (tt "        (fun (x) -> ")
+    (tt "            List.exists (fun(y) -> x = y) list2)")
+    (tt "        list1")))
   (list
    (vl-append
     0
-    (code-line "let CheckForExistence onList =")
-    (code-line "    fun(x) -> List.exists (fun(y) -> x = y) onList")
-    (code-line "")
-    (code-line "let Exists = CheckForExistence universe")
-    (code-line "let Find possibles = ")
-    (code-line "    List.Filter Exists possibles")))
+    (tt "let CheckForExistence onList =")
+    (tt "    fun(x) -> List.exists (fun(y) -> x = y) onList")
+    (tt "")
+    (tt "let Find possibles = ")
+    (tt "    List.Filter (CheckForExistence universe) possibles")))
   (list
    (vl-append
     0
-    (code-line "let CheckIfThree cell universe =")
-    (code-line "    let neighbours = GetNeighbours cell")
-    (code-line "    let alive = FindOnUniverse universe neighbours")
-    (code-line "    List.length alive = 3")))
+    (tt "let CheckIfThree cell universe =")
+    (tt "    let neighbours = GetNeighbours cell")
+    (tt "    let alive = FindOnUniverse universe neighbours")
+    (tt "    List.length alive = 3")))
   (list
    (vl-append
     0
-    (code-line "let FWU = FindOnUniverse universe")
-    (code-line "let checkForThree alive = List.length alive = 3")
-    (code-line "let check = GetNeighbours >> FWU >> checkForThree")))))
+    (tt "let FWU = FindOnUniverse universe")
+    (tt "let checkForThree alive = List.length alive = 3")
+    (tt "let check = GetNeighbours >> FWU >> checkForThree")))))
 
 (slide
  #:title "The Links"
