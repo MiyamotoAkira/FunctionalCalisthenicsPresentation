@@ -85,6 +85,14 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
  (item "Infinite Sequences")
  (item "One Argument Functions"))
 
+(slide
+ #:title "Conway's Game of life"
+ 'next
+ (item "Cells are alive or dead")
+ (item "Universe is a grid of squares")
+ (item "Cell stays alive if 2 or 3 neighbours")
+ (item "Dead cell will born if 3 neighbours"))
+
 (with-steps
  (intro first second nonames withnames)
  (slide
