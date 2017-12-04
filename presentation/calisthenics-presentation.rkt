@@ -213,25 +213,25 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
     0
     (tt "let ``Empty cell becomes alive`` () =")
     (tt "    let u3 = [")
-    (tt "        { xPosition = -1; yPosition = -1};")
-    (tt "        { xPosition = 1; yPosition = 1};")
-    (tt "        { xPosition = -1; yPosition = 1}]")
-    (tt "    let u = [{ xPosition = 0; yPosition = 0}]")
+    (tt "        { x = -1; y = -1};")
+    (tt "        { x = 1; y = 1};")
+    (tt "        { x = -1; y = 1}]")
+    (tt "    let u = [{ x = 0; y = 0}]")
     (tt "    let au = NextUniverse u3")
     (tt "    Assert.True (CompareList u au)")))
   (list
    (vl-append
     0
     (tt "let expectedUniverse =")
-    (tt "     [{ xPosition = 0; yPosition = 0}]")
+    (tt "     [{ x = 0; y = 0}]")
     (tt "")
     (tt "let CompareWith expected actual =")
     (tt "    Assert.True (CompareList expected actual)")
     (tt "")
     (tt "let universeWithThreeCells = ")
-    (tt "    [{ xPosition = -1; yPosition = -1};")
-    (tt "     { xPosition = 1; yPosition = 1};")
-    (tt "     { xPosition = -1; yPosition = 1}]")
+    (tt "    [{ x = -1; y = -1};")
+    (tt "     { x = 1; y = 1};")
+    (tt "     { x = -1; y = 1}]")
     (tt "let ``Empty cell becomes alive`` () =")
     (tt "    universeWithThreeCells")
     (tt "    |> NextUniverse")
@@ -249,8 +249,8 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
    (vl-append
     0
     (tt "let AddN cell mods universe =")
-    (tt "    { xPosition = cell.xPosition + fst mods;")
-    (tt "      yPosition = cell.yPosition +  snd mods}")
+    (tt "    { x = cell.x + fst mods;")
+    (tt "      y = cell.y +  snd mods}")
     (tt "    :: universe")
     (tt "")
     (tt "let GetNeighbours (cell:Cell) : List<Cell> =")
@@ -264,8 +264,8 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
   (list
    (vl-append 0
          (tt "let AddN cell mods universe =")
-         (tt "    { xPosition = cell.xPosition + fst mods;")
-         (tt "      yPosition = cell.yPosition +  snd mods}")
+         (tt "    { x = cell.x + fst mods;")
+         (tt "      y = cell.y +  snd mods}")
          (tt "    :: universe")
          (tt "")
          (tt "let GetNeighbours (cell:Cell) : List<Cell> =")
@@ -337,22 +337,22 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
     0
     (tt "let CreateUniverse () = ")
     (tt "    printf \"We are creating the universe\"")
-    (tt "    [{xPosition = 0; yPosition = 0}]")))
+    (tt "    [{x = 0; y = 0}]")))
   (list
    (vl-append
     0
     (tt "let CreateUniverse logger = ")
     (tt "    logger \"We are creating the universe\"")
-    (tt "    [{xPosition = 0; yPosition = 0}]")))
+    (tt "    [{x = 0; y = 0}]")))
   (list
    (vl-append
     0
     (tt "let CreateUniverse logger = ")
-    (tt "    [{xPosition = 0; yPosition = 0}]")
+    (tt "    [{x = 0; y = 0}]")
     (tt "")
     (tt "let [<EntryPoint>] main _ = ")
     (tt "   printf \"We are creating the universe\"")
-    (tt "   [{xPosition = 0; yPosition = 0}]")))))
+    (tt "   [{x = 0; y = 0}]")))))
 
 (slide
  #:title "Expressions, not Statements"
