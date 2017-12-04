@@ -74,6 +74,7 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
 
 (slide
  #:title "The Rules"
+ (comment "These are the rules as they currently stand. We will be looking at examples of each one as we move along.")
  (item "Name everyting")
  (item "No Mutable State")
  (item "Exhaustive Conditionals")
@@ -87,6 +88,7 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
 
 (slide
  #:title "Conway's Game of life"
+ (comment "Does anyone not know the game of life? Created in 1970 by John Horton Conway. Interesting because from a very simple set of rules you can create some sofisticated elements. When I originally heard about it I learned about gliders, and guns, and oscillators. And then, not long ago I discovered that you can create an Universal Turing Machine from it.")
  'next
  (item "Cells are alive or dead")
  (item "Universe is a grid of squares")
