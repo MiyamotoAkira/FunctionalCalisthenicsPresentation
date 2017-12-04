@@ -93,6 +93,15 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
  (item "Cell stays alive if 2 or 3 neighbours")
  (item "Dead cell will born if 3 neighbours"))
 
+(define (function s)
+  (colorize (tt s) "light blue"))
+
+(define (keyword s)
+  (colorize (tt s) "blue"))
+
+(define (parameter s)
+  (colorize (tt s) "orange"))
+
 (with-steps
  (intro first second nonames withnames)
  (slide
@@ -105,24 +114,31 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
   (lt-superimpose
    ((vonly nonames)
     (vl-append 0
-               (tt "let GetNeighbours (cell:Cell) : List<Cell> =")
-               (tt "    List.fold (fun acc elem ->")
-               (tt "        { xPosition = cell.xPosition + fst elem;")
-               (tt "          yPosition = cell.yPosition +  snd elem}")
-               (tt "       :: acc)")
-               (tt "    [] neighbours")
-               (tt "    |> List.rev")))
+               (hbl-append 0 (keyword "let ") (function "GetNeighbours") (parameter " (cell:Cell) : List<Cell> ") (keyword "="))
+               (tt "    let rec FindNeighbours neighbours U =")
+               (tt "        match neighbours with")
+               (tt "        | [] -> U")
+               (tt "        | H::T ->")
+               (tt "            FindNeighbours T (")
+               (tt "                 { x = cell.x + fst H;")
+               (tt "                 y = cell.y +  snd H}")
+               (tt "                :: U)")
+               (tt "    FindNeighbours neighbours []")
+               (hbl-append 0 (tt "    ") (keyword "|> ") (tt "List.rev"))))
    ((vonly withnames)
     (vl-append 0
-               (tt "let AddNeighbour cell mods universe =")
-               (tt "    { xPosition = cell.xPosition + fst mods;")
-               (tt "      yPosition = cell.yPosition +  snd mods}")
+               (hbl-append 0 (keyword "let ") (function "AddNeighbour ") (parameter "cell universe mods ") (keyword "="))
+               (tt "    { x = cell.x + fst mods;")
+               (tt "      y = cell.y +  snd mods}")
                (tt "    :: universe")
                (tt "")
-               (tt "let GetNeighbours (cell:Cell) : List<Cell> =")
-               (tt "    let AddNeighbourForCell acc elem =")
-               (tt "        AddNeighbour cell elem acc")
-               (tt "    List.fold AddNeighboursForCell [] neighbours")
+               (hbl-append 0 (keyword "let ") (function "GetNeighbours") (parameter " (cell:Cell) : List<Cell> ") (keyword "="))
+               (tt "    let rec FindNeighbours Ns U =")
+               (tt "        match Ns with")
+               (tt "        | [] -> U")
+               (tt "        | H::T ->")
+               (tt "            FindNeighbours T (AddNeighbour cell U H)")
+               (tt "    FindNeighbours neighbours []")
                (tt "    |> List.rev"))))))
 
 (slide
