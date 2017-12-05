@@ -104,6 +104,40 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
 (define (parameter s)
   (colorize (tt s) "orange"))
 
+(define (letk) (keyword "let "))
+
+(define (equal) (keyword "= "))
+
+(define (tab) (tt "    "))
+
+(slide
+ #:title "Some declarations"
+ (vl-append 0
+            (hbl-append 0 (keyword "type ") (function "Cell ") (equal) (keyword "{") (tt "x") (keyword ": int; ") (tt "y") (keyword ": int}") )
+            (tt "")
+            (hbl-append 0
+                        (keyword "let ")
+                        (function "neighbours ")
+                        (keyword "= [")
+                        (tt "(-1,-1)")
+                        (keyword "; ")
+                        (tt "(0,-1)")
+                        (keyword "; ")
+                        (tt "(1,-1)")
+                        (keyword "; ")
+                        (tt "(-1,0)")
+                        (keyword "; "))
+            (hbl-append 0
+                        (tt "                  ")
+                        (tt "(1,0)")
+                        (keyword "; ")
+                        (tt "(-1,1)")
+                        (keyword "; ")
+                        (tt "(0,1)")
+                        (keyword "; ")
+                        (tt "(1,1)")
+                        (keyword ";]"))))
+
 (with-steps
  (intro first second nonames withnames)
  (slide
@@ -117,31 +151,32 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
    ((vonly nonames)
     (vl-append 0
                (hbl-append 0 (keyword "let ") (function "GetNeighbours") (parameter " (cell:Cell) : List<Cell> ") (keyword "="))
-               (tt "    let rec FindNeighbours neighbours U =")
-               (tt "        match neighbours with")
-               (tt "        | [] -> U")
-               (tt "        | H::T ->")
+               (hbl-append 0 (tt "    ") (keyword "let rec ") (function "FindNeighbours ") (parameter " neighbours U ") (keyword "="))
+               (hbl-append 0 (tt "        ") (keyword "match ") (tt "neighbours ") (keyword "with"))
+               (hbl-append 0 (tt "        ") (keyword "| ") (keyword "[] -> ") (tt "U"))
+               (hbl-append 0 (tt "        ") (keyword "| ") (tt "H") (keyword "::") (tt "T ") (keyword "->"))
                (tt "            FindNeighbours T (")
-               (tt "                 { x = cell.x + fst H;")
-               (tt "                 y = cell.y +  snd H}")
-               (tt "                :: U)")
+               (hbl-append 0 (tt "                 ") (keyword "{ ") (tt "x ") (keyword "= ") (tt "cell.x ") (keyword "+ ") (tt "fst H") (keyword ";"))
+               (hbl-append 0 (tt "                 y ") (keyword "= ") (tt "cell.y ") (keyword "+ ") (tt "snd H") (keyword "}"))
+               (hbl-append 0 (tt "                ") (keyword ":: ") (tt "U)"))
                (tt "    FindNeighbours neighbours []")
                (hbl-append 0 (tt "    ") (keyword "|> ") (tt "List.rev"))))
    ((vonly withnames)
     (vl-append 0
                (hbl-append 0 (keyword "let ") (function "AddNeighbour ") (parameter "cell universe mods ") (keyword "="))
-               (tt "    { x = cell.x + fst mods;")
-               (tt "      y = cell.y +  snd mods}")
-               (tt "    :: universe")
+               (hbl-append 0 (keyword "    { ") (tt "x ") (keyword "= ") (tt "cell.x ") (keyword "+ ") (tt "fst mods") (keyword ";"))
+               (hbl-append 0 (tt "      y ") (keyword "= ") (tt "cell.y ") (keyword "+ ") (tt "snd mods") (keyword "}"))
+               (hbl-append 0 (keyword "    ::") (tt "universe"))
                (tt "")
                (hbl-append 0 (keyword "let ") (function "GetNeighbours") (parameter " (cell:Cell) : List<Cell> ") (keyword "="))
-               (tt "    let rec FindNeighbours Ns U =")
-               (tt "        match Ns with")
-               (tt "        | [] -> U")
-               (tt "        | H::T ->")
+               (hbl-append 0 (keyword "    let rec ") (function "FindNeighbours") (parameter "Ns U ") (keyword "="))
+               (hbl-append 0 (keyword "        match ") (tt "Ns ") (keyword "with"))
+               (hbl-append 0 (keyword "        | [] -> ") (tt "U"))
+               (hbl-append 0 (keyword "        | ") (tt "H") (keyword "::") (tt "T ") (keyword "->"))
                (tt "            FindNeighbours T (AddNeighbour cell U H)")
-               (tt "    FindNeighbours neighbours []")
-               (tt "    |> List.rev"))))))
+               (hbl-append 0 (tt "    FindNeighbours neighbours ") (keyword "[]"))
+
+               (hbl-append 0 (keyword "    |> ") (tt "List.rev")))))))
 
 (slide
  #:title "No Mutable State"
@@ -154,24 +189,25 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
   (list
    (vl-append
     0
-    (tt "let FindOnUniverse universe (alive:byref<_>) = ")
-    (tt "    alive <- some_calculation")
+    (hbl-append 0 (letk) (function "FindOnUniverse ") (parameter "universe (alive:byref<_>) ") (keyword "="))
+    (hbl-append 0 (tab) (tt "alive ") (keyword "<- ") (tt "some_calculation"))
     (tt " ")
-    (tt "let CheckIfAlive cell universe =")
-    (tt "    let mutable alive  = GetNeighbours cell")
-    (tt "    FindOnUniverse universe &alive")
-    (tt "    (List.length alive) = 2")
-    (tt "    || (List.length alive = 3)")))
+    (hbl-append 0 (letk) (function "CheckIfAlive ") (parameter "cell universe ") (keyword "="))
+    (hbl-append 0 (tab) (letk) (keyword "mutable ") (function "alive ") (keyword "= ") (tt "GetNeighbours cell"))
+    (hbl-append 0 (tab) (tt "FindOnUniverse universe ") (keyword "&") (tt "alive"))
+    (hbl-append 0 (tab) (tt "(List.length alive) ") (equal) (tt "2"))
+    (hbl-append 0 (tab) (keyword "|| ") (tt "(List.length alive ") (equal) (tt "3"))))
   (list
    (vl-append
     0
-    (tt "let FindOnUniverse universe alive = ...")
+    (hbl-append 0 (keyword "let ") (function "FindOnUniverse ") (parameter "universe alive") (keyword "= ") (tt "..."))
     (tt " ")
-    (tt "let CheckIfAlive cell universe =")
-    (tt "    let neighbours  = GetNeighbours cell")
-    (tt "    let alive = FindOnUniverse universe neighbours")
-    (tt "    (List.length alive) = 2")
-    (tt "    || (List.length alive = 3)")))))
+    (hbl-append 0 (keyword "let ") (function "CheckIfAlive ") (parameter "cell universe ") (keyword "="))
+    (hbl-append 0 (tab) (letk) (function "neighbours ") (equal) (tt "GetNeighbours cell"))
+    (hbl-append 0 (tab) (letk) (function "alive ") (equal) (tt "FindOnUniverse universe neighbours"))
+    (hbl-append 0 (tab) (tt "(List.length alive) ") (equal) (tt "2"))
+    (hbl-append 0 (tab) (keyword "|| ") (tt "(List.length alive ") (equal) (tt "3"))
+    ))))
 
 (slide
  #:title "Exhaustive Conditionals"
@@ -183,28 +219,32 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
  'alts
  (list
   (list
-   (vl-append 0
-    (tt "match CheckIfAlive elem universe with")
-    (tt "| true -> printf \"hey\"")))
+   (vl-append
+    0
+    (hbl-append 0 (keyword "match ") (tt "CheckIfAlive elem universe ") (keyword "with "))
+    (hbl-append 0 (keyword "| true -> ") (tt "elem ") (keyword ":: ") (tt "acc"))))
   (list
-   (vl-append 0
-    (tt "match CheckIfAlive elem universe with")
-    (tt "| true -> elem :: acc")
-    (tt "| false -> acc")))
+   (vl-append
+    0
+    (hbl-append 0 (keyword "match ") (tt "CheckIfAlive elem universe ") (keyword "with "))
+    (hbl-append 0 (keyword "| true -> ") (tt "elem ") (keyword ":: ") (tt "acc"))
+    (hbl-append 0 (keyword "| false -> ") (tt "acc"))))
   (list
-   (vl-append 0
-              (tt "if x = \"fefe\" then")
-              (tt "    printf \"hey\"")))
+   (vl-append
+    0
+    (hbl-append 0 (keyword "if ") (tt "x ") (equal) (tt "\"let's go\" ") (keyword "then"))
+    (hbl-append 0 (tab) (tt "printf \"hey\""))))
   (list
-   (vl-append 0
-              (tt "if x = \"fefe\" then")
-              (tt "    printf \"hey\"")
-              (tt  "else")
-              (tt  "    prinft \"ho\"")))))
+   (vl-append
+    0
+    (hbl-append 0 (keyword "if ") (tt "x ") (equal) (tt "\"let's go\" ") (keyword "then"))
+    (hbl-append 0 (tab) (tt "printf \"hey\""))
+    (keyword "else")
+    (hbl-append 0 (tab) (tt "printf \"ho\""))))))
 
 (slide
  #:title "Do not use intermediate variables"
- (comment "")
+ (comment "I want you to notice that this is a test. All these rules still apply to tests. Tests is code. But wait, we said that we want names on everything. If we want names and no intermediate variables we need to push them out. Maybe we can consider constants (cheating a bit). They can be reused on multiple tests. But if not, we are removing locality.")
  'next
  (t "It is about the flow of data transformations")
  'next
@@ -213,31 +253,47 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
   (list
    (vl-append
     0
-    (tt "let ``Empty cell becomes alive`` () =")
-    (tt "    let u3 = [")
-    (tt "        { x = -1; y = -1};")
-    (tt "        { x = 1; y = 1};")
-    (tt "        { x = -1; y = 1}]")
-    (tt "    let u = [{ x = 0; y = 0}]")
-    (tt "    let au = NextUniverse u3")
-    (tt "    Assert.True (CompareList u au)")))
+    (hbl-append 0 (letk) (function "CompareWith ") (parameter "expected actual ") (equal))
+    (tt "    Assert.True (CompareList expected actual)")
+    (tt "")
+    (hbl-append 0 (letk) (function "``Empty cell becomes alive`` ") (keyword "() ") (equal))
+    (hbl-append 0 (tab) (letk) (function "u3 ") (equal) (keyword "["))
+    (hbl-append 0 (tab) (tab) (keyword "{") (tt "x ") (equal) (tt "-1") (keyword "; ") (tt "y ") (equal) (tt "-1") (keyword "};"))
+    (hbl-append 0 (tab) (tab) (keyword "{") (tt "x ") (equal) (tt "1") (keyword "; ") (tt "y ") (equal) (tt "1") (keyword "};"))
+    (hbl-append 0 (tab) (tab) (keyword "{") (tt "x ") (equal) (tt "-1") (keyword "; ") (tt "y ") (equal) (tt "1") (keyword "}]"))
+    (hbl-append 0 (tab) (letk) (function "universe ") (equal) (keyword "[{ ") (tt "x ") (equal) (tt "0") (keyword "; ") (tt "y ") (equal) (tt "0") (keyword "}]"))
+    (hbl-append 0 (tab) (letk) (function "actualUniverse ") (equal) (tt"NextUniverse u3"))
+    (hbl-append 0 (tab) (tt "CompareWith universe actualUniverse"))))
   (list
    (vl-append
     0
-    (tt "let expectedUniverse =")
-    (tt "     [{ x = 0; y = 0}]")
-    (tt "")
-    (tt "let CompareWith expected actual =")
+    (hbl-append 0 (letk) (function "CompareWith ") (parameter "expected actual ") (equal))
     (tt "    Assert.True (CompareList expected actual)")
     (tt "")
-    (tt "let universeWithThreeCells = ")
-    (tt "    [{ x = -1; y = -1};")
-    (tt "     { x = 1; y = 1};")
-    (tt "     { x = -1; y = 1}]")
-    (tt "let ``Empty cell becomes alive`` () =")
+    (hbl-append 0 (letk) (function "``Empty cell becomes alive`` ") (keyword "() ") (equal))
+    (hbl-append 0 (tab) (keyword "[{") (tt "x ") (equal) (tt "-1") (keyword "; ") (tt "y ") (equal) (tt "-1") (keyword "};"))
+    (hbl-append 0 (tab) (keyword "{") (tt "x ") (equal) (tt "1") (keyword "; ") (tt "y ") (equal) (tt "1") (keyword "};"))
+    (hbl-append 0 (tab) (keyword "{") (tt "x ") (equal) (tt "-1") (keyword "; ") (tt "y ") (equal) (tt "1") (keyword "}]"))
+    (hbl-append 0 (tab) (keyword "|> ") (tt "NextUniverse"))
+    (hbl-append 0 (tab) (keyword "|> ") (tt "CompareWith ") (keyword "[{ ") (tt "x ") (equal) (tt "0") (keyword "; ") (tt "y ") (equal) (tt "0") (keyword "}]"))))
+  (list
+   (vl-append
+    0
+    (hbl-append 0 (letk) (function "CompareWith ") (parameter "expected actual ") (equal))
+    (tt "    Assert.True (CompareList expected actual)")
+    (tt "")
+    (hbl-append 0 (letk) (function "expectedUniverse ") (equal))
+    (hbl-append 0 (tab) (keyword "[{ ") (tt "x ") (equal) (tt "0") (keyword "; ") (tt "y ") (equal) (tt "0") (keyword "}]"))
+    (tt "")
+    (hbl-append 0 (letk) (function "universeWithThreeCells ") (equal))
+    (hbl-append 0 (tab) (keyword "[{") (tt "x ") (equal) (tt "-1") (keyword "; ") (tt "y ") (equal) (tt "-1") (keyword "};"))
+    (hbl-append 0 (tab) (keyword "{") (tt "x ") (equal) (tt "1") (keyword "; ") (tt "y ") (equal) (tt "1") (keyword "};"))
+    (hbl-append 0 (tab) (keyword "{") (tt "x ") (equal) (tt "-1") (keyword "; ") (tt "y ") (equal) (tt "1") (keyword "}]"))
+    (tt "")
+    (hbl-append 0 (letk) (function "``Empty cell becomes alive`` ") (keyword "() ") (equal))
     (tt "    universeWithThreeCells")
-    (tt "    |> NextUniverse")
-    (tt "    |> CompareWith expectedUniverse")))))
+    (hbl-append 0 (tab) (keyword "|> ") (tt "NextUniverse"))
+    (hbl-append 0 (tab) (keyword "|> ") (tt "CompareWith expectedUniverse"))))))
 
 (slide
  #:title "No Explicit Recursion"
@@ -250,30 +306,42 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
   (list
    (vl-append
     0
-    (tt "let AddN cell mods universe =")
-    (tt "    { x = cell.x + fst mods;")
-    (tt "      y = cell.y +  snd mods}")
-    (tt "    :: universe")
+    (hbl-append 0 (letk) (function "AddN ") (parameter "cell universe mods ") (equal))
+    (hbl-append 0 (tab) (keyword "{ ") (tt "x ") (equal) (tt "cell.x ") (keyword "+ ") (tt "fst mods") (keyword ";"))
+    (hbl-append 0 (tab) (tt "y ") (equal) (tt "cell.y ") (keyword "+ ") (tt "snd mods") (keyword "}"))
+    (hbl-append 0 (tab) (keyword ":: ") (tt "universe"))
     (tt "")
-    (tt "let GetNeighbours (cell:Cell) : List<Cell> =")
-    (tt "    let rec FindNeighbours cU nU =")
-    (tt "        match cU with")
-    (tt "        | [] -> nU")
-    (tt "        | H::T ->")
-    (tt "            FindNeighbours T (AddN cell H nU)")
-    (tt "    FindNeighbours neighbours []")
-    (tt "    |> List.rev")))
+    (hbl-append 0 (letk) (function "GetNeighbours ") (parameter "(cell:Cell) : List<Cell> ") (equal))
+    (hbl-append 8 (tab) (letk) (keyword "rec ") (function "FindNeighbours ") (parameter "U N ") (equal))
+    (hbl-append 0 (tab) (tab) (keyword "match ") (tt "N ") (keyword "with "))
+    (hbl-append 0 (tab) (tab) (keyword "| [] -> ") (tt "U"))
+    (hbl-append 0 (tab) (tab) (keyword "| ") (tt "H") (keyword "::") (tt "T ") (keyword "->"))
+    (tt "            FindNeighbours T (AddN cell U H)")
+    (hbl-append 0 (tt "    FindNeighbours neighbours ") (keyword "[]"))
+    (hbl-append 0 (tab) (keyword "|>") (tt "List.rev"))))
   (list
-   (vl-append 0
-         (tt "let AddN cell mods universe =")
-         (tt "    { x = cell.x + fst mods;")
-         (tt "      y = cell.y +  snd mods}")
-         (tt "    :: universe")
-         (tt "")
-         (tt "let GetNeighbours (cell:Cell) : List<Cell> =")
-         (tt "    let AddNForCell acc elem = AddN cell elem acc")
-         (tt "    List.fold AddNForCell [] neighbours")
-         (tt "    |> List.rev")))))
+   (vl-append
+    0
+    (hbl-append 0 (letk) (function "AddN ") (parameter "cell universe mods ") (equal))
+    (hbl-append 0 (tab) (keyword "{ ") (tt "x ") (equal) (tt "cell.x ") (keyword "+ ") (tt "fst mods") (keyword ";"))
+    (hbl-append 0 (tab) (tt "y ") (equal) (tt "cell.y ") (keyword "+ ") (tt "snd mods") (keyword "}"))
+    (hbl-append 0 (tab) (keyword ":: ") (tt "universe"))
+    (tt "")
+    (hbl-append 0 (letk) (function "GetNeighbours ") (parameter "(cell:Cell) : List<Cell> ") (equal))
+    (hbl-append 0 (tab) (letk) (function "AddNForCell ") (parameter "acc elem ") (equal) (tt "AddN cell acc elem"))
+    (hbl-append 0 (tab) (tt "List.fold (AddN cell) ") (keyword "[] ") (tt "neighbours"))
+    (hbl-append 0 (tab) (keyword "|>") (tt "List.rev"))))
+  (list
+   (vl-append
+    0
+    (hbl-append 0 (letk) (function "AddN ") (parameter "cell universe mods ") (equal))
+    (hbl-append 0 (tab) (keyword "{ ") (tt "x ") (equal) (tt "cell.x ") (keyword "+ ") (tt "fst mods") (keyword ";"))
+    (hbl-append 0 (tab) (tt "y ") (equal) (tt "cell.y ") (keyword "+ ") (tt "snd mods") (keyword "}"))
+    (hbl-append 0 (tab) (keyword ":: ") (tt "universe"))
+    (tt "")
+    (hbl-append 0 (letk) (function "GetNeighbours ") (parameter "(cell:Cell) : List<Cell> ") (equal))
+    (hbl-append 0 (tab) (tt "List.fold (AddN cell) ") (keyword "[] ") (tt "neighbours"))
+    (hbl-append 0 (tab) (keyword "|>") (tt "List.rev"))))))
 
 (slide
  #:title "Generic Building Blocks"
@@ -288,45 +356,29 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
   (list
    (vl-append
     0
-    (tt "let NotIn universe =")
-    (tt "    fun x -> not (List.exists (fun(y) -> CompareCell x y) universe)")
-    (tt "")
-    (tt "let NotAnyInUniverse universe from =")
-    (tt "    List.filter (NotIn universe) from")
-    (tt "")
-    (tt "let Born universe =")
-    (tt "    List.fold (fun acc elem ->")
-    (tt "                   (GetNeighbours elem) @ acc) [] universe)")
-    (tt "    |> Set.ofList")
-    (tt "    |> Set.toList")
-    (tt "    |> NotAnyInUniverse ")
-    (tt "    |> List.fold (fun acc elem ->")
-    (tt "                  match CheckIfThree elem universe with")
-    (tt "                  | true -> elem :: acc")
-    (tt "                  | false -> acc) []")))
+    (hbl-append 0 (letk) (function "Born ") (parameter "universe ") (equal))
+    (hbl-append 0 (tab) (tt "List.fold ") (keyword "-> ") (tt "CollateNeighbours ") (keyword "[] ") (tt "universe"))
+    (hbl-append 0 (tab) (keyword "|> ") (tt "Set.ofList"))
+    (hbl-append 0 (tab) (keyword "|> ") (tt "Set.toList"))
+    (hbl-append 0 (tab) (keyword "|> ") (tt "NotAnyIn universe"))
+    (hbl-append (tab) (keyword "|> ") (tt "List.fold (") (keyword "fun ") (tt "acc e ") (keyword "->"))
+    (hbl-append (tab) (tab) (tab) (tab) (keyword "match ") (tt "IfThree e universe ") (keyword "with"))
+    (hbl-append 0 (tab) (tab) (tab) (tab) (keyword "| true -> ") (tt "e ") (keyword ":: ") (tt "acc"))
+    (hbl-append 0 (tab) (tab) (tab) (tab) (keyword "| false -> ") (tt "acc) ") (keyword "[] ") (tt "acc"))))
   (list
    (vl-append
     0
-    (tt "let NotIn list =")
-    (tt "    fun x -> not (List.exists (fun(y) -> CompareCell x y) list)")
-    (tt "")
-    (tt "let NotAnyIn list from =")
-    (tt "    List.filter (NotIn list) from")
-    (tt "")
-    (tt "let Born check universe =")
-    (tt "    List.fold (fun acc elem ->")
-    (tt "                   (GetNeighbours elem) @ acc) [] universe)")
-    (tt "    |> Set.ofList")
-    (tt "    |> Set.toList")
-    (tt "    |> NotAnyIn universe")
-    (tt "    |> List.fold (fun acc elem ->")
-    (tt "                  match check elem universe with")
-    (tt "                  | true -> elem :: acc")
-    (tt "                  | false -> acc) []")
-    (tt "")
-    (tt "let BornWithThree universe =")
-    (tt "    Born CheckIfThree universe")
-    ))))
+    (hbl-append 0 (letk) (function "Born ") (parameter "check universe ") (equal))
+    (hbl-append 0 (tab) (tt "List.fold ") (keyword "-> ") (tt "CollateNeighbours ") (keyword "[] ") (tt "universe"))
+    (hbl-append 0 (tab) (keyword "|> ") (tt "Set.ofList"))
+    (hbl-append 0 (tab) (keyword "|> ") (tt "Set.toList"))
+    (hbl-append 0 (tab) (keyword "|> ") (tt "NotAnyIn universe"))
+    (hbl-append (tab) (keyword "|> ") (tt "List.fold (") (keyword "fun ") (tt "acc e ") (keyword "->"))
+    (hbl-append (tab) (tab) (tab) (tab) (keyword "match ") (tt "check e universe ") (keyword "with"))
+    (hbl-append 0 (tab) (tab) (tab) (tab) (keyword "| true -> ") (tt "e ") (keyword ":: ") (tt "acc"))
+    (hbl-append 0 (tab) (tab) (tab) (tab) (keyword "| false -> ") (tt "acc) ") (keyword "[] ") (tt "acc"))
+    (hbl-append (letk) (function "BornWithThree ") (parameter "universe ") (equal))
+    (tt "    Born CheckIfThree universe")))))
 
 (slide
  #:title "Side effects at the boundaries"
@@ -358,7 +410,7 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
 
 (slide
  #:title "Expressions, not Statements"
- (comment "")
+ (comment "This started as a rule. But after using the rules of no mutable state and side effects on the boundaries there shouldn't be anything to apply here. Expressions, not Statmentes becomes a property of your code.")
  'next
  (t "No assignment at any point."))
 
@@ -374,18 +426,18 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
   (list
    (vl-append
     0
-    (tt "let FindOnUniverse list1 list2 =")
+    (hbl-append 0 (letk) (function "FindOnUniverse ") (parameter "list1 list2 ") (equal))
     (tt "    List.filter ")
-    (tt "        (fun (x) ->")
-    (tt "            List.exists (fun(y) -> x = y) list2)")
+    (hbl-append 0 (tab) (tab) (tt "(") (keyword "fun ") (tt "(x) ") (keyword "->"))
+    (hbl-append 0 (tab) (tab) (tab) (tt "List.exists (") (keyword "fun ") (tt "(y) ") (keyword "-> ") (tt "x ") (equal) (tt "y) list2)"))
     (tt "        list1")))
   (list
    (vl-append
     0
-    (tt "let FindOnUniverse seq1 seq2 =")
-    (tt "    Seq.filter")
-    (tt "        (fun (x) ->")
-    (tt "            Seq.exists (fun(y) -> x = y) seq2)")
+    (hbl-append 0 (letk) (function "FindOnUniverse ") (parameter "seq1 seq2 ") (equal))
+    (tt "    Seq.filter ")
+    (hbl-append 0 (tab) (tab) (tt "(") (keyword "fun ") (tt "(x) ") (keyword "->"))
+    (hbl-append 0 (tab) (tab) (tab) (tt "Seq.exists (") (keyword "fun ") (tt "(y) ") (keyword "-> ") (tt "x ") (equal) (tt "y) seq2)"))
     (tt "        seq1")))))
 
 (slide
@@ -398,38 +450,38 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
   (list
    (vl-append
     0
-    (tt "let FindOnUniverse list1 list2 =")
-    (tt "    List.filter")
-    (tt "        (fun (x) -> ")
-    (tt "            List.exists (fun(y) -> x = y) list2)")
-    (tt "        list1")))
+    (hbl-append 0 (letk) (function "FindOnUniverse ") (parameter "seq1 seq2 ") (equal))
+    (tt "    Seq.filter ")
+    (hbl-append 0 (tab) (tab) (tt "(") (keyword "fun ") (tt "(x) ") (keyword "->"))
+    (hbl-append 0 (tab) (tab) (tab) (tt "Seq.exists (") (keyword "fun ") (tt "(y) ") (keyword "-> ") (tt "x ") (equal) (tt "y) seq2)"))
+    (tt "        seq1")))
   (list
    (vl-append
     0
-    (tt "let CheckForExistence onList =")
-    (tt "    fun(x) -> List.exists (fun(y) -> x = y) onList")
+    (hbl-append 0 (letk) (function "CheckExistence ") (parameter "onSeq ") (equal))
+    (hbl-append 0 (tab) (keyword "fun") (tt "(x) ") (keyword "-> ") (tt "Seq.exists (") (keyword "fun") (tt "(y) ") (keyword "-> ") (tt "x ") (equal) (tt "y) onSeq"))
     (tt "")
-    (tt "let Find possibles = ")
-    (tt "    List.Filter (CheckForExistence universe) possibles")))
+    (hbl-append 0 (letk) (function "Find ") (parameter "possibles ") (equal))
+    (tt "    Seq.Filter (CheckExistence universe) possibles")))
   (list
    (vl-append
     0
-    (tt "let CheckIfThree cell universe =")
-    (tt "    let neighbours = GetNeighbours cell")
-    (tt "    let alive = FindOnUniverse universe neighbours")
-    (tt "    List.length alive = 3")))
+    (hbl-append 0 (letk) (function "CheckIfThree ") (parameter "cell universe ") (equal))
+    (hbl-append 0 (tab) (letk) (function "allNeighs ") (equal) (tt "GetNeighbours cell"))
+    (hbl-append 0 (tab) (letk) (function "alive ") (equal) (tt "FindOnUniverse universe allNeighs"))
+    (hbl-append 0 (tab) (tt "List.length alive ") (equal) (tt "3"))))
   (list
    (vl-append
     0
-    (tt "let FWU = FindOnUniverse universe")
-    (tt "let checkForThree alive = List.length alive = 3")
-    (tt "let check = GetNeighbours >> FWU >> checkForThree")))))
+    (hbl-append 0 (letk) (function "FWU ") (equal) (tt "FindOnUniverse universe"))
+    (hbl-append 0 (letk) (function "CheckForThree ") (parameter "alive ") (equal) (tt "List.length alive ") (equal) (tt "3"))
+    (hbl-append 0 (letk) (function "check ") (equal) (tt "GetNeighbours ") (keyword ">> ") (tt "FWU ") (keyword ">> ") (tt "CheckForThree") )))))
 
 (slide
  #:title "The Links"
- (t "Our take: https://codurance.com/2017/10/12/functional-calisthenics/")
- (t "The original: http://blog.ninjaferret.co.uk/2015/06/05/Introducing-Functional-Calisthenics.html")
- (t "Kata modifications: https://codurance.com/2017/11/16/katas-for-functional-calisthenics/"))
+ (hbl-append 0 (t "Our take:") (colorize (t " https://tinyurl.com/functional-calisthenics") "blue"))
+ (hbl-append 0 (t "The original:") (colorize (t " https://tinyurl.com/original-calisthenics") "blue"))
+ (hbl-append 0 (t "Kata modifications:") (colorize (t " https://tinyurl.com/katas-calisthenics") "blue")))
 
 (slide
  #:title "The end"
