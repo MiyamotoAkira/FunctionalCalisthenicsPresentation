@@ -345,7 +345,7 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
 
 (slide
  #:title "Generic Building Blocks"
- (comment "The Born function is very aware of the domain in which it is working. Its even aware of the fact that is a Life of game on a square's grid. But what if we wanted to use an hexagonal grid? The rule for being born is different (2 neighbours, instead of 3). ")
+ (comment "The Born function is very aware of the domain in which it is working. Its even aware of the fact that is a Life of game on a square's grid. But what if we wanted to use an hexagonal grid? The rule for being born is different (2 neighbours, instead of 3). So now we pass a function that does the needed calculation. Born is kind of domain aware still, but much looser than before. By the way, let's gonna give a few names")
  'next
  (t "Try to create functions that are not domain aware")
  'next
@@ -377,6 +377,18 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
     (hbl-append (tab) (tab) (tab) (tab) (keyword "match ") (tt "check e universe ") (keyword "with"))
     (hbl-append 0 (tab) (tab) (tab) (tab) (keyword "| true -> ") (tt "e ") (keyword ":: ") (tt "acc"))
     (hbl-append 0 (tab) (tab) (tab) (tab) (keyword "| false -> ") (tt "acc) ") (keyword "[] ") (tt "acc"))
+    (tt "")
+    (hbl-append (letk) (function "BornWithThree ") (parameter "universe ") (equal))
+    (tt "    Born CheckIfThree universe")))
+  (list
+   (vl-append
+    0
+    (hbl-append 0 (letk) (function "Born ") (parameter "check universe ") (equal))
+    (hbl-append 0 (tab) (tt "List.fold ") (keyword "-> ") (tt "CollateNeighbours ") (keyword "[] ") (tt "universe"))
+    (hbl-append 0 (tab) (keyword "|> ") (tt "Dedup"))
+    (hbl-append 0 (tab) (keyword "|> ") (tt "NotAnyIn universe"))
+    (hbl-append 0 (tab) (keyword "|> ") (tt "CheckAll check"))
+    (tt "")
     (hbl-append (letk) (function "BornWithThree ") (parameter "universe ") (equal))
     (tt "    Born CheckIfThree universe")))))
 
