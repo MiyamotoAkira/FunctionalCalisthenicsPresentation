@@ -382,6 +382,7 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
 
 (slide
  #:title "Side effects at the boundaries"
+ (comment "As soon as one function is not pure, every caller to it is not pure as well. We want to limit the non-pureness. We want to restrict where we have side effect. Here we have a call into a database action in the middle of our Born function. We want to store all new borns ... Dependency Injection ... We can keep pushing out ... In this case it goes into our main. Does it push business logic out into main? Our main is the composition root. At the composition root we can interleave.")
  (t "Keep your functions pure")
  'next
  'alts
@@ -389,24 +390,58 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
   (list
    (vl-append
     0
-    (tt "let CreateUniverse () = ")
-    (tt "    printf \"We are creating the universe\"")
-    (tt "    [{x = 0; y = 0}]")))
-  (list
-   (vl-append
-    0
-    (tt "let CreateUniverse logger = ")
-    (tt "    logger \"We are creating the universe\"")
-    (tt "    [{x = 0; y = 0}]")))
-  (list
-   (vl-append
-    0
-    (tt "let CreateUniverse logger = ")
-    (tt "    [{x = 0; y = 0}]")
+    (hbl-append 0 (letk) (function "SaveBorns ") (parameter "newBorns ") (equal))
+    (tt "    ...Saving in database")
+    (tt "    newBorns")
     (tt "")
+    (hbl-append 0 (letk) (function "Born ") (parameter "check universe ") (equal))
+    (tt "...")
+    (hbl-append 0 (tab) (keyword "|> ") (tt "CheckAll check"))
+    (hbl-append 0 (tab) (keyword "|> ") (tt "SaveBorns"))))
+  (list
+   (vl-append
+    0
+    (hbl-append 0 (letk) (function "SaveBorns ") (parameter "newBorns ") (equal))
+    (tt "    ...Saving in database")
+    (tt "    newBorns")
+    (tt "")
+    (hbl-append 0 (letk) (function "Born ") (parameter "check universe saving") (equal))
+    (tt "    ...")
+    (hbl-append 0 (tab) (keyword "|> ") (tt "CheckAll check"))
+    (hbl-append 0 (tab) (keyword "|> ") (tt "saving"))
+    (tt "")
+    (tt "Born check universe SaveBorns")))
+  (list
+   (vl-append
+    0
+    (hbl-append 0 (letk) (function "SaveBorns ") (parameter "newBorns ") (equal))
+    (tt "   Saving in database")
+    (tt "    newBorns")
+    (tt "")
+    (hbl-append 0 (letk) (function "Born ") (parameter "check universe ") (equal))
+    (tt "...")
+    (hbl-append 0 (tab) (keyword "|> ") (tt "CheckAll check"))
+    
     (tt "let [<EntryPoint>] main _ = ")
-    (tt "   printf \"We are creating the universe\"")
-    (tt "   [{x = 0; y = 0}]")))))
+    (tt "...")
+    (tt "    Born check universe")
+    (hbl-append 0 (tab) (keyword "|> ") (tt "SaveBorns"))))
+  (list
+   (vl-append
+    0
+    (hbl-append 0 (letk) (function "SaveBorns ") (parameter "newBorns ") (equal))
+    (tt "   Saving in database")
+    (tt "    newBorns")
+    (tt "")
+    (hbl-append 0 (letk) (function "Born ") (parameter "check universe ") (equal))
+    (tt "...")
+    (hbl-append 0 (tab) (keyword "|> ") (tt "CheckAll check"))
+    
+    (tt "let [<EntryPoint>] main _ = ")
+    (tt "...")
+    (tt "    Born check universe")
+    (hbl-append 0 (tab) (keyword "|> ") (tt "SaveBorns"))
+    (hbl-append 0 (tab) (keyword "|> ") (tt "AddToUniverse"))))))
 
 (slide
  #:title "Expressions, not Statements"
