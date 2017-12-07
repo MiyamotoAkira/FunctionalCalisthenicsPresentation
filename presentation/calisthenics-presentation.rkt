@@ -49,40 +49,40 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
   #:title "The Clojure Experiment"
    (vc-append gap-size
               ((vafter first)
-               (t "First functional production code"))
-              ((vafter second) (t "Back to well trained imperative patterns"))
-              ((vafter third) (t "The code was a mess")))
+               (text "First functional production code" (current-main-font) 48))
+              ((vafter second) (text "Back to well trained imperative patterns" (current-main-font) 48))
+              ((vafter third) (text "The code was a mess" (current-main-font) 48)))
   (comment "I like functional programming. I have done functional programming at home. Testing things here and there. I have used F#. I have use Clojure. I have used Elixir. But ... all what I did was small pieces of code under no pressure. At Codurance I had the opportunity of working on my first production functional code. And soon I found myself, as the deadlines was looming, back into my well trained OO and imperative programming. On one side, it did allow me to move quickly. On the other side, the resulting code was a mess. Difficult to understand and difficult to change. At the end I came to realize that all that practicing that I have done for my OOP skills needed to be replicated on FP.")))
 
 (slide
  #:title "Functional Calisthenics"
  (comment "Which is were Functional Calisthenics come into play. They were originally set at Socrates UK 2015. I decided to have a stab at them. But there were a few rules that I disagree with, and sadly there was missing something I considered important: Why?. So we got together a group of developers at Codurance and rewrote them. They are not a finished work. And we are not the owners of the truth. I will explain why we have each one. But I will happily stand corrected if that means improving my craft.")
  'next
- (t "Original version during Socrates UK 2015")
+ (text "Original version during Socrates UK 2015" (current-main-font) 48)
  'next
- (t "First stab led to rewrite")
+ (text "First stab led to rewrite" (current-main-font) 48)
  'next
- (t "A work in progress"))
+ (text "A work in progress" (current-main-font) 48))
 
 (slide
  #:title "The application"
  (comment "All what I am going to send is for practice. What you do on production code will depend. Because not all functional languages are equal. They have different characteristics. For example, I remember a presentation by Phil (Trelford) about the use of mutable collections on F# for performance purposes. Furthermore, some of the rules are either forced into you by the language (for example, Haskell forces a few of these rules). Or are simply not possible (the pipe operator or currying in Erlang for the rule \"Do not use intermediate variables\")")
  'next
- (t "This is for practice")
+ (text "This is for practice" (current-main-font) 48)
  'next
- (t "Each functional language has its own characteristics"))
+ (text "Each language has its own characteristics" (current-main-font) 48))
 
 (slide
  #:title "The Rules"
  (comment "These are the rules as they currently stand. We will be looking at examples of each one as we move along.")
  (item "Name everything")
  (item "No Mutable State")
+ (item "Expressions, Not Statemets")
  (item "Exhaustive Conditionals")
  (item "Do Not Use Intermediate Variables")
  (item "No Explicit Recursion")
  (item "Generic Building Blocks")
  (item "Side Effects At The Boundaries")
- (item "Expressions, Not Statemets")
  (item "Infinite Sequences")
  (item "One Argument Functions"))
 
@@ -177,6 +177,16 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
                (hbl-append 0 (tab) (tt "FindNeighbours neighbours ") (keyword "[]"))
 
                (hbl-append 0 (tab) (keyword "|> ") (tt "List.rev")))))))
+
+(slide
+ #:title "Expressions, not Statements"
+ (comment "I have moved its position on this presentation already 4 times. This started as a rule. But after using the rules of no mutable state and side effects on the boundaries there shouldn't be anything to apply here. Expressions, not Statmentes becomes a property of your code.")
+ 'next
+ (t "No assignment at any point.")
+ 'next
+ (tt "SomeFunctionCall someparameter")
+ 'next
+ (hbl-append 0 (letk) (function "someResult ") (equal) (tt "SomeFunctionCall someparameter")))
 
 (slide
  #:title "No Mutable State"
@@ -454,12 +464,6 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
     (tt "    Born check universe")
     (hbl-append 0 (tab) (keyword "|> ") (tt "SaveBorns"))
     (hbl-append 0 (tab) (keyword "|> ") (tt "AddToUniverse"))))))
-
-(slide
- #:title "Expressions, not Statements"
- (comment "This started as a rule. But after using the rules of no mutable state and side effects on the boundaries there shouldn't be anything to apply here. Expressions, not Statmentes becomes a property of your code.")
- 'next
- (t "No assignment at any point."))
 
 (slide
  #:title "Infinite Sequences"
