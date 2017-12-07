@@ -182,7 +182,7 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
  #:title "Expressions, not Statements"
  (comment "I have moved its position on this presentation already 4 times. This started as a rule. But after using the rules of no mutable state and side effects on the boundaries there shouldn't be anything to apply here. Expressions, not Statmentes becomes a property of your code.")
  'next
- (t "No assignment at any point.")
+ (t "A rule that becomes a characteristic")
  'next
  (tt "SomeFunctionCall someparameter")
  'next
