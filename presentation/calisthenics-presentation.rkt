@@ -36,12 +36,18 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
    (text "tataka" (current-main-font) 48))
   (bitmap "footer-logo.png")))
 
-(slide
- (rb-superimpose
-  (cc-superimpose
-   (linewidth 0 (frame (blank client-w client-h) #:color "white"))
-   (text "Practice makes the master" (current-main-font) 48))
-  (bitmap "footer-logo.png")))
+(with-steps
+ (into first second)
+ (slide
+  (rb-superimpose
+   (cc-superimpose
+    (linewidth 0 (frame (blank client-w client-h) #:color "white"))
+    (vc-append gap-size
+               ((vafter first)
+                (text "Practice makes the master" (current-main-font) 48))
+               ((vafter second)
+                (text "But practice with a goal" (current-main-font) 48))))
+   (bitmap "footer-logo.png"))))
 
 (with-steps
  (intro first second third)
@@ -63,6 +69,13 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
  (text "First stab led to rewrite" (current-main-font) 48)
  'next
  (text "A work in progress" (current-main-font) 48))
+
+(slide
+ #:title "End Goal"
+ 'next
+ (text "Pureness" (current-main-font) 48)
+ 'next
+ (text "Composable Abstractions" (current-main-font) 48))
 
 (slide
  #:title "The application"
