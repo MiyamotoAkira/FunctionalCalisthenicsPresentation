@@ -53,60 +53,88 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
  (intro first second third)
  (slide
   #:title "The Clojure Experiment"
-   (vc-append gap-size
-              ((vafter first)
-               (text "First functional production code" (current-main-font) 48))
-              ((vafter second) (text "Back to well trained imperative patterns" (current-main-font) 48))
-              ((vafter third) (text "The code was a mess" (current-main-font) 48)))
-  (comment "I like functional programming. I have done functional programming at home. Testing things here and there. I have used F#. I have use Clojure. I have used Elixir. But ... all what I did was small pieces of code under no pressure. At Codurance I had the opportunity of working on my first production functional code. And soon I found myself, as the deadlines was looming, back into my well trained OO and imperative programming. On one side, it did allow me to move quickly. On the other side, the resulting code was a mess. Difficult to understand and difficult to change. At the end I came to realize that all that practicing that I have done for my OOP skills needed to be replicated on FP.")))
+  (comment "I like functional programming. I have done functional programming at home. Testing things here and there. I have used F#. I have use Clojure. I have used Elixir. But ... all what I did was small pieces of code under no pressure. At Codurance I had the opportunity of working on my first production functional code. And soon I found myself, as the deadlines was looming, back into my well trained OO and imperative programming. On one side, it did allow me to move quickly. On the other side, the resulting code was a mess. Difficult to understand and difficult to change. At the end I came to realize that all that practicing that I have done for my OOP skills needed to be replicated on FP.")
+  (rb-superimpose
+   (cc-superimpose
+    (linewidth 0 (frame (titleless-page) #:color "white"))
+    (vc-append gap-size
+               ((vafter first) (text "First functional production code" (current-main-font) 48))
+               ((vafter second) (text "Back to well trained imperative patterns" (current-main-font) 48))
+               ((vafter third) (text "The code was a mess" (current-main-font) 48))))
+   (bitmap "footer-logo.png"))))
 
-(slide
- #:title "Functional Calisthenics"
- (comment "Which is were Functional Calisthenics come into play. They were originally set at Socrates UK 2015. I decided to have a stab at them. But there were a few rules that I disagree with, and sadly there was missing something I considered important: Why?. So we got together a group of developers at Codurance and rewrote them. They are not a finished work. And we are not the owners of the truth. I will explain why we have each one. But I will happily stand corrected if that means improving my craft.")
- 'next
- (text "Original version during Socrates UK 2015" (current-main-font) 48)
- 'next
- (text "First stab led to rewrite" (current-main-font) 48)
- 'next
- (text "A work in progress" (current-main-font) 48))
+(with-steps
+ (intro first second third)
+ (slide
+  #:title "Functional Calisthenics"
+  (comment "Which is were Functional Calisthenics come into play. They were originally set at Socrates UK 2015. I decided to have a stab at them. But there were a few rules that I disagree with, and sadly there was missing something I considered important: Why?. So we got together a group of developers at Codurance and rewrote them. They are not a finished work. And we are not the owners of the truth. I will explain why we have each one. But I will happily stand corrected if that means improving my craft.")
+  (rb-superimpose
+   (cc-superimpose
+    (linewidth 0 (frame (titleless-page) #:color "white"))
+    (vc-append gap-size
+               ((vafter first) (text "Original version during Socrates UK 2015" (current-main-font) 48))
+               ((vafter second) (text "First stab led to rewrite" (current-main-font) 48))
+               ((vafter third) (text "A work in progress" (current-main-font) 48))))
+   (bitmap "footer-logo.png"))))
 
-(slide
- #:title "End Goal"
- 'next
- (text "Pureness" (current-main-font) 48)
- 'next
- (text "Composable Abstractions" (current-main-font) 48))
+(with-steps
+ (intro first second)
+ (slide
+  #:title "End Goal"
+  (rb-superimpose
+   (cc-superimpose
+    (linewidth 0 (frame (titleless-page) #:color "white"))
+    (vc-append gap-size
+               ((vafter first) (text "Pureness" (current-main-font) 48))
+               ((vafter second) (text "Composable Abstractions" (current-main-font) 48))))
+   (bitmap "footer-logo.png"))))
 
-(slide
- #:title "The application"
- (comment "All what I am going to send is for practice. What you do on production code will depend. Because not all functional languages are equal. They have different characteristics. For example, I remember a presentation by Phil (Trelford) about the use of mutable collections on F# for performance purposes. Furthermore, some of the rules are either forced into you by the language (for example, Haskell forces a few of these rules). Or are simply not possible (the pipe operator or currying in Erlang for the rule \"Do not use intermediate variables\")")
- 'next
- (text "This is for practice" (current-main-font) 48)
- 'next
- (text "Each language has its own characteristics" (current-main-font) 48))
+(with-steps
+ (intro first second)
+ (slide
+  #:title "The application"
+  (comment "All what I am going to send is for practice. What you do on production code will depend. Because not all functional languages are equal. They have different characteristics. For example, I remember a presentation by Phil (Trelford) about the use of mutable collections on F# for performance purposes. Furthermore, some of the rules are either forced into you by the language (for example, Haskell forces a few of these rules). Or are simply not possible (the pipe operator or currying in Erlang for the rule \"Do not use intermediate variables\")")
+  (rb-superimpose
+   (cc-superimpose
+    (linewidth 0 (frame (titleless-page) #:color "white"))
+    (vc-append gap-size
+               ((vafter first) (text "This is for practice" (current-main-font) 48))
+               ((vafter second) (text "Each language has its own characteristics" (current-main-font) 48))))
+   (bitmap "footer-logo.png"))))
 
 (slide
  #:title "The Rules"
  (comment "These are the rules as they currently stand. We will be looking at examples of each one as we move along.")
- (item "Name everything")
- (item "No Mutable State")
- (item "Expressions, Not Statemets")
- (item "Exhaustive Conditionals")
- (item "Do Not Use Intermediate Variables")
- (item "No Explicit Recursion")
- (item "Generic Building Blocks")
- (item "Side Effects At The Boundaries")
- (item "Infinite Sequences")
- (item "One Argument Functions"))
+ (rb-superimpose
+  (cc-superimpose
+   (linewidth 0 (frame (titleless-page) #:color "white"))
+   (vc-append gap-size
+              (item "Name everything")
+              (item "No Mutable State")
+              (item "Expressions, Not Statemets")
+              (item "Exhaustive Conditionals")
+              (item "Do Not Use Intermediate Variables")
+              (item "No Explicit Recursion")
+              (item "Generic Building Blocks")
+              (item "Side Effects At The Boundaries")
+              (item "Infinite Sequences")
+              (item "One Argument Functions")))
+  (bitmap "footer-logo.png")))
 
-(slide
- #:title "Conway's Game of Life"
- (comment "Does anyone not know the game of life? Created in 1970 by John Horton Conway. Interesting because from a very simple set of rules you can create some sofisticated elements. When I originally heard about it I learned about gliders, and guns, and oscillators. And then, not long ago I discovered that you can create an Universal Turing Machine from it.")
- 'next
- (item "Cells are alive or dead")
- (item "Universe is a grid of squares")
- (item "Cell stays alive if 2 or 3 neighbours")
- (item "Dead cell will come to life if it has 3 neighbours"))
+(with-steps
+ (intro first second third fourth)
+ (slide
+  #:title "Conway's Game of Life"
+  (comment "Does anyone not know the game of life? Created in 1970 by John Horton Conway. Interesting because from a very simple set of rules you can create some sofisticated elements. When I originally heard about it I learned about gliders, and guns, and oscillators. And then, not long ago I discovered that you can create an Universal Turing Machine from it.")
+  (rb-superimpose
+   (cc-superimpose
+    (linewidth 0 (frame (titleless-page) #:color "white"))
+    (vc-append gap-size
+               ((vafter first) (item "Cells are alive or dead"))
+               ((vafter second) (item "Universe is a grid of squares"))
+               ((vafter third) (item "Cell stays alive if 2 or 3 neighbours"))
+               ((vafter fourth) (item "Dead cell will come to life if it has 3 neighbours"))))
+   (bitmap "footer-logo.png"))))
 
 (define (function s)
   (colorize (tt s) "light blue"))
@@ -125,31 +153,35 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
 
 (slide
  #:title "Some declarations"
- (vl-append 0
-            (hbl-append 0 (keyword "type ") (function "Cell ") (equal) (keyword "{") (tt "x") (keyword ": int; ") (tt "y") (keyword ": int}") )
-            (tt "")
-            (hbl-append 0
-                        (keyword "let ")
-                        (function "neighbours ")
-                        (keyword "= [")
-                        (tt "(-1,-1)")
-                        (keyword "; ")
-                        (tt "(0,-1)")
-                        (keyword "; ")
-                        (tt "(1,-1)")
-                        (keyword "; ")
-                        (tt "(-1,0)")
-                        (keyword "; "))
-            (hbl-append 0
-                        (tt "                  ")
-                        (tt "(1,0)")
-                        (keyword "; ")
-                        (tt "(-1,1)")
-                        (keyword "; ")
-                        (tt "(0,1)")
-                        (keyword "; ")
-                        (tt "(1,1)")
-                        (keyword ";]"))))
+ (rb-superimpose
+  (cc-superimpose
+   (linewidth 0 (frame (titleless-page) #:color "white"))
+   (vl-append 0
+              (hbl-append 0 (keyword "type ") (function "Cell ") (equal) (keyword "{") (tt "x") (keyword ": int; ") (tt "y") (keyword ": int}") )
+              (tt "")
+              (hbl-append 0
+                          (keyword "let ")
+                          (function "neighbours ")
+                          (keyword "= [")
+                          (tt "(-1,-1)")
+                          (keyword "; ")
+                          (tt "(0,-1)")
+                          (keyword "; ")
+                          (tt "(1,-1)")
+                          (keyword "; ")
+                          (tt "(-1,0)")
+                          (keyword "; "))
+              (hbl-append 0
+                          (tt "                  ")
+                          (tt "(1,0)")
+                          (keyword "; ")
+                          (tt "(-1,1)")
+                          (keyword "; ")
+                          (tt "(0,1)")
+                          (keyword "; ")
+                          (tt "(1,1)")
+                          (keyword ";]"))))
+  (bitmap "footer-logo.png")))
 
 (with-steps
  (intro first second nonames withnames)
@@ -189,7 +221,8 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
                (hbl-append 0 (tab) (tab) (tab)) (tt "FindNeighbours T (AddNeighbour cell universe H)")
                (hbl-append 0 (tab) (tt "FindNeighbours neighbours ") (keyword "[]"))
 
-               (hbl-append 0 (tab) (keyword "|> ") (tt "List.rev")))))))
+               (hbl-append 0 (tab) (keyword "|> ") (tt "List.rev")))))
+  ))
 
 (slide
  #:title "Expressions, not Statements"
