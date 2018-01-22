@@ -2,7 +2,16 @@
 
 (require "base.rkt")
 
+(provide letk)
+(provide equal)
+(provide tab)
 (provide declarations-fsharp)
+
+(define (letk) (keyword "let "))
+
+(define (equal) (keyword "= "))
+
+(define (tab) (tt "    "))
 
 (define (declarations-fsharp)
   (vc-append 0 (hbl-append 0 (keyword "type ") (function "Cell ") (equal) (keyword "{") (tt "x") (keyword ": int; ") (tt "y") (keyword ": int}") )
