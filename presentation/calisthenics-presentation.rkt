@@ -2,6 +2,8 @@
 
 (require slideshow/code)
 (require slideshow/step)
+(require "base.rkt")
+(require "fsharp-code.rkt")
 
 (define (wrapper p)
   (rb-superimpose
@@ -136,51 +138,13 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
                ((vafter fourth) (item "Dead cell will come to life if it has 3 neighbours"))))
    (bitmap "footer-logo.png"))))
 
-(define (function s)
-  (colorize (tt s) "light blue"))
-
-(define (keyword s)
-  (colorize (tt s) "blue"))
-
-(define (parameter s)
-  (colorize (tt s) "orange"))
-
-(define (letk) (keyword "let "))
-
-(define (equal) (keyword "= "))
-
-(define (tab) (tt "    "))
 
 (slide
  #:title "Some declarations"
  (rb-superimpose
   (cc-superimpose
    (linewidth 0 (frame (titleless-page) #:color "white"))
-   (vl-append 0
-              (hbl-append 0 (keyword "type ") (function "Cell ") (equal) (keyword "{") (tt "x") (keyword ": int; ") (tt "y") (keyword ": int}") )
-              (tt "")
-              (hbl-append 0
-                          (keyword "let ")
-                          (function "neighbours ")
-                          (keyword "= [")
-                          (tt "(-1,-1)")
-                          (keyword "; ")
-                          (tt "(0,-1)")
-                          (keyword "; ")
-                          (tt "(1,-1)")
-                          (keyword "; ")
-                          (tt "(-1,0)")
-                          (keyword "; "))
-              (hbl-append 0
-                          (tt "                  ")
-                          (tt "(1,0)")
-                          (keyword "; ")
-                          (tt "(-1,1)")
-                          (keyword "; ")
-                          (tt "(0,1)")
-                          (keyword "; ")
-                          (tt "(1,1)")
-                          (keyword ";]"))))
+   (vl-append 0 (declarations-fsharp)))
   (bitmap "footer-logo.png")))
 
 (with-steps
