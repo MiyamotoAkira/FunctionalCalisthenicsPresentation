@@ -19,72 +19,54 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
 
 (slide
  (comment "Now that I have a context you know that 'taka' has to do with an attacking pattern. At some speed 'ta' is not good enough. The movement of the tongue is too slow to keep pace. The 'ka' attacking pattern represents the use of the back of your tongue (a velar phoneme) to cut and restart the air flow. And you do require quite some practice to master it.")
- (rb-superimpose
-  (cc-superimpose
-   (linewidth 0 (frame (blank client-w client-h) #:color "white"))
-   (text "taka" (current-main-font) 48))
-  output-footer) )
+ (wrapper (text "taka" (current-main-font) 48)))
 
 (slide
  (comment "Now you have the information about what the above represents. Both the how and why (physical movement and speed). Again, this requires a lot of practice. As a professional trumpet player you will go through this everyday. Scales, arpegios, études ...")
- (rb-superimpose
-  (cc-superimpose
-   (linewidth 0 (frame (blank client-w client-h) #:color "white"))
-   (text "tataka" (current-main-font) 48))
-  output-footer))
+ (wrapper (text "tataka" (current-main-font) 48)))
 
 (with-steps
  (into first second)
  (slide
-  (rb-superimpose
-   (cc-superimpose
-    (linewidth 0 (frame (blank client-w client-h) #:color "white"))
-    (vc-append gap-size
-               ((vafter first)
-                (text "Practice makes the master" (current-main-font) 48))
-               ((vafter second)
-                (text "But practice with a goal" (current-main-font) 48))))
-   output-footer)))
+  (wrapper
+   (vc-append
+    gap-size
+    ((vafter first) (text "Practice makes the master" (current-main-font) 48))
+    ((vafter second) (text "But practice with a goal" (current-main-font) 48))))))
 
 (with-steps
  (intro first second third)
  (slide
   #:title "The Clojure Experiment"
   (comment "I like functional programming. I have done functional programming at home. Testing things here and there. I have used F#. I have use Clojure. I have used Elixir. But ... all what I did was small pieces of code under no pressure. At Codurance I had the opportunity of working on my first production functional code. And soon I found myself, as the deadlines was looming, back into my well trained OO and imperative programming. On one side, it did allow me to move quickly. On the other side, the resulting code was a mess. Difficult to understand and difficult to change. At the end I came to realize that all that practicing that I have done for my OOP skills needed to be replicated on FP.")
-  (rb-superimpose
-   (cc-superimpose
-    (linewidth 0 (frame (titleless-page) #:color "white"))
-    (vc-append gap-size
-               ((vafter first) (text "First functional production code" (current-main-font) 48))
-               ((vafter second) (text "Back to well trained imperative patterns" (current-main-font) 48))
-               ((vafter third) (text "The code was a mess" (current-main-font) 48))))
-   output-footer)))
+  (wrapper-titleless
+   (vc-append
+    gap-size
+    ((vafter first) (text "First functional production code" (current-main-font) 48))
+    ((vafter second) (text "Back to well trained imperative patterns" (current-main-font) 48))
+    ((vafter third) (text "The code was a mess" (current-main-font) 48))))))
 
 (with-steps
  (intro first second third)
  (slide
   #:title "Functional Calisthenics"
   (comment "Which is were Functional Calisthenics come into play. They were originally set at Socrates UK 2015. I decided to have a stab at them. But there were a few rules that I disagree with, and sadly there was missing something I considered important: Why?. So we got together a group of developers at Codurance and rewrote them. They are not a finished work. And we are not the owners of the truth. I will explain why we have each one. But I will happily stand corrected if that means improving my craft.")
-  (rb-superimpose
-   (cc-superimpose
-    (linewidth 0 (frame (titleless-page) #:color "white"))
-    (vc-append gap-size
-               ((vafter first) (text "Original version during Socrates UK 2015" (current-main-font) 48))
-               ((vafter second) (text "First stab led to rewrite" (current-main-font) 48))
-               ((vafter third) (text "A work in progress" (current-main-font) 48))))
-   output-footer)))
+  (wrapper-titleless
+   (vc-append
+    gap-size
+    ((vafter first) (text "Original version during Socrates UK 2015" (current-main-font) 48))
+    ((vafter second) (text "First stab led to rewrite" (current-main-font) 48))
+    ((vafter third) (text "A work in progress" (current-main-font) 48))))))
 
 (with-steps
  (intro first second)
  (slide
   #:title "End Goal"
-  (rb-superimpose
-   (cc-superimpose
-    (linewidth 0 (frame (titleless-page) #:color "white"))
-    (vc-append gap-size
-               ((vafter first) (text "Pureness" (current-main-font) 48))
-               ((vafter second) (text "Composable Abstractions" (current-main-font) 48))))
-   output-footer)))
+  (wrapper-titleless
+   (vc-append
+    gap-size
+    ((vafter first) (text "Pureness" (current-main-font) 48))
+    ((vafter second) (text "Composable Abstractions" (current-main-font) 48))))))
 
 (with-steps
  (intro first second)
