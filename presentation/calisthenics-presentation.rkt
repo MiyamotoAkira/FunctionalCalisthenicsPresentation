@@ -5,12 +5,7 @@
 (require "base.rkt")
 (require "fsharp-code.rkt")
 
-(define (wrapper p)
-  (rb-superimpose
-   (cc-superimpose
-    (linewidth 0 (frame (blank client-w client-h) #:color "white"))
-    p)
-   (bitmap "footer-logo.png")))
+
 
 (slide
  (text "Functional Calisthenics" (current-main-font) 60)
@@ -28,7 +23,7 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
   (cc-superimpose
    (linewidth 0 (frame (blank client-w client-h) #:color "white"))
    (text "taka" (current-main-font) 48))
-  (bitmap "footer-logo.png")) )
+  output-footer) )
 
 (slide
  (comment "Now you have the information about what the above represents. Both the how and why (physical movement and speed). Again, this requires a lot of practice. As a professional trumpet player you will go through this everyday. Scales, arpegios, études ...")
@@ -36,7 +31,7 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
   (cc-superimpose
    (linewidth 0 (frame (blank client-w client-h) #:color "white"))
    (text "tataka" (current-main-font) 48))
-  (bitmap "footer-logo.png")))
+  output-footer))
 
 (with-steps
  (into first second)
@@ -49,7 +44,7 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
                 (text "Practice makes the master" (current-main-font) 48))
                ((vafter second)
                 (text "But practice with a goal" (current-main-font) 48))))
-   (bitmap "footer-logo.png"))))
+   output-footer)))
 
 (with-steps
  (intro first second third)
@@ -63,7 +58,7 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
                ((vafter first) (text "First functional production code" (current-main-font) 48))
                ((vafter second) (text "Back to well trained imperative patterns" (current-main-font) 48))
                ((vafter third) (text "The code was a mess" (current-main-font) 48))))
-   (bitmap "footer-logo.png"))))
+   output-footer)))
 
 (with-steps
  (intro first second third)
@@ -77,7 +72,7 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
                ((vafter first) (text "Original version during Socrates UK 2015" (current-main-font) 48))
                ((vafter second) (text "First stab led to rewrite" (current-main-font) 48))
                ((vafter third) (text "A work in progress" (current-main-font) 48))))
-   (bitmap "footer-logo.png"))))
+   output-footer)))
 
 (with-steps
  (intro first second)
@@ -89,7 +84,7 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
     (vc-append gap-size
                ((vafter first) (text "Pureness" (current-main-font) 48))
                ((vafter second) (text "Composable Abstractions" (current-main-font) 48))))
-   (bitmap "footer-logo.png"))))
+   output-footer)))
 
 (with-steps
  (intro first second)
@@ -102,7 +97,7 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
     (vc-append gap-size
                ((vafter first) (text "This is for practice" (current-main-font) 48))
                ((vafter second) (text "Each language has its own characteristics" (current-main-font) 48))))
-   (bitmap "footer-logo.png"))))
+   output-footer)))
 
 (slide
  #:title "The Rules"
@@ -121,7 +116,7 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
               (item "Side Effects At The Boundaries")
               (item "Infinite Sequences")
               (item "One Argument Functions")))
-  (bitmap "footer-logo.png")))
+  output-footer))
 
 (with-steps
  (intro first second third fourth)
@@ -136,7 +131,7 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
                ((vafter second) (item "Universe is a grid of squares"))
                ((vafter third) (item "Cell stays alive if 2 or 3 neighbours"))
                ((vafter fourth) (item "Dead cell will come to life if it has 3 neighbours"))))
-   (bitmap "footer-logo.png"))))
+   output-footer)))
 
 
 (slide
@@ -145,7 +140,7 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
   (cc-superimpose
    (linewidth 0 (frame (titleless-page) #:color "white"))
    (vl-append 0 (declarations-fsharp)))
-  (bitmap "footer-logo.png")))
+  output-footer))
 
 (with-steps
  (intro first second nonames withnames)
@@ -158,34 +153,9 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
               (t "(Including lambdas/anonymous functions)")))
   (lt-superimpose
    ((vonly nonames)
-    (vl-append 0
-               (hbl-append 0 (letk) (function "GetNeighbours") (parameter " (cell:Cell) : List<Cell> ") (keyword "="))
-               (hbl-append 0 (tab) (letk) (keyword "rec ") (function "FindNeighbours ") (parameter "neighbours universe ") (equal))
-               (hbl-append 0 (tab) (tab) (keyword "match ") (tt "neighbours ") (keyword "with"))
-               (hbl-append 0 (tab) (tab) (keyword "| ") (keyword "[] -> ") (tt "universe"))
-               (hbl-append 0 (tab) (tab) (keyword "| ") (tt "H") (keyword "::") (tt "T ") (keyword "->"))
-               (hbl-append 0 (tab) (tab) (tab) (tt "FindNeighbours T ("))
-               (hbl-append 0 (tab) (tab) (tab) (tab) (keyword "{") (tt "x ") (equal) (tt "cell.x ") (keyword "+ ") (tt "fst H") (keyword ";"))
-               (hbl-append 0 (tab) (tab) (tab) (tab) (tt " y ") (equal) (tt "cell.y ") (keyword "+ ") (tt "snd H") (keyword "}"))
-               (hbl-append 0 (tab) (tab) (tab) (tab) (keyword ":: ") (tt "universe)"))
-               (hbl-append 0 (tab) (tt "FindNeighbours neighbours ") (keyword "[]"))
-               (hbl-append 0 (tab) (keyword "|> ") (tt "List.rev"))))
+    (bad-naming-fsharp))
    ((vonly withnames)
-    (vl-append 0
-               (hbl-append 0 (keyword "let ") (function "AddNeighbour ") (parameter "cell universe mods ") (equal))
-               (hbl-append 0 (tab) (keyword "{") (tt "x ") (equal) (tt "cell.x ") (keyword "+ ") (tt "fst mods") (keyword ";"))
-               (hbl-append 0 (tab) (tt " y ") (equal) (tt "cell.y ") (keyword "+ ") (tt "snd mods") (keyword "}"))
-               (hbl-append 0 (tab) (keyword ":: ") (tt "universe"))
-               (tt "")
-               (hbl-append 0 (letk) (function "GetNeighbours") (parameter " (cell:Cell) : List<Cell> ") (equal))
-               (hbl-append 0 (tab) (letk) (keyword "rec ") (function "FindNeighbours ") (parameter "neighbours universe ") (equal))
-               (hbl-append 0 (tab) (tab) (keyword "match ") (tt "neighbours ") (keyword "with"))
-               (hbl-append 0 (tab) (tab) (keyword "| [] -> ") (tt "universe"))
-               (hbl-append 0 (tab) (tab) (keyword "| ") (tt "H") (keyword "::") (tt "T ") (keyword "->"))
-               (hbl-append 0 (tab) (tab) (tab)) (tt "FindNeighbours T (AddNeighbour cell universe H)")
-               (hbl-append 0 (tab) (tt "FindNeighbours neighbours ") (keyword "[]"))
-
-               (hbl-append 0 (tab) (keyword "|> ") (tt "List.rev")))))
+    (good-naming-fsharp)))
   ))
 
 (slide
@@ -194,9 +164,9 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
  'next
  (t "A rule that becomes a characteristic")
  'next
- (tt "SomeFunctionCall someparameter")
+ (statement-fsharp)
  'next
- (hbl-append 0 (letk) (function "someResult ") (equal) (tt "SomeFunctionCall someparameter")))
+ (expression-fsharp))
 
 (slide
  #:title "No Mutable State"
@@ -206,28 +176,8 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
  'next
  'alts
  (list
-  (list
-   (vl-append
-    0
-    (hbl-append 0 (letk) (function "FindOnUniverse ") (parameter "universe (alive:byref<_>) ") (keyword "="))
-    (hbl-append 0 (tab) (tt "alive ") (keyword "<- ") (tt "some_calculation"))
-    (tt " ")
-    (hbl-append 0 (letk) (function "CheckIfAlive ") (parameter "cell universe ") (keyword "="))
-    (hbl-append 0 (tab) (letk) (keyword "mutable ") (function "alive ") (keyword "= ") (tt "GetNeighbours cell"))
-    (hbl-append 0 (tab) (tt "FindOnUniverse universe ") (keyword "&") (tt "alive"))
-    (hbl-append 0 (tab) (tt "(List.length alive) ") (equal) (tt "2"))
-    (hbl-append 0 (tab) (keyword "|| ") (tt "(List.length alive ") (equal) (tt "3"))))
-  (list
-   (vl-append
-    0
-    (hbl-append 0 (letk) (function "FindOnUniverse ") (parameter "universe alive ") (equal) (tt "..."))
-    (tt " ")
-    (hbl-append 0 (letk) (function "CheckIfAlive ") (parameter "cell universe ") (keyword "="))
-    (hbl-append 0 (tab) (letk) (function "neighbours ") (equal) (tt "GetNeighbours cell"))
-    (hbl-append 0 (tab) (letk) (function "alive ") (equal) (tt "FindOnUniverse universe neighbours"))
-    (hbl-append 0 (tab) (tt "(List.length alive) ") (equal) (tt "2"))
-    (hbl-append 0 (tab) (keyword "|| ") (tt "(List.length alive ") (equal) (tt "3"))
-    ))))
+  (list (mutable-state-fsharp))
+  (list (non-mutable-state-fsharp))))
 
 (slide
  #:title "Exhaustive Conditionals"
@@ -238,29 +188,10 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
  'next
  'alts
  (list
-  (list
-   (vl-append
-    0
-    (hbl-append 0 (keyword "match ") (tt "CheckIfAlive elem universe ") (keyword "with "))
-    (hbl-append 0 (keyword "| true -> ") (tt "elem ") (keyword ":: ") (tt "acc"))))
-  (list
-   (vl-append
-    0
-    (hbl-append 0 (keyword "match ") (tt "CheckIfAlive elem universe ") (keyword "with "))
-    (hbl-append 0 (keyword "| true -> ") (tt "elem ") (keyword ":: ") (tt "acc"))
-    (hbl-append 0 (keyword "| false -> ") (tt "acc"))))
-  (list
-   (vl-append
-    0
-    (hbl-append 0 (keyword "if ") (tt "x ") (equal) (tt "\"let's go\" ") (keyword "then"))
-    (hbl-append 0 (tab) (tt "printf \"hey\""))))
-  (list
-   (vl-append
-    0
-    (hbl-append 0 (keyword "if ") (tt "x ") (equal) (tt "\"let's go\" ") (keyword "then"))
-    (hbl-append 0 (tab) (tt "printf \"hey\""))
-    (keyword "else")
-    (hbl-append 0 (tab) (tt "printf \"ho\""))))))
+  (list (non-exhaustive-1-fsharp))
+  (list (exhaustive-1-fsharp))
+  (list (non-exhaustive-2-fsharp))
+  (list (exhaustive-2-fsharp))))
 
 (slide
  #:title "Do not use intermediate variables"
@@ -270,50 +201,9 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
  'next
  'alts
  (list
-  (list
-   (vl-append
-    0
-    (hbl-append 0 (letk) (function "CompareWith ") (parameter "expected actual ") (equal))
-    (tt "    Assert.True (CompareList expected actual)")
-    (tt "")
-    (hbl-append 0 (letk) (function "``Empty cell becomes alive`` ") (keyword "() ") (equal))
-    (hbl-append 0 (tab) (letk) (function "u3 ") (equal) (keyword "["))
-    (hbl-append 0 (tab) (tab) (keyword "{") (tt "x ") (equal) (tt "-1") (keyword "; ") (tt "y ") (equal) (tt "-1") (keyword "};"))
-    (hbl-append 0 (tab) (tab) (keyword "{") (tt "x ") (equal) (tt "1") (keyword "; ") (tt "y ") (equal) (tt "1") (keyword "};"))
-    (hbl-append 0 (tab) (tab) (keyword "{") (tt "x ") (equal) (tt "-1") (keyword "; ") (tt "y ") (equal) (tt "1") (keyword "}]"))
-    (hbl-append 0 (tab) (letk) (function "universe ") (equal) (keyword "[{") (tt "x ") (equal) (tt "0") (keyword "; ") (tt "y ") (equal) (tt "0") (keyword "}]"))
-    (hbl-append 0 (tab) (letk) (function "actualUniverse ") (equal) (tt"NextUniverse u3"))
-    (hbl-append 0 (tab) (tt "CompareWith universe actualUniverse"))))
-  (list
-   (vl-append
-    0
-    (hbl-append 0 (letk) (function "CompareWith ") (parameter "expected actual ") (equal))
-    (tt "    Assert.True (CompareList expected actual)")
-    (tt "")
-    (hbl-append 0 (letk) (function "``Empty cell becomes alive`` ") (keyword "() ") (equal))
-    (hbl-append 0 (tab) (keyword "[{") (tt "x ") (equal) (tt "-1") (keyword "; ") (tt "y ") (equal) (tt "-1") (keyword "};"))
-    (hbl-append 0 (tab) (keyword " {") (tt "x ") (equal) (tt "1") (keyword "; ") (tt "y ") (equal) (tt "1") (keyword "};"))
-    (hbl-append 0 (tab) (keyword " {") (tt "x ") (equal) (tt "-1") (keyword "; ") (tt "y ") (equal) (tt "1") (keyword "}]"))
-    (hbl-append 0 (tab) (keyword "|> ") (tt "NextUniverse"))
-    (hbl-append 0 (tab) (keyword "|> ") (tt "CompareWith ") (keyword "[{") (tt "x ") (equal) (tt "0") (keyword "; ") (tt "y ") (equal) (tt "0") (keyword "}]"))))
-  (list
-   (vl-append
-    0
-    (hbl-append 0 (letk) (function "CompareWith ") (parameter "expected actual ") (equal))
-    (tt "    Assert.True (CompareList expected actual)")
-    (tt "")
-    (hbl-append 0 (letk) (function "expectedUniverse ") (equal))
-    (hbl-append 0 (tab) (keyword "[{") (tt "x ") (equal) (tt "0") (keyword "; ") (tt "y ") (equal) (tt "0") (keyword "}]"))
-    (tt "")
-    (hbl-append 0 (letk) (function "universeWithThreeCells ") (equal))
-    (hbl-append 0 (tab) (keyword "[{") (tt "x ") (equal) (tt "-1") (keyword "; ") (tt "y ") (equal) (tt "-1") (keyword "};"))
-    (hbl-append 0 (tab) (keyword " {") (tt "x ") (equal) (tt "1") (keyword "; ") (tt "y ") (equal) (tt "1") (keyword "};"))
-    (hbl-append 0 (tab) (keyword " {") (tt "x ") (equal) (tt "-1") (keyword "; ") (tt "y ") (equal) (tt "1") (keyword "}]"))
-    (tt "")
-    (hbl-append 0 (letk) (function "``Empty cell becomes alive`` ") (keyword "() ") (equal))
-    (tt "    universeWithThreeCells")
-    (hbl-append 0 (tab) (keyword "|> ") (tt "NextUniverse"))
-    (hbl-append 0 (tab) (keyword "|> ") (tt "CompareWith expectedUniverse"))))))
+  (list (intermediate-variables-fsharp))
+  (list (non-intermediate-variables-fsharp))
+  (list (non-intermediate-variables-alternate-fsharp))))
 
 (slide
  #:title "No Explicit Recursion"
@@ -323,45 +213,9 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
  'next
  'alts
  (list
-  (list
-   (vl-append
-    0
-    (hbl-append 0 (letk) (function "AddN ") (parameter "cell universe mods ") (equal))
-    (hbl-append 0 (tab) (keyword "{") (tt "x ") (equal) (tt "cell.x ") (keyword "+ ") (tt "fst mods") (keyword ";"))
-    (hbl-append 0 (tab) (tt " y ") (equal) (tt "cell.y ") (keyword "+ ") (tt "snd mods") (keyword "}"))
-    (hbl-append 0 (tab) (keyword ":: ") (tt "universe"))
-    (tt "")
-    (hbl-append 0 (letk) (function "GetNeighbours ") (parameter "(cell:Cell) : List<Cell> ") (equal))
-    (hbl-append 8 (tab) (letk) (keyword "rec ") (function "FindNeighbours ") (parameter "N U ") (equal))
-    (hbl-append 0 (tab) (tab) (keyword "match ") (tt "N ") (keyword "with "))
-    (hbl-append 0 (tab) (tab) (keyword "| [] -> ") (tt "U"))
-    (hbl-append 0 (tab) (tab) (keyword "| ") (tt "H") (keyword "::") (tt "T ") (keyword "->"))
-    (tt "            FindNeighbours T (AddN cell U H)")
-    (hbl-append 0 (tt "    FindNeighbours neighbours ") (keyword "[]"))
-    (hbl-append 0 (tab) (keyword "|> ") (tt "List.rev"))))
-  (list
-   (vl-append
-    0
-    (hbl-append 0 (letk) (function "AddN ") (parameter "cell universe mods ") (equal))
-    (hbl-append 0 (tab) (keyword "{") (tt "x ") (equal) (tt "cell.x ") (keyword "+ ") (tt "fst mods") (keyword ";"))
-    (hbl-append 0 (tab) (tt " y ") (equal) (tt "cell.y ") (keyword "+ ") (tt "snd mods") (keyword "}"))
-    (hbl-append 0 (tab) (keyword ":: ") (tt "universe"))
-    (tt "")
-    (hbl-append 0 (letk) (function "GetNeighbours ") (parameter "(cell:Cell) : List<Cell> ") (equal))
-    (hbl-append 0 (tab) (letk) (function "AddNForCell ") (parameter "acc elem ") (equal) (tt "AddN cell acc elem"))
-    (hbl-append 0 (tab) (tt "List.fold AddNForCell ") (keyword "[] ") (tt "neighbours"))
-    (hbl-append 0 (tab) (keyword "|> ") (tt "List.rev"))))
-  (list
-   (vl-append
-    0
-    (hbl-append 0 (letk) (function "AddN ") (parameter "cell universe mods ") (equal))
-    (hbl-append 0 (tab) (keyword "{") (tt "x ") (equal) (tt "cell.x ") (keyword "+ ") (tt "fst mods") (keyword ";"))
-    (hbl-append 0 (tab) (tt " y ") (equal) (tt "cell.y ") (keyword "+ ") (tt "snd mods") (keyword "}"))
-    (hbl-append 0 (tab) (keyword ":: ") (tt "universe"))
-    (tt "")
-    (hbl-append 0 (letk) (function "GetNeighbours ") (parameter "(cell:Cell) : List<Cell> ") (equal))
-    (hbl-append 0 (tab) (tt "List.fold (AddN cell) ") (keyword "[] ") (tt "neighbours"))
-    (hbl-append 0 (tab) (keyword "|> ") (tt "List.rev"))))))
+  (list (recursion-fsharp))
+  (list (non-recursion-fsharp))
+  (list (non-recursion-alternate-fsharp))))
 
 (slide
  #:title "Generic Building Blocks"
@@ -373,44 +227,9 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
  'next
  'alts
  (list
-  (list
-   (vl-append
-    0
-    (hbl-append 0 (letk) (function "Born ") (parameter "universe ") (equal))
-    (hbl-append 0 (tab) (tt "List.fold ") (keyword "-> ") (tt "CollateNeighbours ") (keyword "[] ") (tt "universe"))
-    (hbl-append 0 (tab) (keyword "|> ") (tt "Set.ofList"))
-    (hbl-append 0 (tab) (keyword "|> ") (tt "Set.toList"))
-    (hbl-append 0 (tab) (keyword "|> ") (tt "NotAnyIn universe"))
-    (hbl-append (tab) (keyword "|> ") (tt "List.fold (") (keyword "fun ") (tt "acc e ") (keyword "->"))
-    (hbl-append (tab) (tab) (tab) (tab) (keyword "match ") (tt "IfThree e universe ") (keyword "with"))
-    (hbl-append 0 (tab) (tab) (tab) (tab) (keyword "| true -> ") (tt "e ") (keyword ":: ") (tt "acc"))
-    (hbl-append 0 (tab) (tab) (tab) (tab) (keyword "| false -> ") (tt "acc) ") (keyword "[] ") (tt "acc"))))
-  (list
-   (vl-append
-    0
-    (hbl-append 0 (letk) (function "Born ") (parameter "check universe ") (equal))
-    (hbl-append 0 (tab) (tt "List.fold ") (keyword "-> ") (tt "CollateNeighbours ") (keyword "[] ") (tt "universe"))
-    (hbl-append 0 (tab) (keyword "|> ") (tt "Set.ofList"))
-    (hbl-append 0 (tab) (keyword "|> ") (tt "Set.toList"))
-    (hbl-append 0 (tab) (keyword "|> ") (tt "NotAnyIn universe"))
-    (hbl-append (tab) (keyword "|> ") (tt "List.fold (") (keyword "fun ") (tt "acc e ") (keyword "->"))
-    (hbl-append (tab) (tab) (tab) (tab) (keyword "match ") (tt "check e universe ") (keyword "with"))
-    (hbl-append 0 (tab) (tab) (tab) (tab) (keyword "| true -> ") (tt "e ") (keyword ":: ") (tt "acc"))
-    (hbl-append 0 (tab) (tab) (tab) (tab) (keyword "| false -> ") (tt "acc) ") (keyword "[] ") (tt "acc"))
-    (tt "")
-    (hbl-append (letk) (function "BornWithThree ") (parameter "universe ") (equal))
-    (tt "    Born CheckIfThree universe")))
-  (list
-   (vl-append
-    0
-    (hbl-append 0 (letk) (function "Born ") (parameter "check universe ") (equal))
-    (hbl-append 0 (tab) (tt "List.fold ") (keyword "-> ") (tt "CollateNeighbours ") (keyword "[] ") (tt "universe"))
-    (hbl-append 0 (tab) (keyword "|> ") (tt "Dedup"))
-    (hbl-append 0 (tab) (keyword "|> ") (tt "NotAnyIn universe"))
-    (hbl-append 0 (tab) (keyword "|> ") (tt "CheckAll check"))
-    (tt "")
-    (hbl-append (letk) (function "BornWithThree ") (parameter "universe ") (equal))
-    (tt "    Born CheckIfThree universe")))))
+  (list (non-generic-building-block-fsharp))
+  (list (generic-building-block-fsharp))
+  (list (generic-building-block-alternate-fsharp))))
 
 (slide
  #:title "Side effects at the boundaries"
@@ -419,61 +238,10 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
  'next
  'alts
  (list
-  (list
-   (vl-append
-    0
-    (hbl-append 0 (letk) (function "SaveBorns ") (parameter "newBorns ") (equal))
-    (tt "    ...Saving in database")
-    (tt "    newBorns")
-    (tt "")
-    (hbl-append 0 (letk) (function "Born ") (parameter "check universe ") (equal))
-    (tt "...")
-    (hbl-append 0 (tab) (keyword "|> ") (tt "CheckAll check"))
-    (hbl-append 0 (tab) (keyword "|> ") (tt "SaveBorns"))))
-  (list
-   (vl-append
-    0
-    (hbl-append 0 (letk) (function "SaveBorns ") (parameter "newBorns ") (equal))
-    (tt "    ...Saving in database")
-    (tt "    newBorns")
-    (tt "")
-    (hbl-append 0 (letk) (function "Born ") (parameter "check universe saving ") (equal))
-    (tt "    ...")
-    (hbl-append 0 (tab) (keyword "|> ") (tt "CheckAll check"))
-    (hbl-append 0 (tab) (keyword "|> ") (tt "saving"))
-    (tt "")
-    (tt "Born check universe SaveBorns")))
-  (list
-   (vl-append
-    0
-    (hbl-append 0 (letk) (function "SaveBorns ") (parameter "newBorns ") (equal))
-    (tt "   Saving in database")
-    (tt "    newBorns")
-    (tt "")
-    (hbl-append 0 (letk) (function "Born ") (parameter "check universe ") (equal))
-    (tt "...")
-    (hbl-append 0 (tab) (keyword "|> ") (tt "CheckAll check"))
-    (tt "")
-    (hbl-append 0 (letk) (keyword "[<EntryPoint>] ") (function "main ") (parameter "_ ") (equal))
-    (tt "...")
-    (tt "    Born check universe")
-    (hbl-append 0 (tab) (keyword "|> ") (tt "SaveBorns"))))
-  (list
-   (vl-append
-    0
-    (hbl-append 0 (letk) (function "SaveBorns ") (parameter "newBorns ") (equal))
-    (tt "   Saving in database")
-    (tt "    newBorns")
-    (tt "")
-    (hbl-append 0 (letk) (function "Born ") (parameter "check universe ") (equal))
-    (tt "...")
-    (hbl-append 0 (tab) (keyword "|> ") (tt "CheckAll check"))
-    
-    (tt "let [<EntryPoint>] main _ = ")
-    (tt "...")
-    (tt "    Born check universe")
-    (hbl-append 0 (tab) (keyword "|> ") (tt "SaveBorns"))
-    (hbl-append 0 (tab) (keyword "|> ") (tt "AddToUniverse"))))))
+  (list (side-effect-fsharp))
+  (list (side-effect-injection-fsharp))
+  (list (side-effect-out-fsharp))
+  (list (side-effect-out-alternate-fsharp))))
 
 (slide
  #:title "Infinite Sequences"
@@ -484,22 +252,8 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
  'next
  'alts
  (list
-  (list
-   (vl-append
-    0
-    (hbl-append 0 (letk) (function "FindOnUniverse ") (parameter "list1 list2 ") (equal))
-    (tt "    List.filter ")
-    (hbl-append 0 (tab) (tab) (tt "(") (keyword "fun ") (tt "(x) ") (keyword "->"))
-    (hbl-append 0 (tab) (tab) (tab) (tt "List.exists (") (keyword "fun ") (tt "(y) ") (keyword "-> ") (tt "x ") (equal) (tt "y) list2)"))
-    (tt "        list1")))
-  (list
-   (vl-append
-    0
-    (hbl-append 0 (letk) (function "FindOnUniverse ") (parameter "seq1 seq2 ") (equal))
-    (tt "    Seq.filter ")
-    (hbl-append 0 (tab) (tab) (tt "(") (keyword "fun ") (tt "(x) ") (keyword "->"))
-    (hbl-append 0 (tab) (tab) (tab) (tt "Seq.exists (") (keyword "fun ") (tt "(y) ") (keyword "-> ") (tt "x ") (equal) (tt "y) seq2)"))
-    (tt "        seq1")))))
+  (list (non-sequence-fsharp))
+  (list (sequence-fsharp))))
 
 (slide
  #:title "One argument functions"
@@ -508,35 +262,10 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
  'next
  'alts
  (list
-  (list
-   (vl-append
-    0
-    (hbl-append 0 (letk) (function "FindOnUniverse ") (parameter "seq1 seq2 ") (equal))
-    (tt "    Seq.filter ")
-    (hbl-append 0 (tab) (tab) (tt "(") (keyword "fun ") (tt "(x) ") (keyword "->"))
-    (hbl-append 0 (tab) (tab) (tab) (tt "Seq.exists (") (keyword "fun ") (tt "(y) ") (keyword "-> ") (tt "x ") (equal) (tt "y) seq2)"))
-    (tt "        seq1")))
-  (list
-   (vl-append
-    0
-    (hbl-append 0 (letk) (function "CheckExistence ") (parameter "onSeq ") (equal))
-    (hbl-append 0 (tab) (keyword "fun") (tt "(x) ") (keyword "-> ") (tt "Seq.exists (") (keyword "fun") (tt "(y) ") (keyword "-> ") (tt "x ") (equal) (tt "y) onSeq"))
-    (tt "")
-    (hbl-append 0 (letk) (function "Find ") (parameter "possibles ") (equal))
-    (tt "    Seq.Filter (CheckExistence universe) possibles")))
-  (list
-   (vl-append
-    0
-    (hbl-append 0 (letk) (function "CheckIfThree ") (parameter "cell universe ") (equal))
-    (hbl-append 0 (tab) (letk) (function "allNeighs ") (equal) (tt "GetNeighbours cell"))
-    (hbl-append 0 (tab) (letk) (function "alive ") (equal) (tt "FindOnUniverse universe allNeighs"))
-    (hbl-append 0 (tab) (tt "List.length alive ") (equal) (tt "3"))))
-  (list
-   (vl-append
-    0
-    (hbl-append 0 (letk) (function "FWU ") (equal) (tt "FindOnUniverse universe"))
-    (hbl-append 0 (letk) (function "CheckForThree ") (parameter "alive ") (equal) (tt "List.length alive ") (equal) (tt "3"))
-    (hbl-append 0 (letk) (function "check ") (equal) (tt "GetNeighbours ") (keyword ">> ") (tt "FWU ") (keyword ">> ") (tt "CheckForThree") )))))
+  (list (multiple-arguments-fsharp))
+  (list (single-argument-fsharp))
+  (list (multiple-arguments-2-fsharp))
+  (list (composition-fsharp))))
 
 (slide
  #:title "The Links"
