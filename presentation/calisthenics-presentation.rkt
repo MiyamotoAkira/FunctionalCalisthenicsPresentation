@@ -105,155 +105,171 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
  (slide
   #:title "Conway's Game of Life"
   (comment "Does anyone not know the game of life? Created in 1970 by John Horton Conway. Interesting because from a very simple set of rules you can create some sofisticated elements. When I originally heard about it I learned about gliders, and guns, and oscillators. And then, not long ago I discovered that you can create an Universal Turing Machine from it.")
-  (rb-superimpose
-   (cc-superimpose
-    (linewidth 0 (frame (titleless-page) #:color "white"))
-    (vc-append gap-size
-               ((vafter first) (item "Cells are alive or dead"))
-               ((vafter second) (item "Universe is a grid of squares"))
-               ((vafter third) (item "Cell stays alive if 2 or 3 neighbours"))
-               ((vafter fourth) (item "Dead cell will come to life if it has 3 neighbours"))))
-   output-footer)))
+  (wrapper-titleless
+   (vc-append
+    gap-size
+    ((vafter first) (item "Cells are alive or dead"))
+    ((vafter second) (item "Universe is a grid of squares"))
+    ((vafter third) (item "Cell stays alive if 2 or 3 neighbours"))
+    ((vafter fourth) (item "Dead cell will come to life if it has 3 neighbours"))))))
 
 
 (slide
  #:title "Some declarations"
- (rb-superimpose
-  (cc-superimpose
-   (linewidth 0 (frame (titleless-page) #:color "white"))
-   (vl-append 0 (declarations-fsharp)))
-  output-footer))
+ (wrapper-titleless
+  (vl-append 0 (declarations-fsharp))))
 
 (with-steps
  (intro first second nonames withnames)
  (slide
   #:title "Name Everything"
-  (vc-append gap-size
-             ((vafter first)
-              (t "Everything should have a name"))
-             ((vafter second)
-              (t "(Including lambdas/anonymous functions)")))
-  (lt-superimpose
-   ((vonly nonames)
-    (bad-naming-fsharp))
-   ((vonly withnames)
-    (good-naming-fsharp)))
-  ))
+  (wrapper-titleless
+   (vc-append
+    gap-size
+    (vc-append gap-size
+               ((vafter first) (t "Everything should have a name"))
+               ((vafter second) (t "(Including lambdas/anonymous functions)")))
+    (lt-superimpose
+     ((vonly nonames) (bad-naming-fsharp))
+     ((vonly withnames) (good-naming-fsharp)))))))
 
-(slide
- #:title "Expressions, not Statements"
- (comment "I have moved its position on this presentation already 4 times. This started as a rule. But after using the rules of no mutable state and side effects on the boundaries there shouldn't be anything to apply here. Expressions, not Statmentes becomes a property of your code.")
- 'next
- (t "A rule that becomes a characteristic")
- 'next
- (statement-fsharp)
- 'next
- (expression-fsharp))
+(with-steps
+ (intro first second third)
+ (slide
+  #:title "Expressions, not Statements"
+  (comment "I have moved its position on this presentation already 4 times. This started as a rule. But after using the rules of no mutable state and side effects on the boundaries there shouldn't be anything to apply here. Expressions, not Statmentes becomes a property of your code.")
+  (wrapper-titleless
+   (vc-append
+    gap-size
+    ((vafter first) (t "A rule that becomes a characteristic"))
+    ((vafter second) (statement-fsharp))
+    ((vafter third) (expression-fsharp))))))
 
-(slide
- #:title "No Mutable State"
- (comment "Mutable state makes reasoning more difficult.")
- 'next
- (t "We want to have guarantees about our code")
- 'next
- 'alts
- (list
-  (list (mutable-state-fsharp))
-  (list (non-mutable-state-fsharp))))
+(with-steps
+ (intro first second third)
+ (slide
+  #:title "No Mutable State"
+  (comment "Mutable state makes reasoning more difficult.")
+  (wrapper-titleless
+   (vc-append
+    gap-size
+    ((vafter first) (t "We want to have guarantees about our code"))
+    (lt-superimpose
+     ((vonly second) (mutable-state-fsharp))
+     ((vonly third) (non-mutable-state-fsharp)))))))
 
-(slide
- #:title "Exhaustive Conditionals"
- (comment "There is some help from F# here. Match statements need to be exhaustive. You can't define a match that is not exhaustive. The example on the screen throws an error at compile time. But, it is happy to allow ifs without else. We don't want that. There are two reasons for an if without an else: side effects and mutability. The latter we have already said we don't want, the former we will talk about later.")
- 'next
- (t "All your ifs, matches, cases should be able")
- (t "to deal with all possible input")
- 'next
- 'alts
- (list
-  (list (non-exhaustive-1-fsharp))
-  (list (exhaustive-1-fsharp))
-  (list (non-exhaustive-2-fsharp))
-  (list (exhaustive-2-fsharp))))
+(with-steps
+ (intro first second third fourth fifth)
+ (slide
+  #:title "Exhaustive Conditionals"
+  (comment "There is some help from F# here. Match statements need to be exhaustive. You can't define a match that is not exhaustive. The example on the screen throws an error at compile time. But, it is happy to allow ifs without else. We don't want that. There are two reasons for an if without an else: side effects and mutability. The latter we have already said we don't want, the former we will talk about later.")
+  (wrapper-titleless
+   (vc-append
+    gap-size
+    ((vafter first)
+     (vc-append
+      gap-size
+      (t "All your ifs, matches, cases should be able")
+      (t "to deal with all possible input")))
+    (lt-superimpose
+     ((vonly second) (non-exhaustive-1-fsharp))
+     ((vonly third) (exhaustive-1-fsharp))
+     ((vonly fourth) (non-exhaustive-2-fsharp))
+     ((vonly fifth) (exhaustive-2-fsharp)))))))
 
-(slide
- #:title "Do not use intermediate variables"
- (comment "I want you to notice that this is a test. All these rules still apply to tests. Tests is code. But wait, we said that we want names on everything. If we want names and no intermediate variables we need to push them out. Maybe we can consider constants (cheating a bit). They can be reused on multiple tests. But if not, we are removing locality.")
- 'next
- (t "It is about the flow of data transformations")
- 'next
- 'alts
- (list
-  (list (intermediate-variables-fsharp))
-  (list (non-intermediate-variables-fsharp))
-  (list (non-intermediate-variables-alternate-fsharp))))
+(with-steps
+ (intro first second third fourth)
+ (slide
+  #:title "Do not use intermediate variables"
+  (comment "I want you to notice that this is a test. All these rules still apply to tests. Tests is code. But wait, we said that we want names on everything. If we want names and no intermediate variables we need to push them out. Maybe we can consider constants (cheating a bit). They can be reused on multiple tests. But if not, we are removing locality.")
+  (wrapper-titleless
+   (vc-append
+    gap-size
+    ((vafter first)  (t "It is about the flow of data transformations"))
+    (lt-superimpose
+     ((vonly second) (intermediate-variables-fsharp))
+     ((vonly third) (non-intermediate-variables-fsharp))
+     ((vonly fourth) (non-intermediate-variables-alternate-fsharp)))))))
 
-(slide
- #:title "No Explicit Recursion"
- (comment "")
- 'next
- (t "Map and Reduce should be used instead")
- 'next
- 'alts
- (list
-  (list (recursion-fsharp))
-  (list (non-recursion-fsharp))
-  (list (non-recursion-alternate-fsharp))))
+(with-steps
+ (intro first second third fourth)
+ (slide
+  #:title "No Explicit Recursion"
+  (comment "")
+  (wrapper-titleless
+   (vc-append
+    gap-size
+    ((vafter first) (t "Map and Reduce should be used instead"))
+    (lt-superimpose
+     ((vonly second) (recursion-fsharp))
+     ((vonly third) (non-recursion-fsharp))
+     ((vonly fourth) (non-recursion-alternate-fsharp)))))))
 
-(slide
- #:title "Generic Building Blocks"
- (comment "The Born function is very aware of the domain in which it is working. Its even aware of the fact that is a Life of game on a square's grid. But what if we wanted to use an hexagonal grid? The rule for being born is different (2 neighbours, instead of 3). So now we pass a function that does the needed calculation. Born is kind of domain aware still, but much looser than before. By the way, let's gonna give a few names")
- 'next
- (t "Try to create functions that are not domain aware")
- 'next
- (t "We are trying to create composable abstractions")
- 'next
- 'alts
- (list
-  (list (non-generic-building-block-fsharp))
-  (list (generic-building-block-fsharp))
-  (list (generic-building-block-alternate-fsharp))))
+(with-steps
+ (intro first second third fourth fifth)
+ (slide
+  #:title "Generic Building Blocks"
+  (comment "The Born function is very aware of the domain in which it is working. Its even aware of the fact that is a Life of game on a square's grid. But what if we wanted to use an hexagonal grid? The rule for being born is different (2 neighbours, instead of 3). So now we pass a function that does the needed calculation. Born is kind of domain aware still, but much looser than before. By the way, let's gonna give a few names")
+  (wrapper-titleless
+   (vc-append
+    gap-size
+    ((vafter first) (t "Try to create functions that are not domain aware"))
+    ((vafter second) (t "We are trying to create composable abstractions"))
+    (lt-superimpose
+     ((vonly third) (non-generic-building-block-fsharp))
+     ((vonly fourth) (generic-building-block-fsharp))
+     ((vonly fifth) (generic-building-block-alternate-fsharp)))))))
 
-(slide
- #:title "Side effects at the boundaries"
- (comment "As soon as one function is not pure, every caller to it is not pure as well. We want to limit the non-pureness. We want to restrict where we have side effect. Here we have a call into a database action in the middle of our Born function. We want to store all new borns ... Dependency Injection ... We can keep pushing out ... In this case it goes into our main. Does it push business logic out into main? Our main is the composition root. At the composition root we can interleave.")
- (t "Keep your functions pure")
- 'next
- 'alts
- (list
-  (list (side-effect-fsharp))
-  (list (side-effect-injection-fsharp))
-  (list (side-effect-out-fsharp))
-  (list (side-effect-out-alternate-fsharp))))
+(with-steps
+ (intro first second third fourth)
+ (slide
+  #:title "Side effects at the boundaries"
+  (comment "As soon as one function is not pure, every caller to it is not pure as well. We want to limit the non-pureness. We want to restrict where we have side effect. Here we have a call into a database action in the middle of our Born function. We want to store all new borns ... Dependency Injection ... We can keep pushing out ... In this case it goes into our main. Does it push business logic out into main? Our main is the composition root. At the composition root we can interleave.")
+  (wrapper-titleless
+   (vc-append
+    gap-size
+    (t "Keep your functions pure")
+    (lt-superimpose
+     ((vonly first) (side-effect-fsharp))
+     ((vonly second) (side-effect-injection-fsharp))
+     ((vonly third) (side-effect-out-fsharp))
+     ((vonly fourth) (side-effect-out-alternate-fsharp)))))))
 
-(slide
- #:title "Infinite Sequences"
- 'next
- (t "Don't use fixed sized collections")
- 'next
- (t "Don't depend on the length of the collection")
- 'next
- 'alts
- (list
-  (list (non-sequence-fsharp))
-  (list (sequence-fsharp))))
+(with-steps
+ (intro first second third fourth)
+ (slide
+  #:title "Infinite Sequences"
+  (wrapper-titleless
+   (vc-append
+    gap-size
+    ((vafter first) (t "Don't use fixed sized collections"))
+    ((vafter second) (t "Don't depend on the length of the collection"))
+    (lt-superimpose
+     ((vonly third) (non-sequence-fsharp))
+     ((vonly fourth) (sequence-fsharp)))))))
 
-(slide
- #:title "One argument functions"
- 'next
- (t "Functions should have a single argument")
- 'next
- 'alts
- (list
-  (list (multiple-arguments-fsharp))
-  (list (single-argument-fsharp))
-  (list (multiple-arguments-2-fsharp))
-  (list (composition-fsharp))))
+(with-steps
+ (intro first second third fourth fifth)
+ (slide
+  #:title "One argument functions"
+  (wrapper-titleless
+   (vc-append
+    gap-size
+    ((vafter first) (t "Functions should have a single argument"))
+    (lt-superimpose
+     ((vonly second) (multiple-arguments-fsharp))
+     ((vonly third) (single-argument-fsharp))
+     ((vonly fourth) (multiple-arguments-2-fsharp))
+     ((vonly fifth) (composition-fsharp)))))))
 
 (slide
  #:title "The Links"
- (hbl-append 0 (t "Our take:") (colorize (t " https://tinyurl.com/functional-calisthenics") "blue"))
- (hbl-append 0 (t "The original:") (colorize (t " https://tinyurl.com/original-calisthenics") "blue"))
- (hbl-append 0 (t "Kata modifications:") (colorize (t " https://tinyurl.com/katas-calisthenics") "blue")))
+ (wrapper-titleless
+  (vc-append
+   gap-size
+   (hbl-append 0 (t "Our take:") (colorize (t " https://tinyurl.com/functional-calisthenics") "blue"))
+   (hbl-append 0 (t "The original:") (colorize (t " https://tinyurl.com/original-calisthenics") "blue"))
+   (hbl-append 0 (t "Kata modifications:") (colorize (t " https://tinyurl.com/katas-calisthenics") "blue")))))
 
 (slide
  #:title "The end"
