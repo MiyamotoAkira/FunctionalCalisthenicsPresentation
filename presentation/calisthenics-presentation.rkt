@@ -39,7 +39,7 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
  (slide
   #:title "The Clojure Experiment"
   (comment "I like functional programming. I have done functional programming at home. Testing things here and there. I have used F#. I have use Clojure. I have used Elixir. But ... all what I did was small pieces of code under no pressure. At Codurance I had the opportunity of working on my first production functional code. And soon I found myself, as the deadlines was looming, back into my well trained OO and imperative programming. On one side, it did allow me to move quickly. On the other side, the resulting code was a mess. Difficult to understand and difficult to change. At the end I came to realize that all that practicing that I have done for my OOP skills needed to be replicated on FP.")
-  (wrapper-titleless
+  (wrapper-page-with-title
    (vc-append
     gap-size
     ((vafter first) (text "First functional production code" (current-main-font) 48))
@@ -51,7 +51,7 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
  (slide
   #:title "Functional Calisthenics"
   (comment "Which is were Functional Calisthenics come into play. They were originally set at Socrates UK 2015. I decided to have a stab at them. But there were a few rules that I disagree with, and sadly there was missing something I considered important: Why?. So we got together a group of developers at Codurance and rewrote them. They are not a finished work. And we are not the owners of the truth. I will explain why we have each one. But I will happily stand corrected if that means improving my craft.")
-  (wrapper-titleless
+  (wrapper-page-with-title
    (vc-append
     gap-size
     ((vafter first) (text "Original version during Socrates UK 2015" (current-main-font) 48))
@@ -62,7 +62,7 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
  (intro first second)
  (slide
   #:title "End Goal"
-  (wrapper-titleless
+  (wrapper-page-with-title
    (vc-append
     gap-size
     ((vafter first) (text "Pureness" (current-main-font) 48))
@@ -105,7 +105,7 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
  (slide
   #:title "Conway's Game of Life"
   (comment "Does anyone not know the game of life? Created in 1970 by John Horton Conway. Interesting because from a very simple set of rules you can create some sofisticated elements. When I originally heard about it I learned about gliders, and guns, and oscillators. And then, not long ago I discovered that you can create an Universal Turing Machine from it.")
-  (wrapper-titleless
+  (wrapper-page-with-title
    (vc-append
     gap-size
     ((vafter first) (item "Cells are alive or dead"))
@@ -116,14 +116,14 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
 
 (slide
  #:title "Some declarations"
- (wrapper-titleless
+ (wrapper-page-with-title
   (vl-append 0 (declarations-fsharp))))
 
 (with-steps
  (intro first second nonames withnames)
  (slide
   #:title "Name Everything"
-  (wrapper-titleless
+  (wrapper-page-with-title
    (vc-append
     gap-size
     (vc-append gap-size
@@ -138,7 +138,7 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
  (slide
   #:title "Expressions, not Statements"
   (comment "I have moved its position on this presentation already 4 times. This started as a rule. But after using the rules of no mutable state and side effects on the boundaries there shouldn't be anything to apply here. Expressions, not Statmentes becomes a property of your code.")
-  (wrapper-titleless
+  (wrapper-page-with-title
    (vc-append
     gap-size
     ((vafter first) (t "A rule that becomes a characteristic"))
@@ -150,7 +150,7 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
  (slide
   #:title "No Mutable State"
   (comment "Mutable state makes reasoning more difficult.")
-  (wrapper-titleless
+  (wrapper-page-with-title
    (vc-append
     gap-size
     ((vafter first) (t "We want to have guarantees about our code"))
@@ -163,7 +163,7 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
  (slide
   #:title "Exhaustive Conditionals"
   (comment "There is some help from F# here. Match statements need to be exhaustive. You can't define a match that is not exhaustive. The example on the screen throws an error at compile time. But, it is happy to allow ifs without else. We don't want that. There are two reasons for an if without an else: side effects and mutability. The latter we have already said we don't want, the former we will talk about later.")
-  (wrapper-titleless
+  (wrapper-page-with-title
    (vc-append
     gap-size
     ((vafter first)
@@ -182,7 +182,7 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
  (slide
   #:title "Do not use intermediate variables"
   (comment "I want you to notice that this is a test. All these rules still apply to tests. Tests is code. But wait, we said that we want names on everything. If we want names and no intermediate variables we need to push them out. Maybe we can consider constants (cheating a bit). They can be reused on multiple tests. But if not, we are removing locality.")
-  (wrapper-titleless
+  (wrapper-page-with-title
    (vc-append
     gap-size
     ((vafter first)  (t "It is about the flow of data transformations"))
@@ -196,7 +196,7 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
  (slide
   #:title "No Explicit Recursion"
   (comment "")
-  (wrapper-titleless
+  (wrapper-page-with-title
    (vc-append
     gap-size
     ((vafter first) (t "Map and Reduce should be used instead"))
@@ -210,7 +210,7 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
  (slide
   #:title "Generic Building Blocks"
   (comment "The Born function is very aware of the domain in which it is working. Its even aware of the fact that is a Life of game on a square's grid. But what if we wanted to use an hexagonal grid? The rule for being born is different (2 neighbours, instead of 3). So now we pass a function that does the needed calculation. Born is kind of domain aware still, but much looser than before. By the way, let's gonna give a few names")
-  (wrapper-titleless
+  (wrapper-page-with-title
    (vc-append
     gap-size
     ((vafter first) (t "Try to create functions that are not domain aware"))
@@ -225,7 +225,7 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
  (slide
   #:title "Side effects at the boundaries"
   (comment "As soon as one function is not pure, every caller to it is not pure as well. We want to limit the non-pureness. We want to restrict where we have side effect. Here we have a call into a database action in the middle of our Born function. We want to store all new borns ... Dependency Injection ... We can keep pushing out ... In this case it goes into our main. Does it push business logic out into main? Our main is the composition root. At the composition root we can interleave.")
-  (wrapper-titleless
+  (wrapper-page-with-title
    (vc-append
     gap-size
     (t "Keep your functions pure")
@@ -239,7 +239,7 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
  (intro first second third fourth)
  (slide
   #:title "Infinite Sequences"
-  (wrapper-titleless
+  (wrapper-page-with-title
    (vc-append
     gap-size
     ((vafter first) (t "Don't use fixed sized collections"))
@@ -252,7 +252,7 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
  (intro first second third fourth fifth)
  (slide
   #:title "One argument functions"
-  (wrapper-titleless
+  (wrapper-page-with-title
    (vc-append
     gap-size
     ((vafter first) (t "Functions should have a single argument"))
@@ -264,7 +264,7 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
 
 (slide
  #:title "The Links"
- (wrapper-titleless
+ (wrapper-page-with-title
   (vc-append
    gap-size
    (hbl-append 0 (t "Our take:") (colorize (t " https://tinyurl.com/functional-calisthenics") "blue"))

@@ -5,7 +5,7 @@
 (provide parameter)
 (provide output-footer)
 (provide wrapper)
-(provide wrapper-titleless)
+(provide wrapper-page-with-title)
 
 (define (function s)
   (colorize (tt s) "light blue"))
@@ -25,7 +25,7 @@
     p)
    output-footer))
 
-(define (wrapper-titleless p)
+(define (wrapper-page-with-title p)
   (rb-superimpose
    (cc-superimpose
     (linewidth 0 (frame (titleless-page) #:color "white"))
