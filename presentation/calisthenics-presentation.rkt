@@ -3,9 +3,24 @@
 (require slideshow/code)
 (require slideshow/step)
 (require "base.rkt")
-(require "fsharp-code.rkt")
+(require "selector.rkt")
+
+(define language 1)
+
+(require mred)
+
+(set! language (message-box/custom
+                           "Select Language"
+                           ""
+                           "F#"
+                           "Clojure"
+                           #f
+                           #f
+                           '(default=1)
+                           1) )
 
 
+(selector language)
 
 (slide
  (text "Functional Calisthenics" (current-main-font) 60)
@@ -117,7 +132,7 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
 (slide
  #:title "Some declarations"
  (wrapper-page-with-title
-  (vl-append 0 (declarations-fsharp))))
+  (vl-append 0 (declarations))))
 
 (with-steps
  (intro first second nonames withnames)
@@ -130,8 +145,8 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
                ((vafter first) (t "Everything should have a name"))
                ((vafter second) (t "(Including lambdas/anonymous functions)")))
     (lt-superimpose
-     ((vonly nonames) (bad-naming-fsharp))
-     ((vonly withnames) (good-naming-fsharp)))))))
+     ((vonly nonames) (bad-naming))
+     ((vonly withnames) (good-naming)))))))
 
 (with-steps
  (intro first second third)
@@ -142,8 +157,8 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
    (vc-append
     gap-size
     ((vafter first) (t "A rule that becomes a characteristic"))
-    ((vafter second) (statement-fsharp))
-    ((vafter third) (expression-fsharp))))))
+    ((vafter second) (statement))
+    ((vafter third) (expression))))))
 
 (with-steps
  (intro first second third)
@@ -155,8 +170,8 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
     gap-size
     ((vafter first) (t "We want to have guarantees about our code"))
     (lt-superimpose
-     ((vonly second) (mutable-state-fsharp))
-     ((vonly third) (non-mutable-state-fsharp)))))))
+     ((vonly second) (mutable-state))
+     ((vonly third) (non-mutable-state)))))))
 
 (with-steps
  (intro first second third fourth fifth)
@@ -172,10 +187,10 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
       (t "All your ifs, matches, cases should be able")
       (t "to deal with all possible input")))
     (lt-superimpose
-     ((vonly second) (non-exhaustive-1-fsharp))
-     ((vonly third) (exhaustive-1-fsharp))
-     ((vonly fourth) (non-exhaustive-2-fsharp))
-     ((vonly fifth) (exhaustive-2-fsharp)))))))
+     ((vonly second) (non-exhaustive-1))
+     ((vonly third) (exhaustive-1))
+     ((vonly fourth) (non-exhaustive-2))
+     ((vonly fifth) (exhaustive-2)))))))
 
 (with-steps
  (intro first second third fourth)
@@ -187,9 +202,9 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
     gap-size
     ((vafter first)  (t "It is about the flow of data transformations"))
     (lt-superimpose
-     ((vonly second) (intermediate-variables-fsharp))
-     ((vonly third) (non-intermediate-variables-fsharp))
-     ((vonly fourth) (non-intermediate-variables-alternate-fsharp)))))))
+     ((vonly second) (intermediate-variables))
+     ((vonly third) (non-intermediate-variables))
+     ((vonly fourth) (non-intermediate-variables-alternate)))))))
 
 (with-steps
  (intro first second third fourth)
@@ -201,9 +216,9 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
     gap-size
     ((vafter first) (t "Map and Reduce should be used instead"))
     (lt-superimpose
-     ((vonly second) (recursion-fsharp))
-     ((vonly third) (non-recursion-fsharp))
-     ((vonly fourth) (non-recursion-alternate-fsharp)))))))
+     ((vonly second) (recursion))
+     ((vonly third) (non-recursion))
+     ((vonly fourth) (non-recursion-alternate)))))))
 
 (with-steps
  (intro first second third fourth fifth)
@@ -216,9 +231,9 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
     ((vafter first) (t "Try to create functions that are not domain aware"))
     ((vafter second) (t "We are trying to create composable abstractions"))
     (lt-superimpose
-     ((vonly third) (non-generic-building-block-fsharp))
-     ((vonly fourth) (generic-building-block-fsharp))
-     ((vonly fifth) (generic-building-block-alternate-fsharp)))))))
+     ((vonly third) (non-generic-building-block))
+     ((vonly fourth) (generic-building-block))
+     ((vonly fifth) (generic-building-block-alternate)))))))
 
 (with-steps
  (intro first second third fourth)
@@ -230,10 +245,10 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
     gap-size
     (t "Keep your functions pure")
     (lt-superimpose
-     ((vonly first) (side-effect-fsharp))
-     ((vonly second) (side-effect-injection-fsharp))
-     ((vonly third) (side-effect-out-fsharp))
-     ((vonly fourth) (side-effect-out-alternate-fsharp)))))))
+     ((vonly first) (side-effect))
+     ((vonly second) (side-effect-injection))
+     ((vonly third) (side-effect-out))
+     ((vonly fourth) (side-effect-out-alternate)))))))
 
 (with-steps
  (intro first second third fourth)
@@ -245,8 +260,8 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
     ((vafter first) (t "Don't use fixed sized collections"))
     ((vafter second) (t "Don't depend on the length of the collection"))
     (lt-superimpose
-     ((vonly third) (non-sequence-fsharp))
-     ((vonly fourth) (sequence-fsharp)))))))
+     ((vonly third) (non-sequence))
+     ((vonly fourth) (sequence)))))))
 
 (with-steps
  (intro first second third fourth fifth)
@@ -257,10 +272,10 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
     gap-size
     ((vafter first) (t "Functions should have a single argument"))
     (lt-superimpose
-     ((vonly second) (multiple-arguments-fsharp))
-     ((vonly third) (single-argument-fsharp))
-     ((vonly fourth) (multiple-arguments-2-fsharp))
-     ((vonly fifth) (composition-fsharp)))))))
+     ((vonly second) (multiple-arguments))
+     ((vonly third) (single-argument))
+     ((vonly fourth) (multiple-arguments-2))
+     ((vonly fifth) (composition)))))))
 
 (slide
  #:title "The Links"
