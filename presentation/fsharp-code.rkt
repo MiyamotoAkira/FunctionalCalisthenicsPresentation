@@ -2,9 +2,6 @@
 
 (require "base.rkt")
 
-(provide letk)
-(provide equal)
-(provide tab)
 (provide declarations-fsharp)
 (provide bad-naming-fsharp)
 (provide good-naming-fsharp)
