@@ -34,92 +34,269 @@
 (provide composition-clojure)
 
 (define (declarations-clojure)
-  (t "This should be some clojure code"))
+  (vl-append
+   (tt "(def neighbours ")
+   (tt "  [[-1 -1] [-1 0] [-1 1] [0 -1]")
+   (tt "   [0 1] [1 -1] [1 0] [1 1]])")))
 
 (define (bad-naming-clojure)
-  (t "This should be some clojure code"))
+  (vl-append
+   0
+   (tt "(defn new-cell-status")
+   (tt "  [cell universe]")
+   (tt "  (let [size (count")
+   (tt "               (find-alive-neighbours")
+   (tt "                 cell universe))]")
+   (tt "  (or (= 2 size) (= 3 size)))) ")))
 
 (define (good-naming-clojure)
-  (t "This should be some clojure code"))
+  (vl-append
+   0
+   (tt "(defn rule-alive")
+   (tt "  [size]")
+   (tt"   (or (= 2 size) (= 3 size)))")
+   (tt "")
+   (tt "(defn new-cell-status")
+   (tt "  [cell universe]")
+   (tt "  (rule-alive")
+   (tt "     (count (find-alive-neighbours")
+   (tt "              cell universe))))")))
 
 (define (statement-clojure)
-  (t "This should be some clojure code"))
+  (vl-append
+   0
+   (tt "(let [result (some-calculation some-parameter)]")
+   (tt " (another-call result))")))
 
 (define (expression-clojure)
-  (t "This should be some clojure code"))
+  (vl-append
+   0
+   (tt "(another-call (some-calculation some-parameter))")))
 
 (define (mutable-state-clojure)
-  (t "This should be some clojure code"))
+  (tt "(def universe (atom [[1 0] [0 0] [-1 0])"))
 
 (define (non-mutable-state-clojure)
-  (t "This should be some clojure code"))
+  (tt "(def universe [[1 0] [0 0] [-1 0]]"))
 
 (define (non-exhaustive-1-clojure)
-  (t "This should be some clojure code"))
+  (vl-append
+   0
+   (tt "(defn rule-alive")
+   (tt "  [size]")
+   (tt "  (match [size]")
+   (tt "    [2] true")
+   (tt "    [3] true))")))
 
 (define (exhaustive-1-clojure)
-  (t "This should be some clojure code"))
+  (vl-append
+   0
+   (tt "(defn rule-alive")
+   (tt "  [size]")
+   (tt "  (match [size]")
+   (tt "    [2] true")
+   (tt "    [3] true")
+   (tt "    :else false))")))
 
 (define (non-exhaustive-2-clojure)
-  (t "This should be some clojure code"))
+  (vl-append
+   0
+   (tt "(defn rule-born")
+   (tt "  [neighbours]")
+   (tt "  (if (= 3 neighbours) true))")))
 
 (define (exhaustive-2-clojure)
-  (t "This should be some clojure code"))
+  (vl-append
+   0
+   (tt "(defn rule-born")
+   (tt "  [neighbours]")
+   (tt "  (if (= 3 neighbours) true false))")))
 
 (define (intermediate-variables-clojure)
-  (t "This should be some clojure code"))
+  (vl-append
+   0
+   (tt "(deftest is-neighbour-test")
+   (tt "  (let [cell [2 1]")
+   (tt "        neighbour [3 0]]")
+   (tt "  (is (is-neighbour cell neighbour)))")))
 
 (define (non-intermediate-variables-clojure)
-  (t "This should be some clojure code"))
+  (vl-append
+   0
+   (tt "(deftest is-neighbour-test")
+   (tt "  (is (is-neighbour [2 1] [3 0])))")))
 
 (define (non-intermediate-variables-alternate-clojure)
-  (t "This should be some clojure code"))
+  (vl-append
+   0
+   (tt "(def cell [2 1])")
+   (tt "(def neighbour [3 0]")
+   (tt "(deftest is-neighbour-test")
+   (tt "  (is (is-neighbour cell neighbour)))")))
 
 (define (recursion-clojure)
-  (t "This should be some clojure code"))
+  (vl-append
+   0
+   (tt "(defn get-neighbours")
+   (tt "[cell]")
+   (tt "(loop [neighbour (first neighbours)")
+   (tt "      rest-n (rest neighbours)")
+   (tt "       result []]")
+   (tt "  (if-not neighbour")
+   (tt "    result")
+   (tt "     (recur")
+   (tt "     (first rest-n)")
+   (tt "     (rest rest-n)")
+   (tt "      (conj result")
+   (tt "            (add-for-neighbour cell neighbour))))))")))
 
 (define (non-recursion-clojure)
-  (t "This should be some clojure code"))
+  (vl-append
+   0
+   (tt "(defn get-neighbours")
+   (tt "  [cell]")
+   (tt "  (map #(add-for-neighbour cell %) neighbours))")))
 
 (define (non-recursion-alternate-clojure)
-  (t "This should be some clojure code"))
+  (vl-append
+   0
+   (tt "(defn get-neighbours")
+   (tt "  [cell]")
+   (tt "  (map #(add-for-neighbour cell %) neighbours))")))
 
 (define (non-generic-building-block-clojure)
-  (t "This should be some clojure code"))
+  (vl-append
+   0
+   (tt "(defn new-cell-status")
+   (tt "  [cell universe]")
+   (tt "  (rule-alive")
+   (tt "    (count (find-alive-neighbours cell universe))))")))
 
 (define (generic-building-block-clojure)
-  (t "This should be some clojure code"))
+  (vl-append
+   0
+   (tt "(defn new-cell-status")
+   (tt "  [cell universe rule]")
+   (tt "  (rule")
+   (tt "    (count (find-alive-neighbours cell universe))))")))
 
 (define (generic-building-block-alternate-clojure)
-  (t "This should be some clojure code"))
+  (vl-append
+   0
+   (tt "(defn new-cell-status")
+   (tt "  [cell universe rule]")
+   (tt "  (-> universe")
+   (tt "      (find-alive-neighbours cell)")
+   (tt "      count")
+   (tt "      rule))")))
 
 (define (side-effect-clojure)
-  (t "This should be some clojure code"))
+  (vl-append
+   0
+   (tt "(defn save-new-borns [new-borns]")
+   (tt "  ... saving on db ...")
+   (tt "")
+   (tt "(defn find-new-borns")
+   (tt "  [universe]")
+   (tt "  ...(save-new-borns all-found) ...)")))
 
 (define (side-effect-injection-clojure)
-  (t "This should be some clojure code"))
+  (vl-append
+   0
+   (tt "(defn save-new-borns [new-borns]")
+   (tt "  ... saving on db ...")
+   (tt "")
+   (tt "(defn find-new-borns")
+   (tt "  [universe saving]")
+   (tt "  ...(saving all-found) ...)")))
 
 (define (side-effect-out-clojure)
-  (t "This should be some clojure code"))
+  (vl-append
+   0
+   (tt "(defn save-new-borns [new-borns]")
+   (tt "  ... saving on db ...")
+   (tt "")
+   (tt "(defn find-new-borns")
+   (tt "  [universe]")
+   (tt "  ...")
+   (tt "  all-found)")
+   (tt "")
+   (tt "(defn main")
+   (tt "  ...")
+   (tt "  (-> universe")
+   (tt "      find-new-borns")
+   (tt "      save-new-borns)")))
 
 (define (side-effect-out-alternate-clojure)
-  (t "This should be some clojure code"))
+  (vl-append
+   0
+   (tt "(defn save-new-borns [new-borns]")
+   (tt "  ... saving on db ...")
+   (tt "")
+   (tt "(defn find-new-borns")
+   (tt "  [universe]")
+   (tt "  ...")
+   (tt "  all-found)")
+   (tt "")
+   (tt "(defn main")
+   (tt "  ...")
+   (tt "  (-> universe")
+   (tt "      find-new-borns")
+   (tt "      save-new-borns)")))
 
 (define (non-sequence-clojure)
-  (t "This should be some clojure code"))
+  (vl-append
+   0
+   (tt "(defn find-alive-neighbours")
+   (tt "  [cell universe]")
+   (tt "  (filterv #(is-neighbour cell %) universe))")))
 
 (define (sequence-clojure)
-  (t "This should be some clojure code"))
+  (vl-append
+   0
+   (tt "(defn find-alive-neighbours")
+   (tt "  [cell universe]")
+   (tt "  (filter #(is-neighbour cell %) universe))")))
 
 (define (multiple-arguments-clojure)
-  (t "This should be some clojure code"))
+  (vl-append
+   0
+   (tt "(defn add-for-neighbour")
+   (tt "  [cell neighbour]")
+   (tt "  (vector (+ (first cell) (first neighbour))")
+   (tt "          (+ (second cell)  (second neighbour))))")
+   (tt "")
+   (tt "(defn get-neighbours")
+   (tt "  [cell]")
+   (tt "  (map #(add-for-neighbour cell %) neighbours))")))
 
 (define (single-argument-clojure)
-  (t "This should be some clojure code"))
+  (vl-append
+   0
+   (tt "(defn add-for-neighbour")
+   (tt "  [cell neighbour]")
+   (tt "  (vector (+ (first cell) (first neighbour))")
+   (tt "          (+ (second cell)  (second neighbour))))")
+   (tt "")
+   (tt "(defn get-neighbours")
+   (tt "  [cell]")
+   (tt "  (let [add-for (partial add-for-neighbour cell)]")
+   (tt "    (map #(add-for %) neighbours)))")))
 
 (define (multiple-arguments-2-clojure)
-  (t "This should be some clojure code"))
+  (vl-append
+   0
+   (tt "(defn new-cell-status")
+   (tt "  [cell universe]")
+   (tt "  (rule-alive")
+   (tt "    (count (find-alive-neighbours cell universe))))")))
 
 (define (composition-clojure)
-  (t "This should be some clojure code"))
-
+  (vl-append
+   0
+   (tt "(def is-alive?")
+   (tt "  (comp rule-alive count find-alive-neighbours))")
+   (tt "")
+   (tt "(defn new-cell-status-s")
+   (tt "[cell universe]")
+   (tt "(is-alive? cell universe))")))
