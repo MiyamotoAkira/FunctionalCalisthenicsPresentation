@@ -8,7 +8,7 @@
 (provide wrapper-page-with-title)
 
 (define (function s)
-  (colorize (tt s) "light blue"))
+  (colorize (tt s) "dark green"))
 
 (define (keyword s)
   (colorize (tt s) "blue"))
