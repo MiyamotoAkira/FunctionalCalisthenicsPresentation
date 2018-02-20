@@ -103,9 +103,9 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
   (cc-superimpose
    (linewidth 0 (frame (titleless-page) #:color "white"))
    (vc-append gap-size
+              (item "Expressions, Not Statemets")
               (item "Name everything")
               (item "No Mutable State")
-              (item "Expressions, Not Statemets")
               (item "Exhaustive Conditionals")
               (item "Do Not Use Intermediate Variables")
               (item "No Explicit Recursion")
@@ -135,6 +135,18 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
   (vl-append 0 (declarations))))
 
 (with-steps
+ (intro first second third)
+ (slide
+  #:title "Expressions, not Statements"
+  (comment "I have moved its position on this presentation already 4 times. This started as a rule. But after using the rules of no mutable state and side effects on the boundaries there shouldn't be anything to apply here. Expressions, not Statmentes becomes a property of your code.")
+  (wrapper-page-with-title
+   (vc-append
+    gap-size
+    ((vafter first) (t "A rule that becomes a characteristic"))
+    ((vafter second) (statement))
+    ((vafter third) (expression))))))
+
+(with-steps
  (intro first second nonames withnames)
  (slide
   #:title "Name Everything"
@@ -147,18 +159,6 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
     (lt-superimpose
      ((vonly nonames) (bad-naming))
      ((vonly withnames) (good-naming)))))))
-
-(with-steps
- (intro first second third)
- (slide
-  #:title "Expressions, not Statements"
-  (comment "I have moved its position on this presentation already 4 times. This started as a rule. But after using the rules of no mutable state and side effects on the boundaries there shouldn't be anything to apply here. Expressions, not Statmentes becomes a property of your code.")
-  (wrapper-page-with-title
-   (vc-append
-    gap-size
-    ((vafter first) (t "A rule that becomes a characteristic"))
-    ((vafter second) (statement))
-    ((vafter third) (expression))))))
 
 (with-steps
  (intro first second third)
