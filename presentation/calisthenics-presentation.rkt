@@ -96,25 +96,6 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
                ((vafter second) (text "Each language has its own characteristics" (current-main-font) 48))))
    output-footer)))
 
-(slide
- #:title "The Rules"
- (comment "These are the rules as they currently stand. We will be looking at examples of each one as we move along.")
- (rb-superimpose
-  (cc-superimpose
-   (linewidth 0 (frame (titleless-page) #:color "white"))
-   (vc-append gap-size
-              (item "Expressions, Not Statemets")
-              (item "Name everything")
-              (item "No Mutable State")
-              (item "Exhaustive Conditionals")
-              (item "Do Not Use Intermediate Variables")
-              (item "No Explicit Recursion")
-              (item "Generic Building Blocks")
-              (item "Side Effects At The Boundaries")
-              (item "Infinite Sequences")
-              (item "One Argument Functions")))
-  output-footer))
-
 (with-steps
  (intro first second third fourth)
  (slide
@@ -123,8 +104,8 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
   (wrapper-page-with-title
    (vc-append
     gap-size
-    ((vafter first) (item "Cells are alive or dead"))
-    ((vafter second) (item "Universe is a grid of squares"))
+    ((vafter first) (item "Universe is a grid of squares"))
+    ((vafter second) (item "Cells are alive or dead"))
     ((vafter third) (item "Cell stays alive if 2 or 3 neighbours"))
     ((vafter fourth) (item "Dead cell will come to life if it has 3 neighbours"))))))
 
@@ -264,7 +245,7 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
      ((vonly fourth) (sequence)))))))
 
 (with-steps
- (intro first second third fourth fifth)
+ (intro first second third fourth fifth sixth)
  (slide
   #:title "One argument functions"
   (wrapper-page-with-title
@@ -275,7 +256,27 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
      ((vonly second) (multiple-arguments))
      ((vonly third) (single-argument))
      ((vonly fourth) (multiple-arguments-2))
-     ((vonly fifth) (composition)))))))
+     ((vonly fifth) (composition))
+     ((vonly sixth) (piping)))))))
+
+(slide
+ #:title "The Rules"
+ (comment "These are the rules as they currently stand.")
+ (rb-superimpose
+  (cc-superimpose
+   (linewidth 0 (frame (titleless-page) #:color "white"))
+   (vc-append gap-size
+              (item "Expressions, Not Statemets")
+              (item "Name everything")
+              (item "No Mutable State")
+              (item "Exhaustive Conditionals")
+              (item "Do Not Use Intermediate Variables")
+              (item "No Explicit Recursion")
+              (item "Generic Building Blocks")
+              (item "Side Effects At The Boundaries")
+              (item "Infinite Sequences")
+              (item "One Argument Functions")))
+  output-footer))
 
 (slide
  #:title "The Links"
@@ -289,5 +290,6 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
 (slide
  #:title "The end"
  (t "Jorge Gueorguiev Garcia")
- (t "@yefoakira")
+ (t "jorge.gueorguiev@codurance.com")
+ (t "yefo.akira@gmail.com")
  (bitmap "codurance.png"))

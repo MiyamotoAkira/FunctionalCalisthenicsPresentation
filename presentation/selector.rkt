@@ -34,6 +34,7 @@
 (provide single-argument)
 (provide multiple-arguments-2)
 (provide composition)
+(provide piping)
 
 (define declarations null)
 (define bad-naming null)
@@ -65,6 +66,7 @@
 (define single-argument null)
 (define multiple-arguments-2 null)
 (define composition null)
+(define piping null)
 
 (define (selector language)
   (if (= language 1)
@@ -129,4 +131,5 @@
         (set! multiple-arguments multiple-arguments-clojure)
         (set! single-argument single-argument-clojure)
         (set! multiple-arguments-2 multiple-arguments-2-clojure)
-        (set! composition composition-clojure))))
+        (set! composition composition-clojure)
+        (set! piping piping-clojure))))
