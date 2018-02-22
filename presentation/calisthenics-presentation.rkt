@@ -290,6 +290,6 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
 (slide
  #:title "The end"
  (t "Jorge Gueorguiev Garcia")
- (t "jorge.gueorguiev@codurance.com")
- (t "yefo.akira@gmail.com")
+ (colorize (t "jorge.gueorguiev@codurance.com") "blue")
+ (colorize (t "yefo.akira@gmail.com") "blue")
  (bitmap "codurance.png"))
