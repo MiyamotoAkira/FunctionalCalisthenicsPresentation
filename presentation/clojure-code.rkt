@@ -16,6 +16,7 @@
 (provide intermediate-variables-clojure)
 (provide non-intermediate-variables-clojure)
 (provide non-intermediate-variables-alternate-clojure)
+(provide justification-clojure)
 (provide recursion-clojure)
 (provide non-recursion-clojure)
 (provide non-recursion-alternate-clojure)
@@ -115,14 +116,18 @@
                (close-p 3))
    (tt "")
    (hbl-append 0 (open-p 1) (defn) (space) (function "new-cell-status"))
-   (hbl-append 0 (tab) (open-s 2) (tt "cell universe") (close-s 2))
-   (hbl-append 0 (tab) (open-p 2) (tt "rule-alive"))
+   (hbl-append 0 (tab) (open-s 2) (tt "universe cell") (close-s 2))
    (hbl-append 0
-               (tab) (tab)
-               (open-p 3) (tt "count") (space) (open-p 4) (tt "find-alive-neighbours"))
+               (tab) (open-p 2) (keyword "let") (space)
+               (open-s 3) (tt "size") (space) (open-p 4) (tt "count"))
    (hbl-append 0
-               (tab) (tab) (tab) (tab) (tab) (tab) (tab) (tt "cell universe")
-               (close-p 4) (close-p 3) (close-p 2) (close-p 1))))
+               (tab) (tab) (tab) (tab) (tab) (tab) (tab) (tab)
+               (open-p 5) (tt "find-alive-neighbours"))
+   (hbl-append 0 (tab) (tab) (tab) (tab) (tab) (tab) (tab) (tab) (space)
+               (tt "universe cell") (close-p 5) (close-p 4) (close-s 3))
+   (hbl-append 0
+               (tab) (tab) (open-p 3) (tt "rule-alive size")
+               (close-p 3) (close-p 2) (close-p 1))))
 
 (define (statement-clojure)
   (vl-append
@@ -210,34 +215,43 @@
 (define (intermediate-variables-clojure)
   (vl-append
    0
-   (hbl-append 0 (open-p 1) (defn) (space) (function "conway-step"))
-   (hbl-append 0 (tab) (open-s 2) (tt "universe") (close-s 2))
+   (hbl-append 0 (open-p 1) (defn) (space) (function "new-cell-status"))
+   (hbl-append 0 (tab) (open-s 2) (tt "universe cell") (close-s 2))
    (hbl-append 0
                (tab) (open-p 2) (keyword "let") (space)
-               (open-s 3) (tt "alive") (space)
-               (open-p 4) (tt "get-staying-alive universe") (close-p 4))
+               (open-s 3) (tt "size") (space) (open-p 4) (tt "count"))
    (hbl-append 0
-               (tab) (tab) (tab) (tab)
-               (tt "new-borns") (space)
-               (open-p 4) (tt "find-new-borns universe") (close-p 4) (close-s 3))
+               (tab) (tab) (tab) (tab) (tab) (tab) (tab) (tab)
+               (open-p 5) (tt "find-alive-neighbours"))
+   (hbl-append 0 (tab) (tab) (tab) (tab) (tab) (tab) (tab) (tab) (space)
+               (tt "universe cell") (close-p 5) (close-p 4) (close-s 3))
    (hbl-append 0
-               (tab) (tab) (open-p 3) (tt "concat new-born alive")
+               (tab) (tab) (open-p 3) (tt "rule-alive size")
                (close-p 3) (close-p 2) (close-p 1))))
 
 (define (non-intermediate-variables-clojure)
   (vl-append
    0
-   (hbl-append 0 (open-p 1) (defn) (space) (function "conway-step"))
-   (hbl-append 0 (tab) (open-s 2) (tt "universe") (close-s 2))
+   (hbl-append 0 (open-p 1) (defn) (space) (function "new-cell-status"))
+   (hbl-append 0 (tab) (open-s 2) (tt "universe cell") (close-s 2))
    (hbl-append 0
-               (tab) (open-p 2) (tt "concat") (space)
-               (open-p 3) (tt "find-new-borns universe") (close-p 3))
+               (tab) (open-p 2) (tt "rule-alive"))
+   (hbl-append 0 (tab) (tab) (open-p 3) (tt "count") (space))
    (hbl-append 0
-               (tab) (tab) (tab) (tab) (tab)
-               (open-p 3) (tt "get-staying-alive universe") (close-p 3)
-               (close-p 2) (close-p 1))))
+               (tab) (tab) (tab) (open-p 4) (tt "find-alive-neighbours"))
+   (hbl-append 0 (tab) (tab) (tab) (tab) (space)
+               (tt "universe cell") (close-p 4) (close-p 3) (close-p 2) (close-p 1))))
 
 (define (non-intermediate-variables-alternate-clojure)
+  (vl-append
+   0
+   (hbl-append 0 (open-p 1) (defn) (space) (function "new-cell-status"))
+   (hbl-append 0 (tab) (open-s 2) (tt "cell universe") (close-s 2))
+   (hbl-append 0 (tab) (open-p 2) (tt "-> ") (open-p 3) (tt "find-alive-neighbours universe cell") (close-p 3))
+   (hbl-append 0 (tab) (tab) (tab) (tt "count"))
+   (hbl-append 0 (tab) (tab) (tab) (tt "rule-alive") (close-p 2) (close-p 1))))
+
+(define (justification-clojure)
   (vl-append
    0
    (hbl-append 0 (open-p 1) (defn))
@@ -302,31 +316,26 @@
   (vl-append
    0
    (hbl-append 0 (open-p 1) (defn) (space) (function "new-cell-status"))
-   (hbl-append 0 (tab) (open-s 2) (tt "cell universe") (close-s 2))
-   (hbl-append 0 (tab) (open-p 2) (tt "rule-alive"))
-   (hbl-append 0
-               (tab) (tab) (open-p 3) (tt "count") (space)
-               (open-p 4) (tt "find-alive-neighbours universe cell")
-               (close-p 4) (close-p 3) (close-p 2) (close-p 1))))
+   (hbl-append 0 (tab) (open-s 2) (tt "universe cell") (close-s 2))
+   (hbl-append 0 (tab) (open-p 2) (tt "-> ") (open-p 3) (tt "find-alive-neighbours universe cell") (close-p 3))
+   (hbl-append 0 (tab) (tab) (tab) (tt "count"))
+   (hbl-append 0 (tab) (tab) (tab) (tt "rule-alive") (close-p 2) (close-p 1))))
 
 (define (generic-building-block-clojure)
   (vl-append
    0
    (hbl-append 0 (open-p 1) (defn) (space) (function "new-cell-status"))
-   (hbl-append 0 (tab) (open-s 2) (tt "cell universe rule") (close-s 2))
-   (hbl-append 0 (tab) (open-p 2) (tt "rule"))
-   (hbl-append 0
-               (tab) (tab) (open-p 3) (tt "count") (space)
-               (open-p 4) (tt "find-alive-neighbours universe cell")
-               (close-p 4) (close-p 3) (close-p 2) (close-p 1))))
+   (hbl-append 0 (tab) (open-s 2) (tt "universe cell rule") (close-s 2))
+   (hbl-append 0 (tab) (open-p 2) (tt "-> ") (open-p 3) (tt "find-alive-neighbours universe cell") (close-p 3))
+   (hbl-append 0 (tab) (tab) (tab) (tt "count"))
+   (hbl-append 0 (tab) (tab) (tab) (tt "rule") (close-p 2) (close-p 1))))
 
 (define (generic-building-block-alternate-clojure)
   (vl-append
    0
    (hbl-append 0 (open-p 1) (defn) (space) (function "new-cell-status"))
    (hbl-append 0 (tab) (open-s 2) (tt "cell universe rule") (close-s 2))
-   (hbl-append 0 (tab) (open-p 2) (tt "-> universe"))
-   (hbl-append 0 (tab) (tab) (tab) (open-p 3) (tt "find-alive-neighbours cell") (close-p 3))
+   (hbl-append 0 (tab) (open-p 2) (tt "-> ") (open-p 3) (tt "find-alive-neighbours universe cell") (close-p 3))
    (hbl-append 0 (tab) (tab) (tab) (tt "count"))
    (hbl-append 0 (tab) (tab) (tab) (tt "rule") (close-p 2) (close-p 1))))
 

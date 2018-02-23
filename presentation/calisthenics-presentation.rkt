@@ -174,7 +174,7 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
      ((vonly fifth) (exhaustive-2)))))))
 
 (with-steps
- (intro first second third fourth)
+ (intro first second third fourth fifth)
  (slide
   #:title "Do not use intermediate variables"
   (comment "I want you to notice that this is a test. All these rules still apply to tests. Tests is code. But wait, we said that we want names on everything. If we want names and no intermediate variables we need to push them out. Maybe we can consider constants (cheating a bit). They can be reused on multiple tests. But if not, we are removing locality.")
@@ -185,7 +185,8 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
     (lt-superimpose
      ((vonly second) (intermediate-variables))
      ((vonly third) (non-intermediate-variables))
-     ((vonly fourth) (non-intermediate-variables-alternate)))))))
+     ((vonly fourth) (non-intermediate-variables-alternate))
+     ((vonly fifth) (justification)))))))
 
 (with-steps
  (intro first second third fourth)
@@ -202,7 +203,7 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
      ((vonly fourth) (non-recursion-alternate)))))))
 
 (with-steps
- (intro first second third fourth fifth)
+ (intro first second third fourth)
  (slide
   #:title "Generic Building Blocks"
   (comment "The Born function is very aware of the domain in which it is working. Its even aware of the fact that is a Life of game on a square's grid. But what if we wanted to use an hexagonal grid? The rule for being born is different (2 neighbours, instead of 3). So now we pass a function that does the needed calculation. Born is kind of domain aware still, but much looser than before. By the way, let's gonna give a few names")
@@ -213,8 +214,7 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
     ((vafter second) (t "We are trying to create composable abstractions"))
     (lt-superimpose
      ((vonly third) (non-generic-building-block))
-     ((vonly fourth) (generic-building-block))
-     ((vonly fifth) (generic-building-block-alternate)))))))
+     ((vonly fourth) (generic-building-block)))))))
 
 (with-steps
  (intro first second third fourth)
