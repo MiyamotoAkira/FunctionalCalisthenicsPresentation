@@ -101,13 +101,18 @@ create our meaning. If I put the context of trumpet playing, then 'ta' becomes t
  (slide
   #:title "Conway's Game of Life"
   (comment "Does anyone not know the game of life? Created in 1970 by John Horton Conway. Interesting because from a very simple set of rules you can create some sofisticated elements. When I originally heard about it I learned about gliders, and guns, and oscillators. And then, not long ago I discovered that you can create an Universal Turing Machine from it.")
-  (wrapper-page-with-title
-   (vc-append
-    gap-size
-    ((vafter first) (item "Universe is a grid of squares"))
-    ((vafter second) (item "Cells are alive or dead"))
-    ((vafter third) (item "Cell stays alive if 2 or 3 neighbours"))
-    ((vafter fourth) (item "Dead cell will come to life if it has 3 neighbours"))))))
+  (cc-superimpose
+   ((vonly intro) (vc-append gap-size (scale (bitmap "Conways_game_of_life_breeder.png") 2)
+                             (text "By Hyperdeath - Own work," (current-main-font) 12)
+                             (text "CC BY-SA 3.0," (current-main-font) 12)
+                             (text "https://commons.wikimedia.org/w/index.php?curid=5117698" (current-main-font) 12)))
+   (wrapper-page-with-title
+    (vc-append
+     gap-size
+     ((vafter first) (item "Universe is a grid of squares"))
+     ((vafter second) (item "Cells are alive or dead"))
+     ((vafter third) (item "Cell stays alive if 2 or 3 neighbours"))
+     ((vafter fourth) (item "Dead cell will come to life if it has 3 neighbours")))))))
 
 
 (slide
