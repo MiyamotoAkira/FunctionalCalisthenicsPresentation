@@ -133,18 +133,13 @@
   (vl-append
    0
    (hbl-append 0
-               (open-p 1) (keyword "let") (space)
-               (open-s 2) (tt "result") (space)
-               (open-p 3) (tt "some-calculation some-parameter") (close-p 3) (close-s 2))
-   (hbl-append 0 (space) (open-p 2) (tt "another-call result") (close-p 2) (close-p 1))))
+               (open-p 1) (keyword "println") (space) (tt "\"This is an statement\"") (close-p 1))))
 
 (define (expression-clojure)
   (vl-append
    0
    (hbl-append 0
-               (open-p 1) (tt "another-call") (space)
-               (open-p 2) (tt "some-calculation some-paramater")
-               (close-p 2) (close-p 1))))
+               (open-p 1) (tt "capitalize") (space) (tt "\"this is an expression\"") (close-p 1))))
 
 (define (mutable-state-clojure)
   (vl-append
