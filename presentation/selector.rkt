@@ -37,7 +37,7 @@
 (provide composition)
 (provide piping)
 
-(define declarations null)
+;(define declarations null)        
 (define bad-naming null)
 (define good-naming null)
 (define statement null)
@@ -70,10 +70,15 @@
 (define composition null)
 (define piping null)
 
+(define-syntax-rule (deflanguage name language)
+  (define name (string-join '( "-" (format "~a" language)))))
+
+(define language null)
+
 (define (selector language)
   (if (= language 1)
       (begin
-        (set! declarations declarations-fsharp)
+        (set! language "fsharp")
         (set! bad-naming bad-naming-fsharp)
         (set! good-naming good-naming-fsharp)
         (set! statement statement-fsharp)
@@ -104,7 +109,7 @@
         (set! multiple-arguments-2 multiple-arguments-2-fsharp)
         (set! composition composition-fsharp))
       (begin
-        (set! declarations declarations-clojure)
+        (set! language "clojure")
         (set! bad-naming bad-naming-clojure)
         (set! good-naming good-naming-clojure)
         (set! statement statement-clojure)
@@ -136,3 +141,5 @@
         (set! multiple-arguments-2 multiple-arguments-2-clojure)
         (set! composition composition-clojure)
         (set! piping piping-clojure))))
+
+(deflanguage declarations language)
